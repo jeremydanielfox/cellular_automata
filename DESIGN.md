@@ -76,7 +76,7 @@ Methods in this class:
 This class acts as a basic data structure in the simulation.  It has instance variables for it's current state, future state, ID, a list of neighbors, a shape (or polygon), and a list of points that correspond to it's physical location.  It does not directly interact with any other classes, but is an object that is used by other classes. 
 
 Methods in this class:
-This class contains getter and setter methods for it's private instance variables. 
+This class contains getter and setter methods for its private instance variables. 
 ####BaseModel
 This is an abstract class that outlines the basic methods that all of the models will need to implement.  Just as with cell, it's purpose is to act as an object used by other classes, specifically by SimEngine. 
 
