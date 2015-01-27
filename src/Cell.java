@@ -15,6 +15,11 @@ public class Cell {
 	private Shape myShape;
 	private Collection<Cell> myNeighbors;
 	private Collection<Point2D> myVertices;
+	
+	public Cell(int id,Shape shape) {
+		myID = id;
+		myShape = shape;
+	}
 
 	public Cell(int id, int currentState, int futureState, Shape shape,
 			Collection<Cell> neighbors, Collection<Point2D> vertices) {
