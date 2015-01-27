@@ -47,22 +47,81 @@ Methods in this class:
 
 
 ####SimEngine
+The purpose of this class is to keep track of and update the cells in the simulation.  It has a BaseModel object and a graph of all the cells in the simulation that are initialized to the correct concrete child class based on the XML file specifications .  In order to update the cells, which is done from the updateCells() method, it calls several of it's own methods which each iterate through the graph of cells.  One of these calls methods on the BaseModel, passing the cells to it to update it's state based on it's neighbors, and another also calls methods on the cells directly.  The fact that it calls methods on the models and cells to update the state of the simulation makes it independent of the structure of the cell of the specific model being used. 
 
+Methods in this class:
+
+- public List [Cell] updateCells()
+	 - calls determineFutureStates(), setFutureToCurrentStates(), and getListOfCells() to update the simulation for the next frame and return the list of updated cells 
+- public void determineFutureStates()
+	 - iterates through the graph and passing each cell to a method on the model object to update the future state of the cell based on the rules implemented in the model 
+- public void setFutureToCurrentStates()
+	 - iterates through the graph and calls a method on each cell which sets it's current state equal to the value stored in it's future state
+- public List [Cell] getListOfCells()
+	 - returns a list of the cells in the graph object
 ####SimWindow
+This class is responsible for displaying the simulation in a window on the screen.  It has a stage, scene, group, region, and Hbox objects in order to run the display, some of which are given to it from the SimBrain.  In this initial design, it contains only 3 methods, described below, that display items that are passed in onto the screen, or that delete items from the display.
+
+Methods in this class:
+
+- public void paintCells(List [Cell] cellsToAdd)
+	- iterates through the list of cells and adds the correct representation to the screen based on the shape, vertices, and text content contained within each cell
+- public void addControlBar(HBox controls)
+	- takes in an HBox and adds it to the group
+- public void wipeCells()
+	- clears out all of the cells currently in the group object that is displayed in the simulation window
+
 
 ####Cell
+This class acts as a basic data structure in the simulation.  It has instance variables for it's current state, future state, ID, a list of neighbors, a shape (or polygon), and a list of points that correspond to it's physical location.  It does not directly interact with any other classes, but is an object that is used by other classes. 
 
+Methods in this class:
+This class contains getter and setter methods for it's private instance variables. 
 ####BaseModel
+This is an abstract class that outlines the basic methods that all of the models will need to implement.  Just as with cell, it's purpose is to act as an object used by other classes, specifically by SimEngine. 
+
+Methods in this class:
+
+- public abstract Cell updateFutureState (Cell cellToUpdate)
+	- takes in a cell and updates it's future state based on it's neighbors and the rules of the model
+- public abstract getSharePointsForNeighbor()
+	- returns the number of points that must be shared between cells for them to be considered neighbors in this model 
 
 ####Model Classes (Fire, PredPray, Segregation, GameOfLife)
+There is a class for each specific model that extends the BaseModel class.  They implement the methods outlined in BaseModel according to their rules, and call methods on the Cell objects that are passed in to them.  Each of these classes has it's associated "states" defined as constants in the class.  The methods in this class are called by the graph classes (below) and SimEngine to set up and run the simulation.
+
+Methods in these classes:
+These classes implement the two methods in the BaseModel class as well as other helper methods specific to the implementation of their rules.
 
 ####ModelFactory
+This is a very short class with one method.  The method is called by SimEngine when initializing a model and it uses reflection to create an instance of a particular model based on input from the XML file.  
+
+Methods in this class:
+- createSpecifiedModel(String model, List [String] modelParameters)
+	- returns a constructed instance of the model identified by the string
 
 ####BaseGraph
+This is an abstract class that outlines the basic methods for each possible type of graph, where graphs differ by the shape of the cells in the simulation.  It has a java Graph object and is an object used by SimEngine to initialize and keep track of the cells on the screen. 
+
+Methods in this class:
+- initializeCells()
+	- divides the grid into cells and gives each cell it's initial information like state and location based on the grid dimension
+- linkCells()
+	- takes the number of points a cell must share with another cell in order to be considered neighbors and creates links between the cells accordingly 
 
 ####SquareGraph
+This class extends the BaseGraph class and implements the methods outlined in BaseGraph.  It is used by SimEngine...
+Methods in this class:
+- initializeCells()
+	- divides the grid into square cells based on gird dimensions specified by the user and assigns each cell initial properties like state and location 
 
 ####GraphFactory
+The purpose of this class is to be able to dynamically create a graph of cells based on the shape of the cells.  The simulation models that we are implementing in our initial stage all use squares, but the intent of creating this class is to make it easy to create another graph should the cells take on another shape. 
+
+Methods in this class:
+- createSpecifiedGraph(String graphType)
+	- returns an instance of the graph specified by the string passed in
+
 # User Interface
  Megan
 # Design Details
