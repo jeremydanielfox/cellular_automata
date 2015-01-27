@@ -12,7 +12,7 @@ Finally, our design includes data structures and models that are used by other c
 
 This program contains 4 main components: the visuals class, the class with the simulation logic, the class that links them together, and the data structure and model implementation classes.  Our program is divided this way in an effort to create minimal dependencies, so that any necessary changes in the future will be isolated, and so that each element is as open to extensions as possible.  
 
-The [“design overview PDF in the same folder as this document”](https://github.com/duke-compsci308-spring2015/cellsociety_team12/blob/master/DesignOverview.pdf) illustrates the relationship between each of the classes, further described below.
+The [design overview PDF in the same folder as this document](https://github.com/duke-compsci308-spring2015/cellsociety_team12/blob/master/DesignOverview.pdf) illustrates the relationship between each of the classes, further described below.
 
 ####SimBrain
 This class creates and links the simulation logic, found in SimEngine, with the visual components of the simulator, implemented both in this class and in SimWindow.  It contains all of the action methods for the buttons in the control panel of the display that allow the user to control the animation of the simulation.  These methods are in this class because it is the only class with access to both the SimEngine and the SimWindow, and the buttons in the control panel make changes to both.  One of these buttons is the "Upload File" button,  and as a result the SimBrain also contains the method for reading a file and starting a new simulation.  
@@ -125,7 +125,7 @@ Methods in this class:
 # User Interface
 First of all, the part of the window in which the simulation is displayed will be located in the top section of the window and will occupy most of the screen. Below the simulation display will be the control bar, which will take up a smaller portion of the screen. The screen size is of fixed dimensions. In the control bar there will be buttons for uploading a file, resetting the simulation, playing, pausing, stepping through the simulation, and changing the speed of the simulation (increase and decrease rate). When the user clicks on the “upload file” button, another window will pop up with a file chooser in which the user can select the XML file with the information they want to simulate. When the user clicks any of the other buttons, it will adjust the animation according to their function, which will be apparent by the names of the buttons. All the buttons relating solely to a simulation in progress will be disabled, meaning the user cannot click those buttons, if there is no simulation in progress. If there is an error in the program that needs to be reported, such as bad input, a smaller window will pop up with a corresponding error message. This error window will remain on the screen until the user acknowledges the error or closes the window.
 
-[“An image of our UI can be found in the same repo as this file.”](https://github.com/duke-compsci308-spring2015/cellsociety_team12/blob/master/UI.pdf)
+[An image of our UI can be found in the same repo as this file.](https://github.com/duke-compsci308-spring2015/cellsociety_team12/blob/master/UI.pdf)
 
 # Design Details
 
