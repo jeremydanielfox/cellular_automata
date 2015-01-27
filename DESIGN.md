@@ -123,7 +123,8 @@ Methods in this class:
 	- returns an instance of the graph specified by the string passed in
 
 # User Interface
- Megan
+First of all, the part of the window in which the simulation is displayed will be located in the top section of the window and will occupy most of the screen. Below the simulation display will be the control bar, which will take up a smaller portion of the screen. The screen size is of fixed dimensions. In the control bar there will be buttons for uploading a file, resetting the simulation, playing, pausing, stepping through the simulation, and changing the speed of the simulation (increase and decrease rate). When the user clicks on the “upload file” button, another window will pop up with a file chooser in which the user can select the XML file with the information they want to simulate. When the user clicks any of the other buttons, it will adjust the animation according to their function, which will be apparent by the names of the buttons. All the buttons relating solely to a simulation in progress will be disabled, meaning the user cannot click those buttons, if there is no simulation in progress. If there is an error in the program that needs to be reported, such as bad input, a smaller window will pop up with a corresponding error message. This error window will remain on the screen until the user acknowledges the error or closes the window.
+
 # Design Details
 
 In this section, we will describe each component introduced in the Overview, along with how these components work with each other and handle features given in the assignment specification.
@@ -201,3 +202,4 @@ We plan to have every group member complete their primary portions early in each
 		* BaseModel
 		* GameOfLife
 	* Secondary components
+		* Fire
