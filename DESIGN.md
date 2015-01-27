@@ -12,7 +12,7 @@ Finally, our design includes data structures and models that are used by other c
 
 This program contains 4 main components: the visuals class, the class with the simulation logic, the class that links them together, and the data structure and model implementation classes.  Our program is divided this way in an effort to create minimal dependencies, so that any necessary changes in the future will be isolated, and so that each element is as open to extensions as possible.  
 
-The PDF in the same folder as this document illustrates the relationship between each of the classes, further described below.
+The [design overview PDF in the same folder as this document](https://github.com/duke-compsci308-spring2015/cellsociety_team12/blob/master/DesignOverview.pdf) illustrates the relationship between each of the classes, further described below.
 
 ####SimBrain
 This class creates and links the simulation logic, found in SimEngine, with the visual components of the simulator, implemented both in this class and in SimWindow.  It contains all of the action methods for the buttons in the control panel of the display that allow the user to control the animation of the simulation.  These methods are in this class because it is the only class with access to both the SimEngine and the SimWindow, and the buttons in the control panel make changes to both.  One of these buttons is the "Upload File" button,  and as a result the SimBrain also contains the method for reading a file and starting a new simulation.  
@@ -47,24 +47,87 @@ Methods in this class:
 
 
 ####SimEngine
+The purpose of this class is to keep track of and update the cells in the simulation.  It has a BaseModel object and a graph of all the cells in the simulation that are initialized to the correct concrete child class based on the XML file specifications .  In order to update the cells, which is done from the updateCells() method, it calls several of it's own methods which each iterate through the graph of cells.  One of these calls methods on the BaseModel, passing the cells to it to update it's state based on it's neighbors, and another also calls methods on the cells directly.  The fact that it calls methods on the models and cells to update the state of the simulation makes it independent of the structure of the cell of the specific model being used. 
+
+Methods in this class:
+
+- public List [Cell] updateCells()
+	 - calls determineFutureStates(), setFutureToCurrentStates(), and getListOfCells() to update the simulation for the next frame and return the list of updated cells 
+- public void determineFutureStates()
+	 - iterates through the graph and passing each cell to a method on the model object to update the future state of the cell based on the rules implemented in the model 
+- public void setFutureToCurrentStates()
+	 - iterates through the graph and calls a method on each cell which sets it's current state equal to the value stored in it's future state
+- public List [Cell] getListOfCells()
+	 - returns a list of the cells in the graph object
 
 ####SimWindow
+This class is responsible for displaying the simulation in a window on the screen.  It has a stage, scene, group, region, and Hbox objects in order to run the display, some of which are given to it from the SimBrain.  In this initial design, it contains only 3 methods, described below, that display items that are passed in onto the screen, or that delete items from the display.
+
+Methods in this class:
+
+- public void paintCells(List [Cell] cellsToAdd)
+	- iterates through the list of cells and adds the correct representation to the screen based on the shape, vertices, and text content contained within each cell
+- public void addControlBar(HBox controls)
+	- takes in an HBox and adds it to the group
+- public void wipeCells()
+	- clears out all of the cells currently in the group object that is displayed in the simulation window
+
 
 ####Cell
+This class acts as a basic data structure in the simulation.  It has instance variables for it's current state, future state, ID, a list of neighbors, a shape (or polygon), and a list of points that correspond to it's physical location.  It does not directly interact with any other classes, but is an object that is used by other classes. 
 
+Methods in this class:
+This class contains getter and setter methods for its private instance variables. 
 ####BaseModel
+This is an abstract class that outlines the basic methods that all of the models will need to implement.  Just as with cell, it's purpose is to act as an object used by other classes, specifically by SimEngine. 
+
+Methods in this class:
+
+- public abstract Cell updateFutureState (Cell cellToUpdate)
+	- takes in a cell and updates it's future state based on it's neighbors and the rules of the model
+- public abstract getSharePointsForNeighbor()
+	- returns the number of points that must be shared between cells for them to be considered neighbors in this model 
 
 ####Model Classes (Fire, PredPray, Segregation, GameOfLife)
+There is a class for each specific model that extends the BaseModel class.  They implement the methods outlined in BaseModel according to their rules, and call methods on the Cell objects that are passed in to them.  Each of these classes has it's associated "states" defined as constants in the class.  The methods in this class are called by the graph classes (below) and SimEngine to set up and run the simulation.
+
+Methods in these classes:
+These classes implement the two methods in the BaseModel class as well as other helper methods specific to the implementation of their rules.
 
 ####ModelFactory
+This is a very short class with one method.  The method is called by SimEngine when initializing a model and it uses reflection to create an instance of a particular model based on input from the XML file.  
+
+Methods in this class:
+- createSpecifiedModel(String model, List [String] modelParameters)
+	- returns a constructed instance of the model identified by the string
 
 ####BaseGraph
+This is an abstract class that outlines the basic methods for each possible type of graph, where graphs differ by the shape of the cells in the simulation.  It has a java Graph object and is an object used by SimEngine to initialize and keep track of the cells on the screen. 
+
+Methods in this class:
+- initializeCells()
+	- divides the grid into cells and gives each cell it's initial information like state and location based on the grid dimension
+- linkCells()
+	- takes the number of points a cell must share with another cell in order to be considered neighbors and creates links between the cells accordingly 
 
 ####SquareGraph
+This class extends the BaseGraph class and implements the methods outlined in BaseGraph.  It is used by SimEngine...
+Methods in this class:
+- initializeCells()
+	- divides the grid into square cells based on gird dimensions specified by the user and assigns each cell initial properties like state and location 
 
 ####GraphFactory
+The purpose of this class is to be able to dynamically create a graph of cells based on the shape of the cells.  The simulation models that we are implementing in our initial stage all use squares, but the intent of creating this class is to make it easy to create another graph should the cells take on another shape. 
+
+Methods in this class:
+- createSpecifiedGraph(String graphType)
+	- returns an instance of the graph specified by the string passed in
+
 # User Interface
- Megan
+First of all, the part of the window in which the simulation is displayed will be located in the top section of the window and will occupy most of the screen. Below the simulation display will be the control bar, which will take up a smaller portion of the screen. The screen size is of fixed dimensions. In the control bar there will be buttons for uploading a file, resetting the simulation, playing, pausing, stepping through the simulation, and changing the speed of the simulation (increase and decrease rate). When the user clicks on the “upload file” button, another window will pop up with a file chooser in which the user can select the XML file with the information they want to simulate. When the user clicks any of the other buttons, it will adjust the animation according to their function, which will be apparent by the names of the buttons. All the buttons relating solely to a simulation in progress will be disabled, meaning the user cannot click those buttons, if there is no simulation in progress. If there is an error in the program that needs to be reported, such as bad input, a smaller window will pop up with a corresponding error message. This error window will remain on the screen until the user acknowledges the error or closes the window.
+
+[An image of our UI can be found in the same repo as this file.](https://github.com/duke-compsci308-spring2015/cellsociety_team12/blob/master/UI.pdf)
+
 # Design Details
 
 In this section, we will describe each component introduced in the Overview, along with how these components work with each other and handle features given in the assignment specification.
@@ -106,7 +169,18 @@ This class will implement an algorithm to build a graph of cells with pointers t
 In terms of the MVC framework, this class represents our view. It is responsible for all of the visuals associated with our simulation, and as such, it contains the group, the scene, and the corresponding visual objects. It also contains the control panel with all of the buttons (pause, play, etc.) that the user presses to control the simulation (when buttons are pressed, methods are called in the brain to make the simulation changes).
 
 # Design Considerations
- Megan
+ In this section, we will elaborate on some of the major design discussions we had and the decisions we made.
+
+The first major design discussion was about which data structure we should use to keep track of the cells. We considered two options, a 2D array/grid and a graph. The benefit of using a 2D grid is that it would be easy to implement for a square grid. However we saw the potential problem that it could be limiting if we needed to use other shapes as cells. A graph, while harder to implement in that it would involve a lot more mathematical calculations, would be handy for determining and keeping track of neighbors in a flexible way. In addition it could be easily extendible in that the shape of the cell could be changed easily. We decided to go with the graph.
+
+The previous discussion lead to the following question: should we extend or wrap the graph? If we made our own graph object that extended Java’s graph object, we wouldn’t be able to make it an abstract class as we would be able to do if we wrapped a graph instead. Since there would be no loss in function to wrap the graph, we decided not to extend Java’s graph object.
+
+Relatedly, we discussed whether or not we should extend JavaFX’s shape object to create our cell object. Nevertheless we decided to wrap the shape in our cell object because we planned for our cell to have a lot of properties unrelated to its shape, and there was no need to limit ourselves by extending shape. We would still be able to access all the information we need about a shape by containing its information in the cell object.
+
+Another design discussion we had was in regards to where to implement the animation timeline, in the simBrain or the simEngine. We considered locating it in the simEngine due to the fact that this class serves as the engine for the simulation and it would make sense to run the simulation from there; the engine would be self-sufficient and involve the entire simulation in this class. However if we did that, simEngine would need some way to update the visuals as we updated every frame and we wanted to keep these two separate. Therefore we decided to put the animation timeline in the simBrain, which connects the simEngine and the simWindow. This way, the method that is called every frame update can access both the simEngine and the simWindow. 
+
+The last major thing we discussed about design was where to create the buttons. We needed the simBrain to be able to access the buttons and contain methods that are called upon the press of any of them. Although this would make the simBrain and the simWindow classes much more dependent on each other, we would be keeping the logic out of the visuals. It made more sense to us to locate them in the simBrain and pass them to the simWindow for display. 
+
 # Team Responsibilities
 ### High Level Plan
 We plan to have every group member complete their primary portions early in each week so that we can then have the team members review their secondary portions the day after. We will test integrating various aspects as often as possible, we each group member trying to keep the master branch updated with their work. Group members should only ever commit fully functioning code to the master branch, which they will do after testing this code thoroughly. 
@@ -131,3 +205,4 @@ We plan to have every group member complete their primary portions early in each
 		* BaseModel
 		* GameOfLife
 	* Secondary components
+		* Fire
