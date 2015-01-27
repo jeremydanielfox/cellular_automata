@@ -165,7 +165,18 @@ This class will implement an algorithm to build a graph of cells with pointers t
 In terms of the MVC framework, this class represents our view. It is responsible for all of the visuals associated with our simulation, and as such, it contains the group, the scene, and the corresponding visual objects. It also contains the control panel with all of the buttons (pause, play, etc.) that the user presses to control the simulation (when buttons are pressed, methods are called in the brain to make the simulation changes).
 
 # Design Considerations
- Megan
+ In this section, we will elaborate on some of the major design discussions we had and the decisions we made.
+
+The first major design discussion was about which data structure we should use to keep track of the cells. We considered two options, a 2D array/grid and a graph. The benefit of using a 2D grid is that it would be easy to implement for a square grid. However we saw the potential problem that it could be limiting if we needed to use other shapes as cells. A graph, while harder to implement in that it would involve a lot more mathematical calculations, would be handy for determining and keeping track of neighbors in a flexible way. In addition it could be easily extendible in that the shape of the cell could be changed easily. We decided to go with the graph.
+
+The previous discussion lead to the following question: should we extend or wrap the graph? If we made our own graph object that extended Java’s graph object, we wouldn’t be able to make it an abstract class as we would be able to do if we wrapped a graph instead. Since there would be no loss in function to wrap the graph, we decided not to extend Java’s graph object.
+
+Relatedly, we discussed whether or not we should extend JavaFX’s shape object to create our cell object. Nevertheless we decided to wrap the shape in our cell object because we planned for our cell to have a lot of properties unrelated to its shape, and there was no need to limit ourselves by extending shape. We would still be able to access all the information we need about a shape by containing its information in the cell object.
+
+Another design discussion we had was in regards to where to implement the animation timeline, in the simBrain or the simEngine. We considered locating it in the simEngine due to the fact that this class serves as the engine for the simulation and it would make sense to run the simulation from there; the engine would be self-sufficient and involve the entire simulation in this class. However if we did that, simEngine would need some way to update the visuals as we updated every frame and we wanted to keep these two separate. Therefore we decided to put the animation timeline in the simBrain, which connects the simEngine and the simWindow. This way, the method that is called every frame update can access both the simEngine and the simWindow. 
+
+The last major thing we discussed about design was where to create the buttons. We needed the simBrain to be able to access the buttons and contain methods that are called upon the press of any of them. Although this would make the simBrain and the simWindow classes much more dependent on each other, we would be keeping the logic out of the visuals. It made more sense to us to locate them in the simBrain and pass them to the simWindow for display. 
+
 # Team Responsibilities
 ### High Level Plan
 We plan to have every group member complete their primary portions early in each week so that we can then have the team members review their secondary portions the day after. We will test integrating various aspects as often as possible, we each group member trying to keep the master branch updated with their work. Group members should only ever commit fully functioning code to the master branch, which they will do after testing this code thoroughly. 
