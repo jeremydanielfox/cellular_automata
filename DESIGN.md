@@ -59,6 +59,7 @@ Methods in this class:
 	 - iterates through the graph and calls a method on each cell which sets it's current state equal to the value stored in it's future state
 - public List [Cell] getListOfCells()
 	 - returns a list of the cells in the graph object
+
 ####SimWindow
 This class is responsible for displaying the simulation in a window on the screen.  It has a stage, scene, group, region, and Hbox objects in order to run the display, some of which are given to it from the SimBrain.  In this initial design, it contains only 3 methods, described below, that display items that are passed in onto the screen, or that delete items from the display.
 
