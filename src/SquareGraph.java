@@ -60,9 +60,9 @@ public class SquareGraph extends BaseGraph {
 								(double) (getXOffset() + (i - 1) * cellWidth),
 								(double) (getYOffset() + j * cellHeight),
 								(double) (getXOffset() + i * cellWidth),
-								(double) (getYOffset() + (j - 1) * cellHeight),
+								(double) (getYOffset() + j * cellHeight),
 								(double) (getXOffset() + i * cellWidth),
-								(double) (getYOffset() + j * cellHeight) });
+								(double) (getYOffset() + (j - 1) * cellHeight)});
 				Cell temp = new Cell(count, tempShape, tempSet);
 				addVertex(temp);
 				count++;

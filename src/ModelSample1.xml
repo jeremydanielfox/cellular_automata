@@ -3,8 +3,8 @@
 	<Model>Fire</Model>
 	<Author>Sierra</Author>
 	<Title>Brown Fire</Title>
-	<GridRows>1</GridRows>
-	<GridColumns>1</GridColumns>
+	<GridRows>5</GridRows>
+	<GridColumns>5</GridColumns>
 	<Parameters>
 		<probCatch>0.15</probCatch>
 	</Parameters>
