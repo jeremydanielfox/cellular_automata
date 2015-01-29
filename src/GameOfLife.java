@@ -19,7 +19,7 @@ public class GameOfLife extends BaseModel {
 	private static final int numLiveNeighborsToRevive = 3;
 	
 	public GameOfLife(Map<String, Integer> parameters) {
-		numPointsForNeighbor = 1;
+		super(parameters, 1);
 	}
 	
 	@Override

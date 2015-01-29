@@ -1,4 +1,5 @@
 import java.util.Collection;
+import java.util.Map;
 
 
 /**
@@ -9,8 +10,11 @@ import java.util.Collection;
  */
 
 public abstract class BaseModel {
-	//will fix this 
-	public int numPointsForNeighbor;
+	private int numPointsForNeighbor;
+	
+	public BaseModel(Map<String, Integer> parameters, int points) {
+		numPointsForNeighbor = points;
+	}
 	
 	// Takes in a cell and updates it's future state based on it's neighbors and the rules of the model
 	public abstract Cell updateFutureState(Cell cellToUpdate, Collection<Cell> neighbors);

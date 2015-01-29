@@ -8,7 +8,7 @@ import java.util.Map;
  *
  */
 
-public class simEngine {
+public class SimEngine {
 	private String myModelName;
 	private Map<String, Integer> myParameters;
 	private List<ConfigCellInfo> myCellsToConfig;
@@ -17,7 +17,7 @@ public class simEngine {
 	private BaseGraph myGraph;
 	private BaseModel myModel;
 	
-	public simEngine(String model, Map<String, Integer> parameters, List<ConfigCellInfo> cellsToConfig) {
+	public SimEngine(String model, Map<String, Integer> parameters, List<ConfigCellInfo> cellsToConfig) {
 		myModelName = model;
 		myParameters = parameters;
 		myCellsToConfig = cellsToConfig;
