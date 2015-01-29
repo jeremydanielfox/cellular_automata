@@ -19,7 +19,7 @@ public class SimEngine {
 	private BaseModel myModel;
 
 	public SimEngine(String model, Map<String, Double> parameters,
-			List<ConfigCellInfo> cellsToConfig) {
+			List<ConfigCellInfo> cellsToConfig, int xOffset, int yOffset) {
 		myModelName = model;
 		myParameters = parameters;
 		myCellsToConfig = cellsToConfig;
@@ -28,7 +28,8 @@ public class SimEngine {
 		myGraph = new SquareGraph(myParameters.get("columns").intValue(),
 				myParameters.get("rows").intValue(),
 				myParameters.get("screenWidth").intValue(),
-				myParameters.get("screenHeight").intValue(),
+				myParameters.get("screenHeight").intValue(), 
+				xOffset, yOffset,
 				myModel.getSharePointsForNeighbor());
 		myGraph.initializeCells();
 	}
