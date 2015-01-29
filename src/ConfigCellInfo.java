@@ -1,13 +1,17 @@
 
 public class ConfigCellInfo {
+	private final int DEFAULT_STATE = 0;
+	
 	private int myRow;
 	private int myCol;
 	private String myState;
+	private int myIntState;
 	
 	public ConfigCellInfo(int row, int col, String state){
 		myRow = row;
 		myCol = col;
 		myState = state;
+		myIntState = DEFAULT_STATE;
 	}
 	
 	public int getRow(){
@@ -18,8 +22,15 @@ public class ConfigCellInfo {
 		return myCol;
 	}
 	
-	public String getState(){
+	public String getStringState(){
 		return myState;
 	}
 	
+	public void setIntState(int intState){
+		myIntState = intState;
+	}
+	
+	public int getIntState(){
+		return myIntState;
+	}
 }
