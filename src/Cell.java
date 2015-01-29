@@ -1,4 +1,4 @@
-import java.util.Collection;
+import java.util.Set;
 
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Shape;
@@ -12,23 +12,20 @@ public class Cell {
 	private int myID;
 	private int myCurrentState;
 	private int myFutureState;
+	private Set<Point2D> myVerticies;
 	private Shape myShape;
-	private Collection<Cell> myNeighbors;
-	private Collection<Point2D> myVertices;
-	
-	public Cell(int id,Shape shape) {
+
+	public Cell(int id, Shape shape, Set<Point2D> verticies) {
 		myID = id;
 		myShape = shape;
+		myVerticies = verticies;
 	}
 
-	public Cell(int id, int currentState, int futureState, Shape shape,
-			Collection<Cell> neighbors, Collection<Point2D> vertices) {
+	public Cell(int id, int currentState, int futureState, Shape shape) {
 		myID = id;
 		myCurrentState = currentState;
 		myFutureState = futureState;
 		myShape = shape;
-		myNeighbors = neighbors;
-		myVertices = vertices;
 	}
 
 	public int getID() {
@@ -63,21 +60,7 @@ public class Cell {
 		myShape = shape;
 	}
 
-	public void addNeighbor(Cell neighbor) {
-		myNeighbors.add(neighbor);
+	public Set<Point2D> getVerticies() {
+		return myVerticies;
 	}
-
-	public void removeNeighbor(Cell neighbor) {
-		if (myNeighbors.contains(neighbor))
-			myNeighbors.remove(neighbor);
-	}
-
-	public Collection<Cell> getNeighbors() {
-		return myNeighbors;
-	}
-
-	public Collection<Point2D> getVertices() {
-		return myVertices;
-	}
-
 }

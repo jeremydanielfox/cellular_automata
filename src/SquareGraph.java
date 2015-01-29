@@ -1,10 +1,10 @@
+import java.util.HashSet;
+import java.util.Set;
+
+import javafx.geometry.Point2D;
 import javafx.scene.shape.Polygon;
 
 public class SquareGraph extends BaseGraph {
-	private int numCellsAcross;
-	private int numCellsUpDown;
-	private int myScreenWidth;
-	private int myScreenHeight;
 	private int cellWidth;
 	private int cellHeight;
 
@@ -21,22 +21,16 @@ public class SquareGraph extends BaseGraph {
 	 * @param screenHeight
 	 */
 	public SquareGraph(int numCellsWidth, int numCellsHeight, int screenWidth,
-			int screenHeight) {
-		numCellsAcross = numCellsWidth;
-		numCellsUpDown = numCellsHeight;
-		myScreenWidth = screenWidth;
-		myScreenHeight = screenHeight;
-		calculateValues();
-		initializeCells();
-		connectCells();
+			int screenHeight, int points) {
+		super(numCellsWidth, numCellsHeight, screenWidth, screenHeight, points);
 	}
 
 	/**
 	 * Calculate the width and height of each cell
 	 */
-	private void calculateValues() {
-		cellWidth = myScreenWidth / numCellsAcross;
-		cellHeight = myScreenHeight / numCellsUpDown;
+	protected void calculateValues() {
+		cellWidth = getMyScreenWidth() / getNumCellsAcross();
+		cellHeight = getMyScreenHeight() / getNumCellsUpDown();
 	}
 
 	/**
@@ -45,9 +39,16 @@ public class SquareGraph extends BaseGraph {
 	 * Polygon. Add each Polygon to each Cell. Add each Cell to the Graph.
 	 */
 	public void initializeCells() {
-		for (int i = 1; i <= numCellsAcross; i++)
-			for (int j = 1; j <= numCellsUpDown; j++) {
+		int count = 1;
+		for (int i = 1; i <= getNumCellsAcross(); i++)
+			for (int j = 1; j <= getNumCellsUpDown(); j++) {
 				Polygon tempShape = new Polygon();
+				Set<Point2D> tempSet = new HashSet<>();
+				tempSet.add(new Point2D((i - 1) * cellWidth, (j - 1)
+						* cellHeight));
+				tempSet.add(new Point2D(i * cellWidth, (j - 1) * cellHeight));
+				tempSet.add(new Point2D((i - 1) * cellWidth, j * cellHeight));
+				tempSet.add(new Point2D(i * cellWidth, j * cellHeight));
 				tempShape.getPoints().addAll(
 						new Double[] { (double) ((i - 1) * cellWidth),
 								(double) ((j - 1) * cellHeight),
@@ -57,27 +58,22 @@ public class SquareGraph extends BaseGraph {
 								(double) (j * cellHeight),
 								(double) (i * cellWidth),
 								(double) (j * cellHeight) });
-				Cell temp = new Cell(i * j, tempShape);
+				Cell temp = new Cell(count, tempShape, tempSet);
 				addVertex(temp);
+				count++;
 			}
 	}
 
 	/**
-	 * Correctly connect all cells to simulate a square grid where each cell has
-	 * four neighbors. This means connecting each cell with the cell of ID one
-	 * greater than it, except if the ID of the cell is divisible by the number
-	 * of cells in numCellsAcross. This also means connecting each cell with the
-	 * cell of ID greater by numCellsAcross.
+	 * Calculate the appropriate ID for a row and column by multiplying the row
+	 * number by the number of cells across, and adding the column number
+	 * 
+	 * @param row
+	 * @param col
+	 * @return
 	 */
-	public void connectCells() {
-		for (Cell first : this.getAllCells())
-			for (Cell second : this.getAllCells()) {
-				if (first.getID() == second.getID() - 1
-						&& first.getID() % numCellsAcross != 0)
-					connect(first, second);
-				if (first.getID() == second.getID() - numCellsAcross)
-					connect(first, second);
-			}
-
+	public int calculateID(int row, int col) {
+		return (row - 1) * getNumCellsAcross() + col;
 	}
+
 }
