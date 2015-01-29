@@ -1,24 +1,27 @@
+import java.util.Collection;
+
 
 /**
  * This the abstract model class that every type of model will extend
  * 
- * @author Megan, Team 12
+ * @author Megan Gutter
  *
  */
 
 public abstract class BaseModel {
+	//will fix this 
 	public int numPointsForNeighbor;
 	
 	// Takes in a cell and updates it's future state based on it's neighbors and the rules of the model
-	public abstract Cell updateFutureState(Cell cellToUpdate);
+	public abstract Cell updateFutureState(Cell cellToUpdate, Collection<Cell> neighbors);
 	
 	public int getSharePointsForNeighbor() {
 		return numPointsForNeighbor;
 	}
 	
-	public int countNeighbors(Cell cellToUpdate, int state) {
+	public int countNeighbors(Cell cellToUpdate, int state, Collection<Cell> neighbors) {
 		int neighborsWithState = 0;
-		for (Cell c : cellToUpdate.getNeighbors()) {
+		for (Cell c : neighbors) {
 			if (c.getCurrentState() == state) {
 				neighborsWithState += 1;
 			}

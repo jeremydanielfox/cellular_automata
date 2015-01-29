@@ -6,7 +6,12 @@ import javafx.geometry.Point2D;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
-
+/**
+ * This class implements the GameOfLife model and extends BaseModel.
+ * 
+ * @author Megan Gutter
+ *
+ */
 public class GameOfLife extends BaseModel {
 	private static final int dead = 0;
 	private static final int alive = 1;
@@ -18,9 +23,9 @@ public class GameOfLife extends BaseModel {
 	}
 	
 	@Override
-	public Cell updateFutureState(Cell cellToUpdate) {
+	public Cell updateFutureState(Cell cellToUpdate, Collection<Cell> neighbors) {
 		// TODO Auto-generated method stub
-		int aliveNeighbors = countNeighbors(cellToUpdate, alive);
+		int aliveNeighbors = countNeighbors(cellToUpdate, alive, neighbors);
 		if ((cellToUpdate.getCurrentState() == dead && aliveNeighbors == numLiveNeighborsToRevive) ||
 				(cellToUpdate.getCurrentState() == alive && 
 				(aliveNeighbors == numLiveNeighborsToLive || aliveNeighbors == numLiveNeighborsToRevive))) {
