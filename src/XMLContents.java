@@ -45,6 +45,12 @@ public class XMLContents {
 		myTitle = extractSpecifiedTag("Title");
 		System.out.println(myTitle);
 
+		myParameters.put("rows", Double.parseDouble(extractSpecifiedTag("GridRows")));
+		System.out.println(myParameters.get("rows"));
+		
+		myParameters.put("columns", Double.parseDouble(extractSpecifiedTag("GridColumns")));
+		System.out.println(myParameters.get("columns"));
+
 		extractConfig();
 		extractParams();
 

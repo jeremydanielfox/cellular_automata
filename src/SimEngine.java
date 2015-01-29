@@ -19,17 +19,16 @@ public class SimEngine {
 	private BaseModel myModel;
 
 	public SimEngine(String model, Map<String, Double> parameters,
-			List<ConfigCellInfo> cellsToConfig, int xOffset, int yOffset) {
+			List<ConfigCellInfo> cellsToConfig, int cellRegionWidth,
+			int cellRegionHeight, int cellRegionXOffset, int cellRegionYOffset) {
 		myModelName = model;
 		myParameters = parameters;
 		myCellsToConfig = cellsToConfig;
 		myModel = new GameOfLife(myParameters);
 		// assuming this data is passed in the parameters map?
 		myGraph = new SquareGraph(myParameters.get("columns").intValue(),
-				myParameters.get("rows").intValue(),
-				myParameters.get("screenWidth").intValue(),
-				myParameters.get("screenHeight").intValue(), 
-				xOffset, yOffset,
+				myParameters.get("rows").intValue(), cellRegionWidth,
+				cellRegionHeight, cellRegionXOffset, cellRegionYOffset,
 				myModel.getSharePointsForNeighbor());
 		myGraph.initializeCells();
 	}
