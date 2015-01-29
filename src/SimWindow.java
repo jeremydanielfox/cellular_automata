@@ -1,3 +1,4 @@
+import java.util.Collection;
 import java.util.List;
 
 import javafx.scene.Group;
@@ -13,6 +14,8 @@ public class SimWindow {
 
 	public static final int WINDOW_HEIGHT = 500;
 	public static final int WINDOW_WIDTH = 500;
+	public static final int SIM_WINDOW_X_OFFSET = 25;
+	public static final int SIM_WINDOW_Y_OFFSET = 25;
 
 	public SimWindow(Stage stage, HBox controls) {
 		myStage = stage;
@@ -24,13 +27,14 @@ public class SimWindow {
 		myStage.show();
 	}
 
-	public void paintCells(List<Cell> cellsToPaint) {
-		for (Cell c : cellsToPaint) {
+	public void paintCells(Collection<Cell> collection) {
+		wipeCells();
+		for (Cell c : collection) {
 			myRoot.getChildren().add(c.getShape());
 		}
 	}
 
 	public void wipeCells() {
-
+		myRoot.getChildren().clear();
 	}
 }

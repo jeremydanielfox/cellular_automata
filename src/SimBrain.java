@@ -9,6 +9,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
@@ -23,7 +24,7 @@ import javafx.util.Duration;
  */
 public class SimBrain extends Application {
 	private SimWindow myWindow;
-	// private SimEngine myEngine;
+	private SimEngine myEngine;
 	private Timeline myAnimation;
 	private XMLContents myXMLContents;
 	private Stage myStage;
@@ -48,6 +49,7 @@ public class SimBrain extends Application {
 
 	private HBox makeControlPanel() {
 		HBox controlPanel = new HBox(10);
+		controlPanel.setAlignment(Pos.CENTER);
 		controlPanel.getChildren().add(makeUploadFileButton());
 		controlPanel.getChildren().add(makePlayButton());
 		controlPanel.getChildren().add(makePauseButton());
@@ -125,7 +127,7 @@ public class SimBrain extends Application {
 	}
 
 	private void updateSim() {
-		// myWindow.paintCells(myEngine.upDateCells());
+		myWindow.paintCells(myEngine.updateCells());
 	}
 
 	private void startNewSim() {
@@ -133,7 +135,8 @@ public class SimBrain extends Application {
 		if (modelSetUp != null) {
 			readFile(modelSetUp);
 		}
-		//myEngine = new SimEngine(myXMLContents.getModel(), myXMLContents.getParams(), myXMLContents.getCellsToConfig());
+		myEngine = new SimEngine(myXMLContents.getModel(), myXMLContents.getParams(), myXMLContents.getCellsToConfig(), 
+				450, 450, SimWindow.SIM_WINDOW_X_OFFSET, SimWindow.SIM_WINDOW_Y_OFFSET);
 		runSim();
 	}
 
