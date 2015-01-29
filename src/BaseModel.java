@@ -19,6 +19,8 @@ public abstract class BaseModel {
 	// the rules of the model
 	public abstract Cell updateFutureState(Cell cellToUpdate,
 			Collection<Cell> neighbors);
+	
+	public abstract int getIntForState(String state);
 
 	public int getSharePointsForNeighbor() {
 		return numPointsForNeighbor;
@@ -34,4 +36,5 @@ public abstract class BaseModel {
 		}
 		return neighborsWithState;
 	}
+	
 }
