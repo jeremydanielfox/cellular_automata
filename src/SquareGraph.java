@@ -57,10 +57,10 @@ public class SquareGraph extends BaseGraph {
 						new Double[] {
 								(double) (getXOffset() + (i - 1) * cellWidth),
 								(double) (getYOffset() + (j - 1) * cellHeight),
-								(double) (getXOffset() + i * cellWidth),
-								(double) (getYOffset() + (j - 1) * cellHeight),
 								(double) (getXOffset() + (i - 1) * cellWidth),
 								(double) (getYOffset() + j * cellHeight),
+								(double) (getXOffset() + i * cellWidth),
+								(double) (getYOffset() + (j - 1) * cellHeight),
 								(double) (getXOffset() + i * cellWidth),
 								(double) (getYOffset() + j * cellHeight) });
 				Cell temp = new Cell(count, tempShape, tempSet);
