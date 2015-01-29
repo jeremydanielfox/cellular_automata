@@ -15,4 +15,14 @@ public abstract class BaseModel {
 	public int getSharePointsForNeighbor() {
 		return numPointsForNeighbor;
 	}
+	
+	public int countNeighbors(Cell cellToUpdate, int state) {
+		int neighborsWithState = 0;
+		for (Cell c : cellToUpdate.getNeighbors()) {
+			if (c.getCurrentState() == state) {
+				neighborsWithState += 1;
+			}
+		}
+		return neighborsWithState;
+	}
 }
