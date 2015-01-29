@@ -1,3 +1,6 @@
+import java.util.Set;
+
+import javafx.geometry.Point2D;
 import javafx.scene.shape.Shape;
 
 /**
@@ -9,11 +12,13 @@ public class Cell {
 	private int myID;
 	private int myCurrentState;
 	private int myFutureState;
+	private Set<Point2D> myVerticies;
 	private Shape myShape;
 
-	public Cell(int id, Shape shape) {
+	public Cell(int id, Shape shape,Set<Point2D> verticies) {
 		myID = id;
 		myShape = shape;
+		myVerticies = verticies;
 	}
 
 	public Cell(int id, int currentState, int futureState, Shape shape) {
@@ -53,5 +58,9 @@ public class Cell {
 
 	public void setShape(Shape shape) {
 		myShape = shape;
+	}
+	
+	public Set<Point2D> getVerticies() {
+		return myVerticies;
 	}
 }

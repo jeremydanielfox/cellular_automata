@@ -1,6 +1,11 @@
+import java.util.HashSet;
+import java.util.Set;
+
+import javafx.geometry.Point2D;
 import javafx.scene.shape.Polygon;
 
 public class SquareGraph extends BaseGraph {
+	private int MIN_POINTS_IN_COMMON = 2;
 	private int cellWidth;
 	private int cellHeight;
 
@@ -39,6 +44,12 @@ public class SquareGraph extends BaseGraph {
 		for (int i = 1; i <= getNumCellsAcross(); i++)
 			for (int j = 1; j <= getNumCellsUpDown(); j++) {
 				Polygon tempShape = new Polygon();
+				Set<Point2D> tempSet = new HashSet<>();
+				tempSet.add(new Point2D((i - 1) * cellWidth, (j - 1)
+						* cellHeight));
+				tempSet.add(new Point2D(i * cellWidth, (j - 1) * cellHeight));
+				tempSet.add(new Point2D((i - 1) * cellWidth, j * cellHeight));
+				tempSet.add(new Point2D(i * cellWidth, j * cellHeight));
 				tempShape.getPoints().addAll(
 						new Double[] { (double) ((i - 1) * cellWidth),
 								(double) ((j - 1) * cellHeight),
@@ -48,7 +59,7 @@ public class SquareGraph extends BaseGraph {
 								(double) (j * cellHeight),
 								(double) (i * cellWidth),
 								(double) (j * cellHeight) });
-				Cell temp = new Cell(count, tempShape);
+				Cell temp = new Cell(count, tempShape, tempSet);
 				addVertex(temp);
 				count++;
 			}
@@ -62,10 +73,14 @@ public class SquareGraph extends BaseGraph {
 	 * cell of ID greater by numCellsAcross.
 	 */
 
+	// public boolean isNeighbors(Cell first, Cell second) {
+	// return first.getID() == second.getID() - 1
+	// && first.getID() % getNumCellsAcross() != 0
+	// || first.getID() == second.getID() - getNumCellsAcross();
+	// }
+
 	public boolean isNeighbors(Cell first, Cell second) {
-		return first.getID() == second.getID() - 1
-				&& first.getID() % getNumCellsAcross() != 0
-				|| first.getID() == second.getID() - getNumCellsAcross();
+		return numPointsInCommon(first, second) >= MIN_POINTS_IN_COMMON;
 	}
 
 	/**

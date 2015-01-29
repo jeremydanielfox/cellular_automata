@@ -2,6 +2,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+
+import javafx.geometry.Point2D;
 
 /**
  * This the abstract graph class that every type of graph we create will extend
@@ -91,6 +94,12 @@ public abstract class BaseGraph {
 			for (Cell second : this.getAllCells())
 				if (isNeighbors(first, second))
 					connect(first, second);
+	}
+	
+	public int numPointsInCommon(Cell first, Cell second) {
+		Set<Point2D> temp = first.getVerticies();
+		temp.retainAll(second.getVerticies());
+		return temp.size();
 	}
 
 	public abstract boolean isNeighbors(Cell first, Cell second);
