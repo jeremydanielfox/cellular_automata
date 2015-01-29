@@ -19,20 +19,23 @@ import javafx.geometry.Point2D;
 public abstract class BaseGraph {
 
 	private Map<Cell, Collection<Cell>> myEdges = new HashMap<>();
+	private int MIN_POINTS_IN_COMMON;
 	private int numCellsAcross;
 	private int numCellsUpDown;
 	private int myScreenWidth;
 	private int myScreenHeight;
 
 	public BaseGraph(int numCellsWidth, int numCellsHeight, int screenWidth,
-			int screenHeight) {
+			int screenHeight, int points) {
 		numCellsAcross = numCellsWidth;
 		numCellsUpDown = numCellsHeight;
 		myScreenWidth = screenWidth;
 		myScreenHeight = screenHeight;
+		MIN_POINTS_IN_COMMON = points;
+		calculateValues();
 		initializeCells();
 		connectCells();
-		calculateValues();
+
 	}
 
 	public int getNumCellsAcross() {
@@ -95,14 +98,21 @@ public abstract class BaseGraph {
 				if (isNeighbors(first, second))
 					connect(first, second);
 	}
-	
+
 	public int numPointsInCommon(Cell first, Cell second) {
-		Set<Point2D> temp = first.getVerticies();
+		Set<Point2D> temp = new HashSet(first.getVerticies());
 		temp.retainAll(second.getVerticies());
 		return temp.size();
 	}
 
-	public abstract boolean isNeighbors(Cell first, Cell second);
+	public int getMinPointsInCommon() {
+		return MIN_POINTS_IN_COMMON;
+	}
+
+	public boolean isNeighbors(Cell first, Cell second) {
+		return numPointsInCommon(first, second) >= getMinPointsInCommon()
+				&& !first.equals(second);
+	}
 
 	public abstract void initializeCells();
 

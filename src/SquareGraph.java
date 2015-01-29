@@ -5,7 +5,6 @@ import javafx.geometry.Point2D;
 import javafx.scene.shape.Polygon;
 
 public class SquareGraph extends BaseGraph {
-	private int MIN_POINTS_IN_COMMON = 2;
 	private int cellWidth;
 	private int cellHeight;
 
@@ -22,8 +21,8 @@ public class SquareGraph extends BaseGraph {
 	 * @param screenHeight
 	 */
 	public SquareGraph(int numCellsWidth, int numCellsHeight, int screenWidth,
-			int screenHeight) {
-		super(numCellsWidth, numCellsHeight, screenWidth, screenHeight);
+			int screenHeight, int points) {
+		super(numCellsWidth, numCellsHeight, screenWidth, screenHeight, points);
 	}
 
 	/**
@@ -63,24 +62,6 @@ public class SquareGraph extends BaseGraph {
 				addVertex(temp);
 				count++;
 			}
-	}
-
-	/**
-	 * Correctly connect all cells to simulate a square grid where each cell has
-	 * four neighbors. This means connecting each cell with the cell of ID one
-	 * greater than it, except if the ID of the cell is divisible by the number
-	 * of cells in numCellsAcross. This also means connecting each cell with the
-	 * cell of ID greater by numCellsAcross.
-	 */
-
-	// public boolean isNeighbors(Cell first, Cell second) {
-	// return first.getID() == second.getID() - 1
-	// && first.getID() % getNumCellsAcross() != 0
-	// || first.getID() == second.getID() - getNumCellsAcross();
-	// }
-
-	public boolean isNeighbors(Cell first, Cell second) {
-		return numPointsInCommon(first, second) >= MIN_POINTS_IN_COMMON;
 	}
 
 	/**

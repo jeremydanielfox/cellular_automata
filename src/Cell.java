@@ -15,7 +15,7 @@ public class Cell {
 	private Set<Point2D> myVerticies;
 	private Shape myShape;
 
-	public Cell(int id, Shape shape,Set<Point2D> verticies) {
+	public Cell(int id, Shape shape, Set<Point2D> verticies) {
 		myID = id;
 		myShape = shape;
 		myVerticies = verticies;
@@ -59,7 +59,7 @@ public class Cell {
 	public void setShape(Shape shape) {
 		myShape = shape;
 	}
-	
+
 	public Set<Point2D> getVerticies() {
 		return myVerticies;
 	}
