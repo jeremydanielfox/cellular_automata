@@ -54,14 +54,15 @@ public class SquareGraph extends BaseGraph {
 				tempSet.add(new Point2D(getXOffset() + i * cellWidth,
 						getYOffset() + j * cellHeight));
 				tempShape.getPoints().addAll(
-						new Double[] { (double) ((i - 1) * cellWidth),
-								(double) ((j - 1) * cellHeight),
-								(double) (i * cellWidth),
-								(double) ((j - 1) * cellHeight),
-								(double) ((i - 1) * cellWidth),
-								(double) (j * cellHeight),
-								(double) (i * cellWidth),
-								(double) (j * cellHeight) });
+						new Double[] {
+								(double) (getXOffset() + (i - 1) * cellWidth),
+								(double) (getYOffset() + (j - 1) * cellHeight),
+								(double) (getXOffset() + i * cellWidth),
+								(double) (getYOffset() + (j - 1) * cellHeight),
+								(double) (getXOffset() + (i - 1) * cellWidth),
+								(double) (getYOffset() + j * cellHeight),
+								(double) (getXOffset() + i * cellWidth),
+								(double) (getYOffset() + j * cellHeight) });
 				Cell temp = new Cell(count, tempShape, tempSet);
 				addVertex(temp);
 				count++;
