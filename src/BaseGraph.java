@@ -14,11 +14,38 @@ import java.util.Map;
  */
 
 public abstract class BaseGraph {
-	private Map<Cell, Collection<Cell>> myEdges = new HashMap<>();
 
-	public BaseGraph() {
+	private Map<Cell, Collection<Cell>> myEdges = new HashMap<>();
+	private int numCellsAcross;
+	private int numCellsUpDown;
+	private int myScreenWidth;
+	private int myScreenHeight;
+
+	public BaseGraph(int numCellsWidth, int numCellsHeight, int screenWidth,
+			int screenHeight) {
+		numCellsAcross = numCellsWidth;
+		numCellsUpDown = numCellsHeight;
+		myScreenWidth = screenWidth;
+		myScreenHeight = screenHeight;
 		initializeCells();
 		connectCells();
+		calculateValues();
+	}
+	
+	public int getNumCellsAcross() {
+		return numCellsAcross;
+	}
+	
+	public int getNumCellsUpDown() {
+		return numCellsUpDown;
+	}
+	
+	public int getMyScreenWidth() {
+		return myScreenWidth;
+	}
+	
+	public int getMyScreenHeight() {
+		return myScreenHeight;
 	}
 
 	public Collection<Cell> getNeighbors(Cell myCell) {
@@ -51,8 +78,26 @@ public abstract class BaseGraph {
 		return myEdges.keySet();
 	}
 
+	public Cell getCell(int ID) {
+		for (Cell current : getAllCells())
+			if (current.getID() == ID)
+				return current;
+		return null;
+
+	}
+
+	public void connectCells() {
+		for (Cell first : this.getAllCells())
+			for (Cell second : this.getAllCells())
+				if (isNeighbors(first, second))
+					connect(first, second);
+	}
+
+	public abstract boolean isNeighbors(Cell first, Cell second);
+
 	public abstract void initializeCells();
+	
+	protected abstract void calculateValues();
 
-	public abstract void connectCells();
-
+	public abstract int calculateID(int row, int col);
 }
