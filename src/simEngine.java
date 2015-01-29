@@ -21,11 +21,11 @@ public class simEngine {
 		myModelName = model;
 		myParameters = parameters;
 		myCellsToConfig = cellsToConfig;
+		myModel = new GameOfLife(myParameters);
 		//assuming this data is passed in the parameters map?
 		myGraph = new SquareGraph(myParameters.get("numCellsWidth"), myParameters.get("numCellsHeight"), 
-				myParameters.get("screenWidth"), myParameters.get("screenHeight"), myParameters.get("points"));
+				myParameters.get("screenWidth"), myParameters.get("screenHeight"), myModel.getSharePointsForNeighbor());
 		myGraph.initializeCells();
-		myModel = new GameOfLife(myParameters);
 	}
 	
 	public Collection<Cell> updateCells() {
