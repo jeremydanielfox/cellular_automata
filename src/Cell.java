@@ -1,6 +1,7 @@
 import java.util.Set;
 
 import javafx.geometry.Point2D;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
 /**
@@ -19,6 +20,12 @@ public class Cell {
 		myID = id;
 		myShape = shape;
 		myVerticies = verticies;
+		myCurrentState =0;
+		myFutureState = 1;
+		if (id%2==0)
+			myShape.setFill(Color.BLUE);
+		else
+			myShape.setFill(Color.BLACK);
 	}
 
 	public Cell(int id, int currentState, int futureState, Shape shape) {
