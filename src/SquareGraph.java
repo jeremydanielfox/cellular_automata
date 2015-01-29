@@ -21,8 +21,9 @@ public class SquareGraph extends BaseGraph {
 	 * @param screenHeight
 	 */
 	public SquareGraph(int numCellsWidth, int numCellsHeight, int screenWidth,
-			int screenHeight, int points) {
-		super(numCellsWidth, numCellsHeight, screenWidth, screenHeight, points);
+			int screenHeight, int xOffset, int yOffset, int points) {
+		super(numCellsWidth, numCellsHeight, screenWidth, screenHeight,
+				xOffset, yOffset, points);
 	}
 
 	/**
@@ -44,11 +45,14 @@ public class SquareGraph extends BaseGraph {
 			for (int j = 1; j <= getNumCellsUpDown(); j++) {
 				Polygon tempShape = new Polygon();
 				Set<Point2D> tempSet = new HashSet<>();
-				tempSet.add(new Point2D((i - 1) * cellWidth, (j - 1)
-						* cellHeight));
-				tempSet.add(new Point2D(i * cellWidth, (j - 1) * cellHeight));
-				tempSet.add(new Point2D((i - 1) * cellWidth, j * cellHeight));
-				tempSet.add(new Point2D(i * cellWidth, j * cellHeight));
+				tempSet.add(new Point2D(getXOffset() + (i - 1) * cellWidth,
+						getYOffset() + (j - 1) * cellHeight));
+				tempSet.add(new Point2D(getXOffset() + i * cellWidth,
+						getYOffset() + (j - 1) * cellHeight));
+				tempSet.add(new Point2D(getXOffset() + (i - 1) * cellWidth,
+						getYOffset() + j * cellHeight));
+				tempSet.add(new Point2D(getXOffset() + i * cellWidth,
+						getYOffset() + j * cellHeight));
 				tempShape.getPoints().addAll(
 						new Double[] { (double) ((i - 1) * cellWidth),
 								(double) ((j - 1) * cellHeight),
