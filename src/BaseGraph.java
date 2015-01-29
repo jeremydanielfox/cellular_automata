@@ -28,7 +28,7 @@ public abstract class BaseGraph {
 	private int myScreenHeight;
 
 	public BaseGraph(int numCellsWidth, int numCellsHeight, int screenWidth,
-			int screenHeight, int xOffset, int yOffset,int points) {
+			int screenHeight, int xOffset, int yOffset, int points) {
 		numCellsAcross = numCellsWidth;
 		numCellsUpDown = numCellsHeight;
 		myScreenWidth = screenWidth;
@@ -95,11 +95,11 @@ public abstract class BaseGraph {
 		return null;
 
 	}
-	
+
 	public int getXOffset() {
 		return horizontalOffset;
 	}
-	
+
 	public int getYOffset() {
 		return verticalOffset;
 	}
@@ -131,4 +131,6 @@ public abstract class BaseGraph {
 	protected abstract void calculateValues();
 
 	public abstract int calculateID(int row, int col);
+
+	public abstract void updateStateOfCell(ConfigCellInfo myBabyCell);
 }
