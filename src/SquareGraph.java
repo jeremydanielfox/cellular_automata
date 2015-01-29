@@ -22,6 +22,7 @@ public class SquareGraph extends BaseGraph {
 	 */
 	public SquareGraph(int numCellsWidth, int numCellsHeight, int screenWidth,
 			int screenHeight) {
+		super();
 		numCellsAcross = numCellsWidth;
 		numCellsUpDown = numCellsHeight;
 		myScreenWidth = screenWidth;
@@ -45,6 +46,7 @@ public class SquareGraph extends BaseGraph {
 	 * Polygon. Add each Polygon to each Cell. Add each Cell to the Graph.
 	 */
 	public void initializeCells() {
+		int count = 1;
 		for (int i = 1; i <= numCellsAcross; i++)
 			for (int j = 1; j <= numCellsUpDown; j++) {
 				Polygon tempShape = new Polygon();
@@ -57,8 +59,9 @@ public class SquareGraph extends BaseGraph {
 								(double) (j * cellHeight),
 								(double) (i * cellWidth),
 								(double) (j * cellHeight) });
-				Cell temp = new Cell(i * j, tempShape);
+				Cell temp = new Cell(count, tempShape);
 				addVertex(temp);
+				count++;
 			}
 	}
 
@@ -80,4 +83,6 @@ public class SquareGraph extends BaseGraph {
 			}
 
 	}
+	// TODO: Needs a method to determine ID number based on Row and Column.
+	// TODO: Make a GetCell method
 }

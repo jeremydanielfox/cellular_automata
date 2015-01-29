@@ -1,4 +1,5 @@
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -13,7 +14,12 @@ import java.util.Map;
  */
 
 public abstract class BaseGraph {
-	private Map<Cell, Collection<Cell>> myEdges;
+	private Map<Cell, Collection<Cell>> myEdges = new HashMap<>();
+
+	public BaseGraph() {
+		initializeCells();
+		connectCells();
+	}
 
 	public Collection<Cell> getNeighbors(Cell myCell) {
 		return myEdges.get(myCell);
@@ -45,12 +51,8 @@ public abstract class BaseGraph {
 		return myEdges.keySet();
 	}
 
-	public void initializeCells() {
+	public abstract void initializeCells();
 
-	}
-
-	public void connectCells() {
-
-	}
+	public abstract void connectCells();
 
 }
