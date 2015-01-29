@@ -85,6 +85,6 @@ public class SquareGraph extends BaseGraph {
 		int row = myBabyCell.getRow();
 		int col = myBabyCell.getCol();
 		int ID = calculateID(row,col);
-		//getCell(ID).setCurrentState(myBabyCell.getIntState());
+		getCell(ID).setCurrentState(myBabyCell.getIntState());
 	}
 }

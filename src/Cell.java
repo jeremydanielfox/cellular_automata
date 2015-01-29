@@ -17,11 +17,11 @@ public class Cell {
 	private Shape myShape;
 
 	public Cell(int id, Shape shape, Set<Point2D> verticies) {
-		myID = id;
-		myShape = shape;
+		setID(id);
+		setShape(shape);
 		myVerticies = verticies;
-		myCurrentState =0;
-		myFutureState = 1;
+		setCurrentState(0);
+		setFutureState(1);
 		if (id%2==0)
 			myShape.setFill(Color.BLUE);
 		else
@@ -29,10 +29,10 @@ public class Cell {
 	}
 
 	public Cell(int id, int currentState, int futureState, Shape shape) {
-		myID = id;
-		myCurrentState = currentState;
-		myFutureState = futureState;
-		myShape = shape;
+		setID(id);
+		setCurrentState(currentState);
+		setFutureState(futureState)	;
+		setShape(shape);
 	}
 
 	public int getID() {
