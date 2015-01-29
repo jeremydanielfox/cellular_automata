@@ -57,12 +57,12 @@ public class SquareGraph extends BaseGraph {
 						new Double[] {
 								(double) (getXOffset() + (i - 1) * cellWidth),
 								(double) (getYOffset() + (j - 1) * cellHeight),
-								(double) (getXOffset() + i * cellWidth),
-								(double) (getYOffset() + (j - 1) * cellHeight),
 								(double) (getXOffset() + (i - 1) * cellWidth),
 								(double) (getYOffset() + j * cellHeight),
 								(double) (getXOffset() + i * cellWidth),
-								(double) (getYOffset() + j * cellHeight) });
+								(double) (getYOffset() + j * cellHeight),
+								(double) (getXOffset() + i * cellWidth),
+								(double) (getYOffset() + (j - 1) * cellHeight)});
 				Cell temp = new Cell(count, tempShape, tempSet);
 				addVertex(temp);
 				count++;
@@ -81,4 +81,10 @@ public class SquareGraph extends BaseGraph {
 		return (row - 1) * getNumCellsAcross() + col;
 	}
 
+	public void updateStateOfCell(ConfigCellInfo myBabyCell) {
+		int row = myBabyCell.getRow();
+		int col = myBabyCell.getCol();
+		int ID = calculateID(row,col);
+		//getCell(ID).setCurrentState(myBabyCell.getIntState());
+	}
 }

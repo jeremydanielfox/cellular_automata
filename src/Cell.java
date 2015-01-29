@@ -63,7 +63,7 @@ public class Cell {
 		return myShape;
 	}
 
-	public void setShape(Shape shape) {
+	private void setShape(Shape shape) {
 		myShape = shape;
 	}
 
