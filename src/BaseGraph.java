@@ -20,17 +20,21 @@ public abstract class BaseGraph {
 
 	private Map<Cell, Collection<Cell>> myEdges = new HashMap<>();
 	private int MIN_POINTS_IN_COMMON;
+	private int horizontalOffset;
+	private int verticalOffset;
 	private int numCellsAcross;
 	private int numCellsUpDown;
 	private int myScreenWidth;
 	private int myScreenHeight;
 
 	public BaseGraph(int numCellsWidth, int numCellsHeight, int screenWidth,
-			int screenHeight, int points) {
+			int screenHeight, int xOffset, int yOffset,int points) {
 		numCellsAcross = numCellsWidth;
 		numCellsUpDown = numCellsHeight;
 		myScreenWidth = screenWidth;
 		myScreenHeight = screenHeight;
+		horizontalOffset = xOffset;
+		verticalOffset = yOffset;
 		MIN_POINTS_IN_COMMON = points;
 		calculateValues();
 		initializeCells();
@@ -90,6 +94,14 @@ public abstract class BaseGraph {
 				return current;
 		return null;
 
+	}
+	
+	public int getXOffset() {
+		return horizontalOffset;
+	}
+	
+	public int getYOffset() {
+		return verticalOffset;
 	}
 
 	public void connectCells() {
