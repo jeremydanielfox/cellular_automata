@@ -1,8 +1,10 @@
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import javafx.geometry.Point2D;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
@@ -15,11 +17,15 @@ import javafx.scene.shape.Shape;
 public class GameOfLife extends BaseModel {
 	private static final int dead = 0;
 	private static final int alive = 1;
+	private Map<String, Integer> stateToInt;
 	private static final int numLiveNeighborsToLive = 2;
 	private static final int numLiveNeighborsToRevive = 3;
 
 	public GameOfLife(Map<String, Double> parameters) {
 		super(parameters, 1);
+		stateToInt = new HashMap<String, Integer>();
+		stateToInt.put("dead", dead);
+		stateToInt.put("alive", alive);
 	}
 
 	@Override
@@ -29,10 +35,16 @@ public class GameOfLife extends BaseModel {
 		if ((cellToUpdate.getCurrentState() == dead && aliveNeighbors == numLiveNeighborsToRevive)
 				|| (cellToUpdate.getCurrentState() == alive && (aliveNeighbors == numLiveNeighborsToLive || aliveNeighbors == numLiveNeighborsToRevive))) {
 			cellToUpdate.setFutureState(alive);
+			cellToUpdate.getShape().setFill(Color.BLUE);
 		} else {
 			cellToUpdate.setFutureState(dead);
+			cellToUpdate.getShape().setFill(Color.HONEYDEW);
 		}
 		return cellToUpdate;
+	}
+	
+	public int getIntForState(String state) {
+		return stateToInt.get(state);
 	}
 
 	/*

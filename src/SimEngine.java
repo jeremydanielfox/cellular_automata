@@ -31,6 +31,7 @@ public class SimEngine {
 				cellRegionHeight, cellRegionXOffset, cellRegionYOffset,
 				myModel.getSharePointsForNeighbor());
 		myGraph.initializeCells();
+		setUpInitCells();
 	}
 
 	public Collection<Cell> updateCells() {
@@ -53,5 +54,12 @@ public class SimEngine {
 
 	public Collection<Cell> getListOfCells() {
 		return (Collection<Cell>) myGraph.getAllCells();
+	}
+	
+	private void setUpInitCells() {
+		for (ConfigCellInfo c : myCellsToConfig) {
+			c.setIntState(myModel.getIntForState(c.getStringState()));
+			myGraph.updateStateOfCell(c);
+		}
 	}
 }
