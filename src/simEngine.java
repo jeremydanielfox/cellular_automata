@@ -41,7 +41,9 @@ public class simEngine {
 	}
 	
 	private void setFutureToCurrentStates() {
-		
+		for (Cell c: myGraph.getAllCells()) {
+			c.setCurrentState(c.getFutureState());
+		}
 	}
 	
 	public Collection<Cell> getListOfCells() {
