@@ -31,19 +31,19 @@ public abstract class BaseGraph {
 		connectCells();
 		calculateValues();
 	}
-	
+
 	public int getNumCellsAcross() {
 		return numCellsAcross;
 	}
-	
+
 	public int getNumCellsUpDown() {
 		return numCellsUpDown;
 	}
-	
+
 	public int getMyScreenWidth() {
 		return myScreenWidth;
 	}
-	
+
 	public int getMyScreenHeight() {
 		return myScreenHeight;
 	}
@@ -96,7 +96,7 @@ public abstract class BaseGraph {
 	public abstract boolean isNeighbors(Cell first, Cell second);
 
 	public abstract void initializeCells();
-	
+
 	protected abstract void calculateValues();
 
 	public abstract int calculateID(int row, int col);

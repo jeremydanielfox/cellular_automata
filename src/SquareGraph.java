@@ -18,7 +18,7 @@ public class SquareGraph extends BaseGraph {
 	 */
 	public SquareGraph(int numCellsWidth, int numCellsHeight, int screenWidth,
 			int screenHeight) {
-		super(numCellsWidth,numCellsHeight,screenWidth,screenHeight);
+		super(numCellsWidth, numCellsHeight, screenWidth, screenHeight);
 	}
 
 	/**
