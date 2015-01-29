@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Information>
+	<Model>GameOfLife</Model>
+	<Author>Sierra</Author>
+	<Title>Brown Fire</Title>
+	<GridRows>2</GridRows>
+	<GridColumns>2</GridColumns>
+	<Parameters>
+		<probCatch>0.15</probCatch>
+	</Parameters>
+	<Configuration>
+		<Cell x="7" y="1" state="Fire"> </Cell>
+		<Cell x="8" y="2" state="Empty"> </Cell>
+	</Configuration>
+</Information>
