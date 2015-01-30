@@ -83,10 +83,13 @@ public class SquareGraph extends BaseGraph {
 		return (row - 1) * getNumCellsAcross() + col;
 	}
 
-	public void updateStateOfCell(ConfigCellInfo myBabyCell) {
+	public void updateStateOfCell(ConfigCellInfo myBabyCell, Color color) {
 		int row = myBabyCell.getRow();
 		int col = myBabyCell.getCol();
+		// we left calculateID alone, doesn't work now but if you switch col and row it works properly 
 		int ID = calculateID(row, col);
 		getCell(ID).setCurrentState(myBabyCell.getIntState());
-	}
+		getCell(ID).getShape().setFill(color);
+		System.out.println(color + " " + ID);
+		}
 }

@@ -60,7 +60,7 @@ public class SimEngine {
 	private void setUpInitCells() {
 		for (ConfigCellInfo c : myCellsToConfig) {
 			c.setIntState(myModel.getIntForState(c.getStringState()));
-			myGraph.updateStateOfCell(c);
+			myGraph.updateStateOfCell(c, myModel.getColorForStringState(c.getStringState()));
 		}
 	}
 }

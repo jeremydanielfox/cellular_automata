@@ -1,4 +1,5 @@
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import javafx.scene.paint.Color;
@@ -12,21 +13,36 @@ import javafx.scene.paint.Color;
 
 public abstract class BaseModel {
 	private int numPointsForNeighbor;
+	private Map<String, Integer> stateToInt;
+	private Map<String, Color> stateToColor;
 
 	public BaseModel(Map<String, Double> parameters, int points) {
 		numPointsForNeighbor = points;
+		stateToInt = new HashMap<String, Integer>();
+		stateToColor = new HashMap<String, Color>();
 	}
 
-	// Takes in a cell and updates it's future state based on it's neighbors and
-	// the rules of the model
+	public Map<String, Integer> getStateToIntMap() {
+		return stateToInt;
+	}
+	
+	public Map<String, Color> getStateToColorMap() {
+		return stateToColor;
+	}
+	
 	public abstract Cell updateFutureState(Cell cellToUpdate,
 			Collection<Cell> neighbors);
 	
-	public abstract int getIntForState(String state);
-	
+	public int getIntForState(String state) {
+		return stateToInt.get(state);
+	}	
 	public abstract Color getDefaultColor();
 	
 	public abstract int getDefaultState();
+	
+	public Color getColorForStringState(String state) {
+		return stateToColor.get(state);
+	}
 
 	public int getSharePointsForNeighbor() {
 		return numPointsForNeighbor;
