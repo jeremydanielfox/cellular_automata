@@ -17,9 +17,14 @@ import javafx.scene.shape.Shape;
 public class GameOfLife extends BaseModel {
 	private static final int dead = 0;
 	private static final int alive = 1;
+	private static final int defaultState = dead;
 	private Map<String, Integer> stateToInt;
 	private static final int numLiveNeighborsToLive = 2;
 	private static final int numLiveNeighborsToRevive = 3;
+	private static final Color deadColor = Color.BLACK;
+	private static final Color aliveColor = Color.FUCHSIA;
+	private static final Color defaultColor = deadColor;
+	
 
 	public GameOfLife(Map<String, Double> parameters) {
 		super(parameters, 1);
@@ -35,10 +40,10 @@ public class GameOfLife extends BaseModel {
 		if ((cellToUpdate.getCurrentState() == dead && aliveNeighbors == numLiveNeighborsToRevive)
 				|| (cellToUpdate.getCurrentState() == alive && (aliveNeighbors == numLiveNeighborsToLive || aliveNeighbors == numLiveNeighborsToRevive))) {
 			cellToUpdate.setFutureState(alive);
-			cellToUpdate.getShape().setFill(Color.BLUE);
+			cellToUpdate.getShape().setFill(aliveColor);
 		} else {
 			cellToUpdate.setFutureState(dead);
-			cellToUpdate.getShape().setFill(Color.HONEYDEW);
+			cellToUpdate.getShape().setFill(deadColor);
 		}
 		return cellToUpdate;
 	}
@@ -46,7 +51,14 @@ public class GameOfLife extends BaseModel {
 	public int getIntForState(String state) {
 		return stateToInt.get(state);
 	}
-
+	
+	public Color getDefaultColor() {
+		return defaultColor;
+	}
+	
+	public int getDefaultState() {
+		return defaultState;
+	}
 	/*
 	 * public static void main (String[] args) { Collection<Cell> neighbors =
 	 * new ArrayList<Cell>(); Collection<Point2D> vertices = new

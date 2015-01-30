@@ -2,6 +2,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javafx.geometry.Point2D;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 public class SquareGraph extends BaseGraph {
@@ -21,9 +22,9 @@ public class SquareGraph extends BaseGraph {
 	 * @param screenHeight
 	 */
 	public SquareGraph(int numCellsWidth, int numCellsHeight, int screenWidth,
-			int screenHeight, int xOffset, int yOffset, int points) {
+			int screenHeight, int xOffset, int yOffset, int points, int defaultState, Color defaultColor) {
 		super(numCellsWidth, numCellsHeight, screenWidth, screenHeight,
-				xOffset, yOffset, points);
+				xOffset, yOffset, points, defaultState, defaultColor);
 	}
 
 	/**
@@ -39,7 +40,7 @@ public class SquareGraph extends BaseGraph {
 	 * a Polygon for each Cell. Assign correct matrix of points for each
 	 * Polygon. Add each Polygon to each Cell. Add each Cell to the Graph.
 	 */
-	public void initializeCells() {
+	public void initializeCells(int defaultState, Color defaultColor) {
 		int count = 1;
 		for (int i = 1; i <= getNumCellsAcross(); i++)
 			for (int j = 1; j <= getNumCellsUpDown(); j++) {
@@ -64,7 +65,7 @@ public class SquareGraph extends BaseGraph {
 								(double) (getYOffset() + j * cellHeight),
 								(double) (getXOffset() + i * cellWidth),
 								(double) (getYOffset() + (j - 1) * cellHeight) });
-				Cell temp = new Cell(count, tempShape, tempSet);
+				Cell temp = new Cell(count, tempShape, tempSet, defaultState, defaultColor);
 				addVertex(temp);
 				count++;
 			}

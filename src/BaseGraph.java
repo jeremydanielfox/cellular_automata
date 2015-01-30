@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javafx.geometry.Point2D;
+import javafx.scene.paint.Color;
 
 /**
  * This the abstract graph class that every type of graph we create will extend
@@ -28,7 +29,7 @@ public abstract class BaseGraph {
 	private int myScreenHeight;
 
 	public BaseGraph(int numCellsWidth, int numCellsHeight, int screenWidth,
-			int screenHeight, int xOffset, int yOffset, int points) {
+			int screenHeight, int xOffset, int yOffset, int points, int defaultState, Color defaultColor) {
 		numCellsAcross = numCellsWidth;
 		numCellsUpDown = numCellsHeight;
 		myScreenWidth = screenWidth;
@@ -37,7 +38,7 @@ public abstract class BaseGraph {
 		verticalOffset = yOffset;
 		MIN_POINTS_IN_COMMON = points;
 		calculateValues();
-		initializeCells();
+		initializeCells(defaultState, defaultColor);
 		connectCells();
 
 	}
@@ -126,7 +127,7 @@ public abstract class BaseGraph {
 				&& !first.equals(second);
 	}
 
-	public abstract void initializeCells();
+	public abstract void initializeCells(int defaultState, Color defaultColor);
 
 	protected abstract void calculateValues();
 

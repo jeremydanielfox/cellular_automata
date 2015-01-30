@@ -25,12 +25,13 @@ public class SimEngine {
 		myParameters = parameters;
 		myCellsToConfig = cellsToConfig;
 		myModel = new GameOfLife(myParameters);
-		// assuming this data is passed in the parameters map?
 		myGraph = new SquareGraph(myParameters.get("columns").intValue(),
 				myParameters.get("rows").intValue(), cellRegionWidth,
 				cellRegionHeight, cellRegionXOffset, cellRegionYOffset,
-				myModel.getSharePointsForNeighbor());
-		myGraph.initializeCells();
+				myModel.getSharePointsForNeighbor(),
+				myModel.getDefaultState(),
+				myModel.getDefaultColor());
+		//myGraph.initializeCells(myModel.getDefaultState(), myModel.getDefaultColor());
 		setUpInitCells();
 	}
 

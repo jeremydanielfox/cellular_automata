@@ -1,6 +1,8 @@
 import java.util.Collection;
 import java.util.Map;
 
+import javafx.scene.paint.Color;
+
 /**
  * This the abstract model class that every type of model will extend
  * 
@@ -21,6 +23,10 @@ public abstract class BaseModel {
 			Collection<Cell> neighbors);
 	
 	public abstract int getIntForState(String state);
+	
+	public abstract Color getDefaultColor();
+	
+	public abstract int getDefaultState();
 
 	public int getSharePointsForNeighbor() {
 		return numPointsForNeighbor;

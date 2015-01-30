@@ -16,16 +16,13 @@ public class Cell {
 	private Set<Point2D> myVerticies;
 	private Shape myShape;
 
-	public Cell(int id, Shape shape, Set<Point2D> verticies) {
+	public Cell(int id, Shape shape, Set<Point2D> verticies, int defaultState, Color defaultColor) {
 		setID(id);
 		setShape(shape);
 		myVerticies = verticies;
-		setCurrentState(0);
+		setCurrentState(defaultState);
 		setFutureState(1);
-		if (id%2==0)
-			myShape.setFill(Color.BLUE);
-		else
-			myShape.setFill(Color.BLACK);
+		myShape.setFill(defaultColor);
 	}
 
 	public Cell(int id, int currentState, int futureState, Shape shape) {
