@@ -9,9 +9,9 @@
 		<probCatch>0.15</probCatch>
 	</Parameters>
 	<Configuration>
-		<Cell x="1" y="1" state="Dead"> </Cell>
-		<Cell x="1" y="2" state="Live"> </Cell>
-		<Cell x="2" y="1" state="Dead"> </Cell>
-		<Cell x="2" y-"2" state= "Live"> </Cell>
+		<Cell x="1" y="1" state="dead"> </Cell>
+		<Cell x="1" y="2" state="alive"> </Cell>
+		<Cell x="2" y="1" state="dead"> </Cell>
+		<Cell x="2" y="2" state= "alive"> </Cell>
 	</Configuration>
 </Information>

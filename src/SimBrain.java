@@ -35,7 +35,7 @@ public class SimBrain extends Application {
 	private static final String INC_SPEED_TEXT = "+";
 	private static final String DEC_SPEED_TEXT = "-";
 	private static final int NUM_FRAMES_PER_SECOND = 60;
-	private static final int FRAMES_PER_SECOND = 1000;
+	private static final int FRAMES_PER_SECOND = 50;
 
 	@Override
 	public void start(Stage s) throws Exception {
@@ -118,6 +118,7 @@ public class SimBrain extends Application {
 		myAnimation = new Timeline();
 		myAnimation.setCycleCount(Animation.INDEFINITE);
 		myAnimation.getKeyFrames().add(frame);
+		myWindow.paintCells(myEngine.getListOfCells());
 		myAnimation.play();
 	}
 
