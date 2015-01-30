@@ -3,8 +3,8 @@
 	<Model>GameOfLife</Model>
 	<Author>Sierra</Author>
 	<Title>Brown Fire</Title>
-	<GridRows>2</GridRows>
-	<GridColumns>2</GridColumns>
+	<GridRows>3</GridRows>
+	<GridColumns>3</GridColumns>
 	<Parameters>
 		<probCatch>0.15</probCatch>
 	</Parameters>
@@ -12,6 +12,5 @@
 		<Cell x="1" y="1" state="dead"> </Cell>
 		<Cell x="1" y="2" state="alive"> </Cell>
 		<Cell x="2" y="1" state="dead"> </Cell>
-		<Cell x="2" y="2" state= "alive"> </Cell>
 	</Configuration>
 </Information>

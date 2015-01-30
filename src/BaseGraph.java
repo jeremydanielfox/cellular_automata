@@ -133,5 +133,5 @@ public abstract class BaseGraph {
 
 	public abstract int calculateID(int row, int col);
 
-	public abstract void updateStateOfCell(ConfigCellInfo myBabyCell);
+	public abstract void updateStateOfCell(ConfigCellInfo myBabyCell, Color color);
 }

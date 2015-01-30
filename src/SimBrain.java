@@ -34,8 +34,8 @@ public class SimBrain extends Application {
 	private static final String PAUSE_TEXT = "Pause";
 	private static final String INC_SPEED_TEXT = "+";
 	private static final String DEC_SPEED_TEXT = "-";
-	private static final int NUM_FRAMES_PER_SECOND = 60;
-	private static final int FRAMES_PER_SECOND = 50;
+	private static final int NUM_FRAMES_PER_SECOND = 10;
+	private static final int FRAMES_PER_SECOND = 10000;
 
 	@Override
 	public void start(Stage s) throws Exception {
