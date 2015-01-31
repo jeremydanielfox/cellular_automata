@@ -28,6 +28,10 @@ public class SimBrain extends Application {
 	private Timeline myAnimation;
 	private XMLContents myXMLContents;
 	private Stage myStage;
+	private Button myPlayButton;
+	private Button myPauseButton;
+	private Button myIncSpeedButton;
+	private Button myDecSpeedButton;
 
 	private static final String UPLOAD_FILE_TEXT = "Upload XML File";
 	private static final String PLAY_TEXT = "Play";
@@ -41,6 +45,7 @@ public class SimBrain extends Application {
 	public void start(Stage s) throws Exception {
 		myStage = s;
 		myWindow = new SimWindow(s, makeControlPanel());
+		initializeAnimation();
 	}
 
 	public static void main(String[] args) {
@@ -49,12 +54,22 @@ public class SimBrain extends Application {
 
 	private HBox makeControlPanel() {
 		HBox controlPanel = new HBox(10);
-		controlPanel.setAlignment(Pos.CENTER);
+		controlPanel.setMaxHeight(50);
+		controlPanel.setPrefWidth(SimWindow.WINDOW_WIDTH);
+		controlPanel.setAlignment(Pos.BOTTOM_CENTER);
 		controlPanel.getChildren().add(makeUploadFileButton());
-		controlPanel.getChildren().add(makePlayButton());
-		controlPanel.getChildren().add(makePauseButton());
-		controlPanel.getChildren().add(makeIncSpeedButton());
-		controlPanel.getChildren().add(makeDecSpeedButton());
+		myPlayButton = makePlayButton();
+		myPlayButton.setDisable(true);
+		controlPanel.getChildren().add(myPlayButton);
+		myPauseButton = makePauseButton();
+		myPauseButton.setDisable(true);
+		controlPanel.getChildren().add(myPauseButton);
+		myIncSpeedButton = makeIncSpeedButton();
+		myIncSpeedButton.setDisable(true);
+		controlPanel.getChildren().add(myIncSpeedButton);
+		myDecSpeedButton = makeDecSpeedButton();
+		myDecSpeedButton.setDisable(true);
+		controlPanel.getChildren().add(myDecSpeedButton);
 		return controlPanel;
 	}
 
@@ -80,7 +95,11 @@ public class SimBrain extends Application {
 	}
 
 	private void playSimulation() {
-		System.out.println("hit play");
+		myAnimation.play();
+		myPauseButton.setDisable(false);
+		myPlayButton.setDisable(true);
+		myIncSpeedButton.setDisable(false);
+		myDecSpeedButton.setDisable(false);
 	}
 
 	private Button makePauseButton() {
@@ -90,7 +109,11 @@ public class SimBrain extends Application {
 	}
 
 	private void pauseSimulation() {
-		System.out.println("hit pause");
+		myAnimation.pause();
+		myPauseButton.setDisable(true);
+		myPlayButton.setDisable(false);
+		myIncSpeedButton.setDisable(true);
+		myDecSpeedButton.setDisable(true);
 	}
 
 	private Button makeIncSpeedButton() {
@@ -114,10 +137,6 @@ public class SimBrain extends Application {
 	}
 
 	private void runSim() {
-		KeyFrame frame = makeKeyFrame(NUM_FRAMES_PER_SECOND);
-		myAnimation = new Timeline();
-		myAnimation.setCycleCount(Animation.INDEFINITE);
-		myAnimation.getKeyFrames().add(frame);
 		myWindow.paintCells(myEngine.getListOfCells());
 		myAnimation.play();
 	}
@@ -127,18 +146,31 @@ public class SimBrain extends Application {
 				e -> updateSim());
 	}
 
+	private void initializeAnimation() {
+		KeyFrame frame = makeKeyFrame(NUM_FRAMES_PER_SECOND);
+		myAnimation = new Timeline();
+		myAnimation.setCycleCount(Animation.INDEFINITE);
+		myAnimation.getKeyFrames().add(frame);
+	}
+
 	private void updateSim() {
-		myWindow.paintCells(myEngine.updateCells());
+		myEngine.updateCells();
 	}
 
 	private void startNewSim() {
 		File modelSetUp = uploadFile();
 		if (modelSetUp != null) {
 			readFile(modelSetUp);
-		}
-		myEngine = new SimEngine(myXMLContents.getModel(), myXMLContents.getParams(), myXMLContents.getCellsToConfig(), 
-				450, 450, SimWindow.SIM_WINDOW_X_OFFSET, SimWindow.SIM_WINDOW_Y_OFFSET);
+		
+		myEngine = new SimEngine(myXMLContents.getModel(),
+				myXMLContents.getParams(), myXMLContents.getCellsToConfig(),
+				450, 450, SimWindow.SIM_WINDOW_X_OFFSET,
+				SimWindow.SIM_WINDOW_Y_OFFSET);
 		runSim();
+		myPauseButton.setDisable(false);
+		myIncSpeedButton.setDisable(false);
+		myDecSpeedButton.setDisable(false);
+		}
 	}
 
 	private void readFile(File file) {
