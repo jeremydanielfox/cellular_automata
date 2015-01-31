@@ -4,6 +4,13 @@ import java.util.Random;
 
 import javafx.scene.paint.Color;
 
+/**
+ * This class implements the Fire model and extends BaseModel.
+ * 
+ * @author Megan Gutter
+ *
+ */
+
 public class Fire extends BaseModel {
 	private static final int empty = 0;
 	private static final int tree = 1;
@@ -35,14 +42,12 @@ public class Fire extends BaseModel {
 
 		if (cellToUpdate.getCurrentState() == tree
 				&& countNeighbors(2, neighbors) > 0 && random < probCatch) {
-			cellToUpdate.setFutureState(burning);
-			cellToUpdate.getShape().setFill(burningColor);
+			changeStateTo(cellToUpdate, burning, burningColor);
 		} else if (cellToUpdate.getCurrentState() == burning
 				|| cellToUpdate.getCurrentState() == empty) {
-			cellToUpdate.setFutureState(empty);
-			cellToUpdate.getShape().setFill(emptyColor);
+			changeStateTo(cellToUpdate, empty, emptyColor);
 		} else {
-			cellToUpdate.setFutureState(tree);
+			changeStateTo(cellToUpdate, tree, treeColor);
 		}
 		return cellToUpdate;
 	}
