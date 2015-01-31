@@ -45,6 +45,9 @@ public class SimBrain extends Application {
 	private static final int FRAME_SPEED_CHANGE_VALUE = 300;
 	private static final int MIN_FRAME_PER_SECOND = 0;
 	private static final int MAX_FRAME_PER_SECOND = 5000;
+	private static final int SCREEN_BORDER_BUFFER = 50;
+	private static final int CELL_REGION_WIDTH = SimWindow.WINDOW_WIDTH-2*SCREEN_BORDER_BUFFER;
+	private static final int CELL_REGION_HEIGHT = SimWindow.WINDOW_HEIGHT-2*SCREEN_BORDER_BUFFER;
 
 	@Override
 	public void start(Stage s) throws Exception {
@@ -201,19 +204,16 @@ public class SimBrain extends Application {
 		File modelSetUp = uploadFile();
 		if (modelSetUp != null) {
 			readFile(modelSetUp);
-
-			myEngine = new SimEngine(myXMLContents.getModel(),
-					myXMLContents.getParams(),
-					myXMLContents.getCellsToConfig(), 450, 450,
-					SimWindow.SIM_WINDOW_X_OFFSET,
-					SimWindow.SIM_WINDOW_Y_OFFSET);
-			myWindow.setStageTitle(myXMLContents.getTitle() + " by "
-					+ myXMLContents.getAuthor());
-			runSim();
-			myPauseButton.setDisable(false);
-			myIncSpeedButton.setDisable(false);
-			myDecSpeedButton.setDisable(false);
-			myStepButton.setDisable(false);
+		myEngine = new SimEngine(myXMLContents.getModel(),
+				myXMLContents.getParams(), myXMLContents.getCellsToConfig(),
+				CELL_REGION_WIDTH, CELL_REGION_HEIGHT, SCREEN_BORDER_BUFFER,
+				SCREEN_BORDER_BUFFER);
+		myWindow.setStageTitle(myXMLContents.getTitle() + " by "+ myXMLContents.getAuthor());
+		runSim();
+		myPauseButton.setDisable(false);
+		myIncSpeedButton.setDisable(false);
+		myDecSpeedButton.setDisable(false);
+		myStepButton.setDisable(false);
 		}
 	}
 

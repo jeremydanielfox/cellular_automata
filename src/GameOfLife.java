@@ -1,12 +1,6 @@
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
-
-import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
 
 /**
  * This class implements the GameOfLife model and extends BaseModel.
@@ -36,14 +30,12 @@ public class GameOfLife extends BaseModel {
 	@Override
 	public Cell updateFutureState(Cell cellToUpdate, Collection<Cell> neighbors) {
 		// TODO Auto-generated method stub
-		int aliveNeighbors = countNeighbors(cellToUpdate, alive, neighbors);
+		int aliveNeighbors = countNeighbors(alive, neighbors);
 		if ((cellToUpdate.getCurrentState() == dead && aliveNeighbors == numLiveNeighborsToRevive)
 				|| (cellToUpdate.getCurrentState() == alive && (aliveNeighbors == numLiveNeighborsToLive || aliveNeighbors == numLiveNeighborsToRevive))) {
-			cellToUpdate.setFutureState(alive);
-			cellToUpdate.getShape().setFill(aliveColor);
+			changeStateTo(cellToUpdate, alive, aliveColor);
 		} else {
-			cellToUpdate.setFutureState(dead);
-			cellToUpdate.getShape().setFill(deadColor);
+			changeStateTo(cellToUpdate, dead, deadColor);
 		}
 		return cellToUpdate;
 	}
