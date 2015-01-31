@@ -14,8 +14,8 @@ public class SimWindow {
 	private Group myRoot;
 	private Group myCellRegion;
 
-	public static final int WINDOW_HEIGHT = 500;
-	public static final int WINDOW_WIDTH = 500;
+	public static final int WINDOW_HEIGHT = 600;
+	public static final int WINDOW_WIDTH = 600;
 	public static final int SIM_WINDOW_X_OFFSET = 25;
 	public static final int SIM_WINDOW_Y_OFFSET = 25;
 
