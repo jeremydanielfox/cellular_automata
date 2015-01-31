@@ -25,28 +25,30 @@ public abstract class BaseModel {
 	public Map<String, Integer> getStateToIntMap() {
 		return stateToInt;
 	}
-	
+
 	public Map<String, Color> getStateToColorMap() {
 		return stateToColor;
 	}
-	
+
 	public abstract Cell updateFutureState(Cell cellToUpdate,
 			Collection<Cell> neighbors);
-	
-	public Collection<Cell> updateFutureStates(Iterable<Cell> cellsToUpdate, BaseGraph graph) {
-		for (Cell c: cellsToUpdate) {
+
+	public Collection<Cell> updateFutureStates(Iterable<Cell> cellsToUpdate,
+			BaseGraph graph) {
+		for (Cell c : cellsToUpdate) {
 			updateFutureState(c, graph.getNeighbors(c));
 		}
 		return (Collection<Cell>) cellsToUpdate;
 	}
-	
+
 	public int getIntForState(String state) {
 		return stateToInt.get(state);
-	}	
+	}
+
 	public abstract Color getDefaultColor();
-	
+
 	public abstract int getDefaultState();
-	
+
 	public Color getColorForStringState(String state) {
 		return stateToColor.get(state);
 	}
@@ -55,8 +57,7 @@ public abstract class BaseModel {
 		return numPointsForNeighbor;
 	}
 
-	public int countNeighbors(Cell cellToUpdate, int state,
-			Collection<Cell> neighbors) {
+	public int countNeighbors(int state, Collection<Cell> neighbors) {
 		int neighborsWithState = 0;
 		for (Cell c : neighbors) {
 			if (c.getCurrentState() == state) {
@@ -65,5 +66,5 @@ public abstract class BaseModel {
 		}
 		return neighborsWithState;
 	}
-	
+
 }
