@@ -29,10 +29,10 @@ public class SimEngine {
 		myGraph = new SquareGraph(myParameters.get("columns").intValue(),
 				myParameters.get("rows").intValue(), cellRegionWidth,
 				cellRegionHeight, cellRegionXOffset, cellRegionYOffset,
-				myModel.getSharePointsForNeighbor(),
-				myModel.getDefaultState(),
+				myModel.getSharePointsForNeighbor(), myModel.getDefaultState(),
 				myModel.getDefaultColor());
-		//myGraph.initializeCells(myModel.getDefaultState(), myModel.getDefaultColor());
+		// myGraph.initializeCells(myModel.getDefaultState(),
+		// myModel.getDefaultColor());
 		setUpInitCells();
 	}
 
@@ -43,9 +43,10 @@ public class SimEngine {
 	}
 
 	private void determineFutureStates() {
-		/*for (Cell c : myGraph.getAllCells()) {
-			myModel.updateFutureState(c, myGraph.getNeighbors(c));
-		}*/
+		/*
+		 * for (Cell c : myGraph.getAllCells()) { myModel.updateFutureState(c,
+		 * myGraph.getNeighbors(c)); }
+		 */
 		myModel.updateFutureStates(myGraph.getAllCells(), myGraph);
 	}
 
@@ -59,11 +60,12 @@ public class SimEngine {
 	public Collection<Cell> getListOfCells() {
 		return (Collection<Cell>) myGraph.getAllCells();
 	}
-	
+
 	private void setUpInitCells() {
 		for (ConfigCellInfo c : myCellsToConfig) {
 			c.setIntState(myModel.getIntForState(c.getStringState()));
-			myGraph.updateStateOfCell(c, myModel.getColorForStringState(c.getStringState()));
+			myGraph.updateStateOfCell(c,
+					myModel.getColorForStringState(c.getStringState()));
 		}
 	}
 }

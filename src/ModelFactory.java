@@ -6,14 +6,15 @@ public class ModelFactory {
 			Map<String, Double> parameters) {
 
 		switch (model) {
-			case "GameOfLife":
-				return new GameOfLife(parameters);
-			case "Fire":
-				return new Fire(parameters);
-			default:
-				return new GameOfLife(parameters);
+		case "GameOfLife":
+			return new GameOfLife(parameters);
+		case "Fire":
+			return new Fire(parameters);
+		case "Segregation":
+			return new Segregation(parameters);
+		default:
+			return new GameOfLife(parameters);
 		}
 
 	}
-
 }
