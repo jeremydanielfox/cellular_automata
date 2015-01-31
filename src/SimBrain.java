@@ -32,20 +32,25 @@ public class SimBrain extends Application {
 	private Button myPauseButton;
 	private Button myIncSpeedButton;
 	private Button myDecSpeedButton;
+	private Button myStepButton;
+	private int framesPerSecond = 2500;
 
 	private static final String UPLOAD_FILE_TEXT = "Upload XML File";
 	private static final String PLAY_TEXT = "Play";
 	private static final String PAUSE_TEXT = "Pause";
 	private static final String INC_SPEED_TEXT = "+";
 	private static final String DEC_SPEED_TEXT = "-";
+	private static final String STEP_BUTTON_TEXT = "Step";
 	private static final int NUM_FRAMES_PER_SECOND = 10;
-	private static final int FRAMES_PER_SECOND = 10000;
+	private static final int FRAME_SPEED_CHANGE_VALUE = 300;
+	private static final int MIN_FRAME_PER_SECOND = 0;
+	private static final int MAX_FRAME_PER_SECOND = 5000;
 
 	@Override
 	public void start(Stage s) throws Exception {
 		myStage = s;
 		myWindow = new SimWindow(s, makeControlPanel());
-		initializeAnimation();
+		initializeAnimationTimeline();
 	}
 
 	public static void main(String[] args) {
@@ -70,6 +75,9 @@ public class SimBrain extends Application {
 		myDecSpeedButton = makeDecSpeedButton();
 		myDecSpeedButton.setDisable(true);
 		controlPanel.getChildren().add(myDecSpeedButton);
+		myStepButton = makeStepButton();
+		myStepButton.setDisable(true);
+		controlPanel.getChildren().add(myStepButton);
 		return controlPanel;
 	}
 
@@ -107,6 +115,17 @@ public class SimBrain extends Application {
 		playButton.setOnAction(e -> pauseSimulation());
 		return playButton;
 	}
+	
+	private Button makeStepButton(){
+		Button pauseButton = new Button(STEP_BUTTON_TEXT);
+		pauseButton.setOnAction(e -> stepSimulation());
+		return pauseButton;
+	}
+	
+	private void stepSimulation(){
+		pauseSimulation();
+		updateSim();
+	}
 
 	private void pauseSimulation() {
 		myAnimation.pause();
@@ -123,9 +142,27 @@ public class SimBrain extends Application {
 	}
 
 	private void incSpeed() {
+		myAnimation.stop();
+		changeFramesPerSecondValue(-1);
+		initializeAnimationTimeline();
+		runSim();
+		myDecSpeedButton.setDisable(false);
 		System.out.println("inc speed");
 	}
-
+	
+	public void changeFramesPerSecondValue(int i){
+		if(framesPerSecond + i*FRAME_SPEED_CHANGE_VALUE <= MIN_FRAME_PER_SECOND){
+			myIncSpeedButton.setDisable(true);
+			return;
+		}
+		else if (framesPerSecond + i*FRAME_SPEED_CHANGE_VALUE >= MAX_FRAME_PER_SECOND){
+			myDecSpeedButton.setDisable(true);
+			return;
+		}
+		framesPerSecond += i*FRAME_SPEED_CHANGE_VALUE;
+		System.out.println(framesPerSecond);
+	}
+	
 	private Button makeDecSpeedButton() {
 		Button playButton = new Button(DEC_SPEED_TEXT);
 		playButton.setOnAction(e -> decSpeed());
@@ -133,6 +170,10 @@ public class SimBrain extends Application {
 	}
 
 	private void decSpeed() {
+		myAnimation.stop();
+		changeFramesPerSecondValue(1);
+		initializeAnimationTimeline();
+		runSim();
 		System.out.println("DEC SPEED");
 	}
 
@@ -142,11 +183,11 @@ public class SimBrain extends Application {
 	}
 
 	private KeyFrame makeKeyFrame(int frameRate) {
-		return new KeyFrame(Duration.millis(FRAMES_PER_SECOND / frameRate),
+		return new KeyFrame(Duration.millis(framesPerSecond / frameRate),
 				e -> updateSim());
 	}
 
-	private void initializeAnimation() {
+	private void initializeAnimationTimeline() {
 		KeyFrame frame = makeKeyFrame(NUM_FRAMES_PER_SECOND);
 		myAnimation = new Timeline();
 		myAnimation.setCycleCount(Animation.INDEFINITE);
@@ -170,6 +211,7 @@ public class SimBrain extends Application {
 		myPauseButton.setDisable(false);
 		myIncSpeedButton.setDisable(false);
 		myDecSpeedButton.setDisable(false);
+		myStepButton.setDisable(false);
 		}
 	}
 
@@ -181,5 +223,4 @@ public class SimBrain extends Application {
 			e.printStackTrace();
 		}
 	}
-
 }
