@@ -24,7 +24,7 @@ public class SimEngine {
 		myModelName = model;
 		myParameters = parameters;
 		myCellsToConfig = cellsToConfig;
-		myModel = new GameOfLife(myParameters);
+		myModel = new Fire(myParameters);
 		myGraph = new SquareGraph(myParameters.get("columns").intValue(),
 				myParameters.get("rows").intValue(), cellRegionWidth,
 				cellRegionHeight, cellRegionXOffset, cellRegionYOffset,

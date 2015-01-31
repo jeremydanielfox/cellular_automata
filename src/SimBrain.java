@@ -118,14 +118,14 @@ public class SimBrain extends Application {
 		playButton.setOnAction(e -> pauseSimulation());
 		return playButton;
 	}
-	
-	private Button makeStepButton(){
+
+	private Button makeStepButton() {
 		Button pauseButton = new Button(STEP_BUTTON_TEXT);
 		pauseButton.setOnAction(e -> stepSimulation());
 		return pauseButton;
 	}
-	
-	private void stepSimulation(){
+
+	private void stepSimulation() {
 		pauseSimulation();
 		updateSim();
 	}
@@ -152,20 +152,19 @@ public class SimBrain extends Application {
 		myDecSpeedButton.setDisable(false);
 		System.out.println("inc speed");
 	}
-	
-	public void changeFramesPerSecondValue(int i){
-		if(framesPerSecond + i*FRAME_SPEED_CHANGE_VALUE <= MIN_FRAME_PER_SECOND){
+
+	public void changeFramesPerSecondValue(int i) {
+		if (framesPerSecond + i * FRAME_SPEED_CHANGE_VALUE <= MIN_FRAME_PER_SECOND) {
 			myIncSpeedButton.setDisable(true);
 			return;
-		}
-		else if (framesPerSecond + i*FRAME_SPEED_CHANGE_VALUE >= MAX_FRAME_PER_SECOND){
+		} else if (framesPerSecond + i * FRAME_SPEED_CHANGE_VALUE >= MAX_FRAME_PER_SECOND) {
 			myDecSpeedButton.setDisable(true);
 			return;
 		}
-		framesPerSecond += i*FRAME_SPEED_CHANGE_VALUE;
+		framesPerSecond += i * FRAME_SPEED_CHANGE_VALUE;
 		System.out.println(framesPerSecond);
 	}
-	
+
 	private Button makeDecSpeedButton() {
 		Button playButton = new Button(DEC_SPEED_TEXT);
 		playButton.setOnAction(e -> decSpeed());
@@ -205,11 +204,11 @@ public class SimBrain extends Application {
 		File modelSetUp = uploadFile();
 		if (modelSetUp != null) {
 			readFile(modelSetUp);
-		
 		myEngine = new SimEngine(myXMLContents.getModel(),
 				myXMLContents.getParams(), myXMLContents.getCellsToConfig(),
 				CELL_REGION_WIDTH, CELL_REGION_HEIGHT, SCREEN_BORDER_BUFFER,
 				SCREEN_BORDER_BUFFER);
+		myWindow.setStageTitle(myXMLContents.getTitle() + " by "+ myXMLContents.getAuthor());
 		runSim();
 		myPauseButton.setDisable(false);
 		myIncSpeedButton.setDisable(false);

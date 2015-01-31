@@ -86,24 +86,31 @@ public class XMLContents {
 	private void extractConfig() {
 		System.out.println("ExtractingCellsToConfig");
 		NodeList configList = myDoc.getElementsByTagName("Configuration");
-		Element firstConfig = (Element) configList.item(0);
-		for (int i = 0; i < configList.getLength(); i++) {
-			Node node = configList.item(i);
+		if (configList.getLength() != 0) {
+			Element firstConfig = (Element) configList.item(0);
+			for (int i = 0; i < configList.getLength(); i++) {
+				Node node = configList.item(i);
 
-			if (node.getNodeType() == Node.ELEMENT_NODE) {
-				Element elem = (Element) node;
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					Element elem = (Element) node;
 
-				NodeList configCells = elem.getElementsByTagName("Cell");
+					NodeList configCells = elem.getElementsByTagName("Cell");
+					if (configCells.getLength() != 0) {
 
-				for (int m = 0; m < configCells.getLength(); m++) {
-					int row = Integer.parseInt(configCells.item(m)
-							.getAttributes().getNamedItem("x").getNodeValue());
-					int col = Integer.parseInt(configCells.item(m)
-							.getAttributes().getNamedItem("y").getNodeValue());
-					String state = (configCells.item(m).getAttributes()
-							.getNamedItem("state").getNodeValue());
-					cellsToConfigure.add(new ConfigCellInfo(row, col, state));
-					System.out.println(row + " " + col + " " + state);
+						for (int m = 0; m < configCells.getLength(); m++) {
+							int row = Integer.parseInt(configCells.item(m)
+									.getAttributes().getNamedItem("x")
+									.getNodeValue());
+							int col = Integer.parseInt(configCells.item(m)
+									.getAttributes().getNamedItem("y")
+									.getNodeValue());
+							String state = (configCells.item(m).getAttributes()
+									.getNamedItem("state").getNodeValue());
+							cellsToConfigure.add(new ConfigCellInfo(row, col,
+									state));
+							System.out.println(row + " " + col + " " + state);
+						}
+					}
 				}
 			}
 		}

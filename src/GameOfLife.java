@@ -36,7 +36,7 @@ public class GameOfLife extends BaseModel {
 	@Override
 	public Cell updateFutureState(Cell cellToUpdate, Collection<Cell> neighbors) {
 		// TODO Auto-generated method stub
-		int aliveNeighbors = countNeighbors(cellToUpdate, alive, neighbors);
+		int aliveNeighbors = countNeighbors(alive, neighbors);
 		if ((cellToUpdate.getCurrentState() == dead && aliveNeighbors == numLiveNeighborsToRevive)
 				|| (cellToUpdate.getCurrentState() == alive && (aliveNeighbors == numLiveNeighborsToLive || aliveNeighbors == numLiveNeighborsToRevive))) {
 			cellToUpdate.setFutureState(alive);
