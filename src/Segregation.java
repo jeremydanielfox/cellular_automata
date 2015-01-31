@@ -43,11 +43,12 @@ public class Segregation extends BaseModel {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
-	public Collection<Cell> updateFutureStates(Iterable<Cell> cellsToUpdate, BaseGraph myGraph) {
+	public Collection<Cell> updateFutureStates(Iterable<Cell> cellsToUpdate,
+			BaseGraph myGraph) {
 		List<Cell> myCells = getRandomCollection(myGraph);
-		for (Cell current: myCells) {
+		for (Cell current : myCells) {
 			current.setFutureState(current.getCurrentState());
 		}
 		Cell myUnhappyCell = null;
@@ -55,7 +56,8 @@ public class Segregation extends BaseModel {
 		for (Cell current : myCells) {
 			if (isReadyToSwitch(myUnhappyCell, myEmptyCell, myGraph))
 				break;
-			if (!isHappy(current, myGraph.getNeighbors(current)) && myUnhappyCell==null)
+			if (!isHappy(current, myGraph.getNeighbors(current))
+					&& myUnhappyCell == null)
 				myUnhappyCell = current;
 			if (current.getCurrentState() == EMPTY && myEmptyCell == null)
 				myEmptyCell = current;
@@ -64,19 +66,19 @@ public class Segregation extends BaseModel {
 			myUnhappyCell.setFutureState(myEmptyCell.getCurrentState());
 			myUnhappyCell.setColor(EMPTY_COLOR);
 			myEmptyCell.setFutureState(myUnhappyCell.getCurrentState());
-			if (myUnhappyCell.getCurrentState()==GROUP_ONE)
+			if (myUnhappyCell.getCurrentState() == GROUP_ONE)
 				myEmptyCell.setColor(GROUP_ONE_COLOR);
-				
+
 			else
 				myEmptyCell.setColor(GROUP_TWO_COLOR);
-				
+
 		}
 		return (Collection<Cell>) myGraph.getAllCells();
 
 	}
 
 	private boolean isReadyToSwitch(Cell first, Cell second, BaseGraph myGraph) {
-		if (first==null || second == null)
+		if (first == null || second == null)
 			return false;
 		return !isHappy(first, myGraph.getNeighbors(first))
 				&& second.getCurrentState() == EMPTY
@@ -105,7 +107,7 @@ public class Segregation extends BaseModel {
 				countDifferent++;
 		}
 		float ratio = countDifferent / (float) myNeighbors.size();
-		
+
 		return ratio <= RATIO_NEIGHBORS;
 	}
 
