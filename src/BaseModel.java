@@ -69,7 +69,7 @@ public abstract class BaseModel {
 
 	public void changeStateTo(Cell cellToUpdate, int state, Color stateColor) {
 		cellToUpdate.setFutureState(state);
-		cellToUpdate.getShape().setFill(stateColor);
+		cellToUpdate.setColor(stateColor);
 	}
 
 }
