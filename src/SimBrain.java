@@ -83,7 +83,7 @@ public class SimBrain extends Application {
 		controlPanel.getChildren().add(myStepButton);
 		return controlPanel;
 	}
-
+	
 	private Button makeUploadFileButton() {
 		Button uploadFile = new Button(UPLOAD_FILE_TEXT);
 		uploadFile.setOnAction(e -> startNewSim());
