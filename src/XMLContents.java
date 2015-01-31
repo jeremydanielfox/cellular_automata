@@ -37,19 +37,16 @@ public class XMLContents {
 		myDoc = builder.parse(myFile);
 
 		myModel = extractSpecifiedTag("Model");
-		System.out.println(myModel);
 
 		myAuthor = extractSpecifiedTag("Author");
-		System.out.println(myAuthor);
 
 		myTitle = extractSpecifiedTag("Title");
-		System.out.println(myTitle);
 
-		myParameters.put("rows", Double.parseDouble(extractSpecifiedTag("GridRows")));
-		System.out.println(myParameters.get("rows"));
-		
-		myParameters.put("columns", Double.parseDouble(extractSpecifiedTag("GridColumns")));
-		System.out.println(myParameters.get("columns"));
+		myParameters.put("rows",
+				Double.parseDouble(extractSpecifiedTag("GridRows")));
+
+		myParameters.put("columns",
+				Double.parseDouble(extractSpecifiedTag("GridColumns")));
 
 		extractConfig();
 		extractParams();
@@ -59,22 +56,23 @@ public class XMLContents {
 	private void extractParams() {
 		System.out.println("ExtractingParams");
 		NodeList paramList = myDoc.getElementsByTagName("Parameters");
-		Element firstParam = (Element) paramList.item(0);
-		for (int k = 0; k < paramList.getLength(); k++) {
-			Node node = paramList.item(k);
-
-			if (node.getNodeType() == Node.ELEMENT_NODE) {
-				Element elem = (Element) node;
-				NodeList specificParams = elem.getChildNodes();
-				for (int q = 0; q < specificParams.getLength(); q++) {
-					Node paramNode = specificParams.item(q);
-					if (paramNode.getNodeType() == Node.ELEMENT_NODE) {
-						Element paramElem = (Element) paramNode;
-						String tag = paramElem.getTagName();
-						double param = Double.parseDouble(paramElem
-								.getChildNodes().item(0).getNodeValue());
-						myParameters.put(tag, param);
-						System.out.println(tag + " " + param);
+		if (paramList.getLength() != 0) {
+			Element firstParam = (Element) paramList.item(0);
+			for (int k = 0; k < paramList.getLength(); k++) {
+				Node node = paramList.item(k);
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					Element elem = (Element) node;
+					NodeList specificParams = elem.getChildNodes();
+					for (int q = 0; q < specificParams.getLength(); q++) {
+						Node paramNode = specificParams.item(q);
+						if (paramNode.getNodeType() == Node.ELEMENT_NODE) {
+							Element paramElem = (Element) paramNode;
+							String tag = paramElem.getTagName();
+							double param = Double.parseDouble(paramElem
+									.getChildNodes().item(0).getNodeValue());
+							myParameters.put(tag, param);
+							System.out.println(tag + " " + param);
+						}
 					}
 				}
 			}
@@ -88,24 +86,31 @@ public class XMLContents {
 	private void extractConfig() {
 		System.out.println("ExtractingCellsToConfig");
 		NodeList configList = myDoc.getElementsByTagName("Configuration");
-		Element firstConfig = (Element) configList.item(0);
-		for (int i = 0; i < configList.getLength(); i++) {
-			Node node = configList.item(i);
+		if (configList.getLength() != 0) {
+			Element firstConfig = (Element) configList.item(0);
+			for (int i = 0; i < configList.getLength(); i++) {
+				Node node = configList.item(i);
 
-			if (node.getNodeType() == Node.ELEMENT_NODE) {
-				Element elem = (Element) node;
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					Element elem = (Element) node;
 
-				NodeList configCells = elem.getElementsByTagName("Cell");
+					NodeList configCells = elem.getElementsByTagName("Cell");
+					if (configCells.getLength() != 0) {
 
-				for (int m = 0; m < configCells.getLength(); m++) {
-					int row = Integer.parseInt(configCells.item(m)
-							.getAttributes().getNamedItem("x").getNodeValue());
-					int col = Integer.parseInt(configCells.item(m)
-							.getAttributes().getNamedItem("y").getNodeValue());
-					String state = (configCells.item(m).getAttributes()
-							.getNamedItem("state").getNodeValue());
-					cellsToConfigure.add(new ConfigCellInfo(row, col, state));
-					System.out.println(row + " " + col + " " + state);
+						for (int m = 0; m < configCells.getLength(); m++) {
+							int row = Integer.parseInt(configCells.item(m)
+									.getAttributes().getNamedItem("x")
+									.getNodeValue());
+							int col = Integer.parseInt(configCells.item(m)
+									.getAttributes().getNamedItem("y")
+									.getNodeValue());
+							String state = (configCells.item(m).getAttributes()
+									.getNamedItem("state").getNodeValue());
+							cellsToConfigure.add(new ConfigCellInfo(row, col,
+									state));
+							System.out.println(row + " " + col + " " + state);
+						}
+					}
 				}
 			}
 		}

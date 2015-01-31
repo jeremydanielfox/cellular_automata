@@ -4,6 +4,7 @@ import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -11,6 +12,7 @@ public class SimWindow {
 	private Stage myStage;
 	private Scene myScene;
 	private Group myRoot;
+	private Group myCellRegion;
 
 	public static final int WINDOW_HEIGHT = 500;
 	public static final int WINDOW_WIDTH = 500;
@@ -19,9 +21,11 @@ public class SimWindow {
 
 	public SimWindow(Stage stage, HBox controls) {
 		myStage = stage;
-		myStage.setTitle("Title from XML");
+		myStage.setTitle("Cellular Automata");
 		myRoot = new Group();
+		myCellRegion = new Group();
 		myRoot.getChildren().add(controls);
+		myRoot.getChildren().add(myCellRegion);
 		myScene = new Scene(myRoot, WINDOW_WIDTH, WINDOW_HEIGHT, Color.WHITE);
 		myStage.setScene(myScene);
 		myStage.show();
@@ -30,11 +34,15 @@ public class SimWindow {
 	public void paintCells(Collection<Cell> collection) {
 		wipeCells();
 		for (Cell c : collection) {
-			myRoot.getChildren().add(c.getShape());
+			myCellRegion.getChildren().add(c.getShape());
 		}
 	}
 
+	public void setStageTitle(String newTitle) {
+		myStage.setTitle(newTitle);
+	}
+
 	public void wipeCells() {
-		myRoot.getChildren().clear();
+		myCellRegion.getChildren().clear();
 	}
 }
