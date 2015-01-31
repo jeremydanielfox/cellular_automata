@@ -3,8 +3,8 @@
 	<Model>GameOfLife</Model>
 	<Author>Sierra</Author>
 	<Title>Brown Fire</Title>
-	<GridRows>100</GridRows>
-	<GridColumns>100</GridColumns>
+	<GridRows>60</GridRows>
+	<GridColumns>60</GridColumns>
 	<Parameters>
 		<probCatch>0.15</probCatch>
 	</Parameters>
