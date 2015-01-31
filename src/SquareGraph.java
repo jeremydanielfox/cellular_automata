@@ -84,6 +84,10 @@ public class SquareGraph extends BaseGraph {
 	}
 
 	public void updateStateOfCell(ConfigCellInfo myBabyCell, Color color) {
+		if (myBabyCell==null) {
+			System.out.println("Can't update state of cell because ConfigCellInfo is null");
+			return;
+		}
 		int row = myBabyCell.getRow();
 		int col = myBabyCell.getCol();
 		// we left calculateID alone, doesn't work now but if you switch col and row it works properly 
