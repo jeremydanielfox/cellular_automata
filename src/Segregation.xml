@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Information>
+	<Model>Segregation</Model>
+	<Author>Jeremy</Author>
+	<Title>Segregation</Title>
+	<GridRows>5</GridRows>
+	<GridColumns>5</GridColumns>
+		
+	<Parameters>
+		<!--<probCatch>0.15</probCatch> -->
+	</Parameters>
+
+	<Configuration>
+		<Cell x="1" y="1" state="group_one"> </Cell>
+		<Cell x="1" y="2" state="group_two"> </Cell>
+		
+		<Cell x="1" y="3" state="group_two"> </Cell>
+		<Cell x="1" y="5" state="group_one"> </Cell>
+		<Cell x="2" y="1" state="group_two"> </Cell>
+		
+		<Cell x="1" y="4" state="group_two"> </Cell>
+		<Cell x="2" y="2" state="group_one"> </Cell>
+		<Cell x="2" y="4" state="group_one"> </Cell>
+		<Cell x="3" y="1" state="group_one"> </Cell>
+		<Cell x="3" y="2" state="group_one"> </Cell>
+		<Cell x="4" y="3" state="group_one"> </Cell>
+		<Cell x="4" y="5" state="group_one"> </Cell>
+		<Cell x="5" y="1" state="group_one"> </Cell>
+		<Cell x="5" y="5" state="group_one"> </Cell>
+		<Cell x="2" y="3" state="group_two"> </Cell>
+		<Cell x="2" y="5" state="group_two"> </Cell>
+		<Cell x="3" y="5" state="group_two"> </Cell>
+		<Cell x="4" y="1" state="group_two"> </Cell>
+		<Cell x="5" y="2" state="group_two"> </Cell>
+		<Cell x="5" y="3" state="group_two"> </Cell>
+	</Configuration>
+</Information>
