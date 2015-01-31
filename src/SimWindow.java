@@ -21,7 +21,7 @@ public class SimWindow {
 
 	public SimWindow(Stage stage, HBox controls) {
 		myStage = stage;
-		myStage.setTitle("Title from XML");
+		myStage.setTitle("Cellular Automata");
 		myRoot = new Group();
 		myCellRegion = new Group();
 		myRoot.getChildren().add(controls);
@@ -36,6 +36,10 @@ public class SimWindow {
 		for (Cell c : collection) {
 			myCellRegion.getChildren().add(c.getShape());
 		}
+	}
+
+	public void setStageTitle(String newTitle) {
+		myStage.setTitle(newTitle);
 	}
 
 	public void wipeCells() {
