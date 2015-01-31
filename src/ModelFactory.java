@@ -8,6 +8,8 @@ public class ModelFactory {
 		switch (model) {
 			case "GameOfLife":
 				return new GameOfLife(parameters);
+			case "Fire":
+				return new Fire(parameters);
 			default:
 				return new GameOfLife(parameters);
 		}

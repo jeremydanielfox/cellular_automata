@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Information>
-	<Model>GameOfLife</Model>
-	<Author>Sierra</Author>
-	<Title>Brown Fire</Title>
+	<Model>Fire</Model>
+	<Author> Sierra and Megan</Author>
+	<Title>Forest Fire</Title>
 	<GridRows>60</GridRows>
 	<GridColumns>60</GridColumns>
 	<Parameters>
