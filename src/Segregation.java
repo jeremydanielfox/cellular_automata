@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -5,6 +6,13 @@ import java.util.Map;
 
 import javafx.scene.paint.Color;
 
+/**
+ * 
+ * This is the Segregation model based off of Thomas Schelling's model
+ * 
+ * @author Jeremy, Team 12
+ *
+ */
 public class Segregation extends BaseModel {
 	public static final int EMPTY = 0;
 	public static final int GROUP_ONE = 1;
@@ -15,9 +23,9 @@ public class Segregation extends BaseModel {
 	public static final Color GROUP_ONE_COLOR = Color.RED;
 	public static final Color GROUP_TWO_COLOR = Color.GREEN;
 	public static final Color DEFAULT_COLOR = EMPTY_COLOR;
-	public static final float RATIO_NEIGHBORS = (float) .5;
+	public static final float RATIO_NEIGHBORS = (float) .33;
 
-	public Segregation(Map<String, Double> parameters, int points) {
+	public Segregation(Map<String, Double> parameters) {
 		// possibly we should create a setNumPointsForNeighbor method in the
 		// superclass so that we can
 		// set up that information using the constructor
@@ -35,10 +43,47 @@ public class Segregation extends BaseModel {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public void updateAllCells(BaseGraph myGraph) {
+
+	@Override
+	public Collection<Cell> updateFutureStates(Iterable<Cell> cellsToUpdate,
+			BaseGraph myGraph) {
 		List<Cell> myCells = getRandomCollection(myGraph);
-		
+		for (Cell current : myCells) {
+			current.setFutureState(current.getCurrentState());
+		}
+		Cell myUnhappyCell = null;
+		Cell myEmptyCell = null;
+		for (Cell current : myCells) {
+			if (isReadyToSwitch(myUnhappyCell, myEmptyCell, myGraph))
+				break;
+			if (!isHappy(current, myGraph.getNeighbors(current))
+					&& myUnhappyCell == null)
+				myUnhappyCell = current;
+			if (current.getCurrentState() == EMPTY && myEmptyCell == null)
+				myEmptyCell = current;
+		}
+		if (isReadyToSwitch(myUnhappyCell, myEmptyCell, myGraph)) {
+			myUnhappyCell.setFutureState(myEmptyCell.getCurrentState());
+			myUnhappyCell.setColor(EMPTY_COLOR);
+			myEmptyCell.setFutureState(myUnhappyCell.getCurrentState());
+			if (myUnhappyCell.getCurrentState() == GROUP_ONE)
+				myEmptyCell.setColor(GROUP_ONE_COLOR);
+
+			else
+				myEmptyCell.setColor(GROUP_TWO_COLOR);
+
+		}
+		return (Collection<Cell>) myGraph.getAllCells();
+
+	}
+
+	private boolean isReadyToSwitch(Cell first, Cell second, BaseGraph myGraph) {
+		if (first == null || second == null)
+			return false;
+		return !isHappy(first, myGraph.getNeighbors(first))
+				&& second.getCurrentState() == EMPTY
+				|| !isHappy(second, myGraph.getNeighbors(second))
+				&& first.getCurrentState() == EMPTY;
 	}
 
 	@Override
@@ -52,8 +97,8 @@ public class Segregation extends BaseModel {
 	}
 
 	private boolean isHappy(Cell myCell, Collection<Cell> myNeighbors) {
-		float myState = myCell.getCurrentState();
-		if (myState==EMPTY)	
+		int myState = myCell.getCurrentState();
+		if (myState == EMPTY)
 			return true;
 		float countDifferent = 0;
 		for (Cell current : myNeighbors) {
@@ -62,11 +107,13 @@ public class Segregation extends BaseModel {
 				countDifferent++;
 		}
 		float ratio = countDifferent / (float) myNeighbors.size();
+
 		return ratio <= RATIO_NEIGHBORS;
 	}
-	
+
 	private List<Cell> getRandomCollection(BaseGraph myGraph) {
-		List<Cell> myCells = (List<Cell>) myGraph.getAllCells();
+		List<Cell> myCells = new ArrayList<Cell>();
+		myCells.addAll((Collection<? extends Cell>) myGraph.getAllCells());
 		Collections.shuffle(myCells);
 		return myCells;
 	}

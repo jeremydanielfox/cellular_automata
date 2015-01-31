@@ -67,4 +67,8 @@ public class Cell {
 	public Set<Point2D> getVerticies() {
 		return myVerticies;
 	}
+	
+	public void setColor (Color current) {
+		myShape.setFill(current);
+	}
 }
