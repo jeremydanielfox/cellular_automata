@@ -33,6 +33,13 @@ public abstract class BaseModel {
 	public abstract Cell updateFutureState(Cell cellToUpdate,
 			Collection<Cell> neighbors);
 	
+	public Collection<Cell> updateFutureStates(Iterable<Cell> cellsToUpdate, BaseGraph graph) {
+		for (Cell c: cellsToUpdate) {
+			updateFutureState(c, graph.getNeighbors(c));
+		}
+		return (Collection<Cell>) cellsToUpdate;
+	}
+	
 	public int getIntForState(String state) {
 		return stateToInt.get(state);
 	}	
