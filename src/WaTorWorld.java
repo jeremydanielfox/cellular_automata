@@ -34,13 +34,13 @@ public class WaTorWorld extends BaseModel {
 	@Override
 	public Color getDefaultColor() {
 		// TODO Auto-generated method stub
-		return null;
+		return defaultColor;
 	}
 
 	@Override
 	public int getDefaultState() {
 		// TODO Auto-generated method stub
-		return 0;
+		return defaultState;
 	}
 
 }
