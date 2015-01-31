@@ -29,7 +29,8 @@ public abstract class BaseGraph {
 	private int myScreenHeight;
 
 	public BaseGraph(int numCellsWidth, int numCellsHeight, int screenWidth,
-			int screenHeight, int xOffset, int yOffset, int points, int defaultState, Color defaultColor) {
+			int screenHeight, int xOffset, int yOffset, int points,
+			int defaultState, Color defaultColor) {
 		numCellsAcross = numCellsWidth;
 		numCellsUpDown = numCellsHeight;
 		myScreenWidth = screenWidth;
@@ -64,23 +65,38 @@ public abstract class BaseGraph {
 	}
 
 	public void addVertex(Cell myCell) {
+		if (myCell == null) {
+			System.out.println("Can't add vertex because not a cell");
+			return;
+		}
 		Collection<Cell> temp = new HashSet<Cell>();
 		myEdges.put(myCell, temp);
 	}
 
 	public void removeVertex(Cell myCell) {
+		if (myCell == null) {
+			System.out.println("Can't remove vertex because not a cell");
+			return;
+		}
 		if (myEdges.containsKey(myCell))
 			myEdges.remove(myCell);
 	}
 
 	public void addEdge(Cell from, Cell to) {
+		if (from == null || to == null) {
+			System.out.println("Can't addEdge because one ore more of the inputs is not a cell");
+			return;
+		}
 		Collection<Cell> temp = getNeighbors(from);
-		if (to != null)
-			temp.add(to);
+		temp.add(to);
 		myEdges.put(from, temp);
 	}
 
 	public void connect(Cell first, Cell second) {
+		if (first==null || second == null) {
+			System.out.println("Can't Connect because one of the inputs is null");
+			return;
+		}
 		addEdge(first, second);
 		addEdge(second, first);
 	}
@@ -133,5 +149,6 @@ public abstract class BaseGraph {
 
 	public abstract int calculateID(int row, int col);
 
-	public abstract void updateStateOfCell(ConfigCellInfo myBabyCell, Color color);
+	public abstract void updateStateOfCell(ConfigCellInfo myBabyCell,
+			Color color);
 }
