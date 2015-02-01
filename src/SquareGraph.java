@@ -94,11 +94,11 @@ public class SquareGraph extends BaseGraph {
 		}
 		int row = myBabyCell.getRow();
 		int col = myBabyCell.getCol();
-		// we left calculateID alone, doesn't work now but if you switch col and
-		// row it works properly
 		int ID = calculateID(row, col);
 		getCell(ID).setCurrentState(myBabyCell.getIntState());
 		getCell(ID).getShape().setFill(color);
+		InhabitantFactory myInhabitantFactory = new InhabitantFactory();
+		getCell(ID).setInhabitant(myInhabitantFactory.createSpecifiedInhabitant(myBabyCell.getStringState(), myBabyCell.getIntState()));
 		System.out.println(color + " " + ID);
 	}
 }

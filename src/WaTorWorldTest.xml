@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Information>
+	<Model>WaTorWorld</Model>
+	<Author> Sierra and Megan</Author>
+	<Title>Sharks and Fish</Title>
+	<GridRows>2</GridRows>
+	<GridColumns>2</GridColumns>
+	<Parameters>
+		<energyLevel>10</energyLevel>
+		<timeTillReproduce>5</timeTillReproduce>
+	</Parameters>
+	<Configuration>
+		<Cell x="1" y="1" state="fish"> </Cell>
+		<Cell x="1" y="2" state="shark"> </Cell>
+	</Configuration>
+</Information>

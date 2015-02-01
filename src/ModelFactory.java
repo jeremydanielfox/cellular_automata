@@ -12,6 +12,8 @@ public class ModelFactory {
 			return new Fire(parameters);
 		case "Segregation":
 			return new Segregation(parameters);
+		case "WaTorWorld":
+			return new WaTorWorld(parameters);
 		default:
 			return new GameOfLife(parameters);
 		}
