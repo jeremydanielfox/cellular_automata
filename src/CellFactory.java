@@ -10,7 +10,7 @@ public class CellFactory {
 			Set<Point2D> verticies, int defaultState, Color defaultColor) {
 
 		switch (model) {
-		case "Segregation":
+		case "WaTorWorld":
 			return new CellWithInhabitant(id, shape, verticies, defaultState,
 					defaultColor);
 		default:
