@@ -6,13 +6,11 @@ import javafx.scene.shape.Shape;
 
 public class CellFactory {
 
-	public Cell createSpecifiedCell(String cell, int id, Shape shape,
+	public Cell createSpecifiedCell(String model, int id, Shape shape,
 			Set<Point2D> verticies, int defaultState, Color defaultColor) {
 
-		switch (cell) {
-		case "Cell":
-			return new Cell(id, shape, verticies, defaultState, defaultColor);
-		case "CellWithInhabitants":
+		switch (model) {
+		case "Segregation":
 			return new CellWithInhabitant(id, shape, verticies, defaultState,
 					defaultColor);
 		default:

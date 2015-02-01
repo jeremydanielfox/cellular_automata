@@ -30,7 +30,7 @@ public class SimEngine {
 				myParameters.get("rows").intValue(), cellRegionWidth,
 				cellRegionHeight, cellRegionXOffset, cellRegionYOffset,
 				myModel.getSharePointsForNeighbor(), myModel.getDefaultState(),
-				myModel.getDefaultColor());
+				myModel.getDefaultColor(),myModelName);
 		// myGraph.initializeCells(myModel.getDefaultState(),
 		// myModel.getDefaultColor());
 		setUpInitCells();

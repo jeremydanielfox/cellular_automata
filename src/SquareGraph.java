@@ -22,9 +22,10 @@ public class SquareGraph extends BaseGraph {
 	 * @param screenHeight
 	 */
 	public SquareGraph(int numCellsWidth, int numCellsHeight, int screenWidth,
-			int screenHeight, int xOffset, int yOffset, int points, int defaultState, Color defaultColor) {
+			int screenHeight, int xOffset, int yOffset, int points,
+			int defaultState, Color defaultColor,String model) {
 		super(numCellsWidth, numCellsHeight, screenWidth, screenHeight,
-				xOffset, yOffset, points, defaultState, defaultColor);
+				xOffset, yOffset, points, defaultState, defaultColor,model);
 	}
 
 	/**
@@ -42,6 +43,7 @@ public class SquareGraph extends BaseGraph {
 	 */
 	public void initializeCells(int defaultState, Color defaultColor) {
 		int count = 1;
+		CellFactory myFactory = new CellFactory();
 		for (int i = 1; i <= getNumCellsAcross(); i++)
 			for (int j = 1; j <= getNumCellsUpDown(); j++) {
 				Polygon tempShape = new Polygon();
@@ -65,7 +67,8 @@ public class SquareGraph extends BaseGraph {
 								(double) (getYOffset() + j * cellHeight),
 								(double) (getXOffset() + i * cellWidth),
 								(double) (getYOffset() + (j - 1) * cellHeight) });
-				Cell temp = new Cell(count, tempShape, tempSet, defaultState, defaultColor);
+				Cell temp = myFactory.createSpecifiedCell(getModelName(), count,
+						tempShape, tempSet, defaultState, defaultColor);
 				addVertex(temp);
 				count++;
 			}
@@ -84,16 +87,18 @@ public class SquareGraph extends BaseGraph {
 	}
 
 	public void updateStateOfCell(ConfigCellInfo myBabyCell, Color color) {
-		if (myBabyCell==null) {
-			System.out.println("Can't update state of cell because ConfigCellInfo is null");
+		if (myBabyCell == null) {
+			System.out
+					.println("Can't update state of cell because ConfigCellInfo is null");
 			return;
 		}
 		int row = myBabyCell.getRow();
 		int col = myBabyCell.getCol();
-		// we left calculateID alone, doesn't work now but if you switch col and row it works properly 
+		// we left calculateID alone, doesn't work now but if you switch col and
+		// row it works properly
 		int ID = calculateID(row, col);
 		getCell(ID).setCurrentState(myBabyCell.getIntState());
 		getCell(ID).getShape().setFill(color);
 		System.out.println(color + " " + ID);
-		}
+	}
 }
