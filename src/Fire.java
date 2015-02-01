@@ -42,12 +42,12 @@ public class Fire extends BaseModel {
 
 		if (cellToUpdate.getCurrentState() == tree
 				&& countNeighbors(2, neighbors) > 0 && random < probCatch) {
-			changeStateTo(cellToUpdate, burning, burningColor);
+			changeFutureState(cellToUpdate, burning, burningColor);
 		} else if (cellToUpdate.getCurrentState() == burning
 				|| cellToUpdate.getCurrentState() == empty) {
-			changeStateTo(cellToUpdate, empty, emptyColor);
+			changeFutureState(cellToUpdate, empty, emptyColor);
 		} else {
-			changeStateTo(cellToUpdate, tree, treeColor);
+			changeFutureState(cellToUpdate, tree, treeColor);
 		}
 		return cellToUpdate;
 	}

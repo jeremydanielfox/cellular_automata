@@ -67,9 +67,10 @@ public abstract class BaseModel {
 		return neighborsWithState;
 	}
 
-	public void changeStateTo(Cell cellToUpdate, int state, Color stateColor) {
+	public void changeFutureState(Cell cellToUpdate, int state, Color stateColor) {
 		cellToUpdate.setFutureState(state);
 		cellToUpdate.setColor(stateColor);
 	}
+	
 
 }

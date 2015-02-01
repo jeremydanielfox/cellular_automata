@@ -43,17 +43,13 @@ public class SimEngine {
 	}
 
 	private void determineFutureStates() {
-		/*
-		 * for (Cell c : myGraph.getAllCells()) { myModel.updateFutureState(c,
-		 * myGraph.getNeighbors(c)); }
-		 */
 		myModel.updateFutureStates(myGraph.getAllCells(), myGraph);
 	}
 
 	private void setFutureToCurrentStates() {
 		for (Cell c : myGraph.getAllCells()) {
 			c.setCurrentState(c.getFutureState());
-			//c.setFutureState(myModel.getDefaultState());
+			c.setFutureState(myModel.getDefaultState());
 		}
 	}
 
