@@ -25,12 +25,12 @@ public class Cell {
 		myShape.setFill(defaultColor);
 	}
 
-	public Cell(int id, int currentState, int futureState, Shape shape) {
-		setID(id);
-		setCurrentState(currentState);
-		setFutureState(futureState)	;
-		setShape(shape);
-	}
+//	public Cell(int id, int currentState, int futureState, Shape shape) {
+//		setID(id);
+//		setCurrentState(currentState);
+//		setFutureState(futureState)	;
+//		setShape(shape);
+//	}
 
 	public int getID() {
 		return myID;
