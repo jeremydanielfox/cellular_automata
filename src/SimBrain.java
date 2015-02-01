@@ -181,7 +181,7 @@ public class SimBrain extends Application {
 
 	private void runSim() {
 		myWindow.paintCells(myEngine.getListOfCells());
-		myAnimation.play();
+		//myAnimation.play();
 	}
 
 	private KeyFrame makeKeyFrame(int frameRate) {
@@ -210,10 +210,11 @@ public class SimBrain extends Application {
 				SCREEN_BORDER_BUFFER);
 		myWindow.setStageTitle(myXMLContents.getTitle() + " by "+ myXMLContents.getAuthor());
 		runSim();
-		myPauseButton.setDisable(false);
-		myIncSpeedButton.setDisable(false);
-		myDecSpeedButton.setDisable(false);
+		//myPauseButton.setDisable(false);
+		//myIncSpeedButton.setDisable(false);
+		//myDecSpeedButton.setDisable(false);
 		myStepButton.setDisable(false);
+		myPlayButton.setDisable(false);
 		}
 	}
 
