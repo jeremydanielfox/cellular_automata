@@ -48,6 +48,7 @@ public class SimBrain extends Application {
 	private static final int SCREEN_BORDER_BUFFER = 50;
 	private static final int CELL_REGION_WIDTH = SimWindow.WINDOW_WIDTH-2*SCREEN_BORDER_BUFFER;
 	private static final int CELL_REGION_HEIGHT = SimWindow.WINDOW_HEIGHT-2*SCREEN_BORDER_BUFFER;
+	private static final int INITIAL_FRAME_RATE = 2500;
 
 	@Override
 	public void start(Stage s) throws Exception {
@@ -66,22 +67,29 @@ public class SimBrain extends Application {
 		controlPanel.setPrefWidth(SimWindow.WINDOW_WIDTH);
 		controlPanel.setAlignment(Pos.BOTTOM_CENTER);
 		controlPanel.getChildren().add(makeUploadFileButton());
-		myPlayButton = makePlayButton();
-		myPlayButton.setDisable(true);
+		myPlayButton = makeButton(PLAY_TEXT, true);
+		myPlayButton.setOnAction(e -> playSimulation());
 		controlPanel.getChildren().add(myPlayButton);
-		myPauseButton = makePauseButton();
-		myPauseButton.setDisable(true);
+		myPauseButton = makeButton(PAUSE_TEXT, true);
+		myPauseButton.setOnAction(e -> pauseSimulation());
 		controlPanel.getChildren().add(myPauseButton);
-		myIncSpeedButton = makeIncSpeedButton();
-		myIncSpeedButton.setDisable(true);
+		myIncSpeedButton = makeButton(INC_SPEED_TEXT, true);
+		myIncSpeedButton.setOnAction(e -> incSpeed());
 		controlPanel.getChildren().add(myIncSpeedButton);
-		myDecSpeedButton = makeDecSpeedButton();
-		myDecSpeedButton.setDisable(true);
+		myDecSpeedButton = makeButton(DEC_SPEED_TEXT, true);
+		myDecSpeedButton.setOnAction(e -> decSpeed());
 		controlPanel.getChildren().add(myDecSpeedButton);
-		myStepButton = makeStepButton();
-		myStepButton.setDisable(true);
+		myStepButton = makeButton(STEP_BUTTON_TEXT, true);
+		myStepButton.setOnAction(e -> stepSimulation());
+		
 		controlPanel.getChildren().add(myStepButton);
 		return controlPanel;
+	}
+	
+	private Button makeButton(String text, boolean disabled){
+		Button newButton = new Button(text);
+		newButton.setDisable(disabled);
+		return newButton;
 	}
 	
 	private Button makeUploadFileButton() {
@@ -99,30 +107,12 @@ public class SimBrain extends Application {
 		return file;
 	}
 
-	private Button makePlayButton() {
-		Button playButton = new Button(PLAY_TEXT);
-		playButton.setOnAction(e -> playSimulation());
-		return playButton;
-	}
-
 	private void playSimulation() {
 		myAnimation.play();
 		myPauseButton.setDisable(false);
 		myPlayButton.setDisable(true);
 		myIncSpeedButton.setDisable(false);
 		myDecSpeedButton.setDisable(false);
-	}
-
-	private Button makePauseButton() {
-		Button playButton = new Button(PAUSE_TEXT);
-		playButton.setOnAction(e -> pauseSimulation());
-		return playButton;
-	}
-
-	private Button makeStepButton() {
-		Button pauseButton = new Button(STEP_BUTTON_TEXT);
-		pauseButton.setOnAction(e -> stepSimulation());
-		return pauseButton;
 	}
 
 	private void stepSimulation() {
@@ -138,17 +128,12 @@ public class SimBrain extends Application {
 		myDecSpeedButton.setDisable(true);
 	}
 
-	private Button makeIncSpeedButton() {
-		Button playButton = new Button(INC_SPEED_TEXT);
-		playButton.setOnAction(e -> incSpeed());
-		return playButton;
-	}
-
 	private void incSpeed() {
 		myAnimation.stop();
 		changeFramesPerSecondValue(-1);
 		initializeAnimationTimeline();
 		runSim();
+		playSimulation();
 		myDecSpeedButton.setDisable(false);
 		System.out.println("inc speed");
 	}
@@ -165,17 +150,12 @@ public class SimBrain extends Application {
 		System.out.println(framesPerSecond);
 	}
 
-	private Button makeDecSpeedButton() {
-		Button playButton = new Button(DEC_SPEED_TEXT);
-		playButton.setOnAction(e -> decSpeed());
-		return playButton;
-	}
-
 	private void decSpeed() {
 		myAnimation.stop();
 		changeFramesPerSecondValue(1);
 		initializeAnimationTimeline();
 		runSim();
+		playSimulation();
 		System.out.println("DEC SPEED");
 	}
 
@@ -222,7 +202,6 @@ public class SimBrain extends Application {
 		try {
 			myXMLContents = new XMLContents(file);
 		} catch (ParserConfigurationException | SAXException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
