@@ -27,10 +27,11 @@ public abstract class BaseGraph {
 	private int numCellsUpDown;
 	private int myScreenWidth;
 	private int myScreenHeight;
+	private String myModel;
 
 	public BaseGraph(int numCellsWidth, int numCellsHeight, int screenWidth,
 			int screenHeight, int xOffset, int yOffset, int points,
-			int defaultState, Color defaultColor) {
+			int defaultState, Color defaultColor,String model) {
 		numCellsAcross = numCellsWidth;
 		numCellsUpDown = numCellsHeight;
 		myScreenWidth = screenWidth;
@@ -38,6 +39,7 @@ public abstract class BaseGraph {
 		horizontalOffset = xOffset;
 		verticalOffset = yOffset;
 		MIN_POINTS_IN_COMMON = points;
+		myModel = model;
 		calculateValues();
 		initializeCells(defaultState, defaultColor);
 		connectCells();
@@ -141,6 +143,10 @@ public abstract class BaseGraph {
 	public boolean isNeighbors(Cell first, Cell second) {
 		return numPointsInCommon(first, second) >= getMinPointsInCommon()
 				&& !first.equals(second);
+	}
+	
+	public String getModelName () {
+		return myModel;
 	}
 
 	public abstract void initializeCells(int defaultState, Color defaultColor);
