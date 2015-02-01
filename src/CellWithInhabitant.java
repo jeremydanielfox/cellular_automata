@@ -11,11 +11,11 @@ public class CellWithInhabitant extends Cell {
 			int defaultState, Color defaultColor) {
 		super(id, shape, verticies, defaultState, defaultColor);
 	}
-
-	public CellWithInhabitant(int id, int currentState, int futureState,
-			Shape shape) {
-		super(id, currentState, futureState, shape);
-	}
+//
+//	public CellWithInhabitant(int id, int currentState, int futureState,
+//			Shape shape) {
+//		super(id, currentState, futureState, shape);
+//	}
 
 	public void setInhabitant(Inhabitant inhabitant) {
 		myInhabitant = inhabitant;
