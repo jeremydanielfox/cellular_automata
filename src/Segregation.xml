@@ -7,7 +7,7 @@
 	<GridColumns>5</GridColumns>
 		
 	<Parameters>
-		<!--<probCatch>0.15</probCatch> -->
+		<RatioNeighbors>0.33</RatioNeighbors>
 	</Parameters>
 
 	<Configuration>

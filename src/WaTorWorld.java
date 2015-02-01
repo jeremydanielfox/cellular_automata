@@ -8,6 +8,7 @@ public class WaTorWorld extends BaseModel {
 	private static final int water = 0;
 	private static final int fish = 1;
 	private static final int shark = 2;
+	private static final int NUM_POINTS_FOR_NEIGHBOR = 2;
 	private static final int defaultState = water;
 	private static final Color waterColor = Color.AQUAMARINE;
 	private static final Color fishColor = Color.YELLOW;
@@ -15,7 +16,7 @@ public class WaTorWorld extends BaseModel {
 	private static final Color defaultColor = waterColor;
 
 	public WaTorWorld(Map<String, Double> parameters) {
-		super(parameters, 2);
+		super(parameters, NUM_POINTS_FOR_NEIGHBOR);
 		// TODO Auto-generated constructor stub
 		getStateToIntMap().put("water", water);
 		getStateToIntMap().put("fish", fish);
