@@ -33,9 +33,9 @@ public class GameOfLife extends BaseModel {
 		int aliveNeighbors = countNeighbors(alive, neighbors);
 		if ((cellToUpdate.getCurrentState() == dead && aliveNeighbors == numLiveNeighborsToRevive)
 				|| (cellToUpdate.getCurrentState() == alive && (aliveNeighbors == numLiveNeighborsToLive || aliveNeighbors == numLiveNeighborsToRevive))) {
-			changeStateTo(cellToUpdate, alive, aliveColor);
+			changeFutureState(cellToUpdate, alive, aliveColor);
 		} else {
-			changeStateTo(cellToUpdate, dead, deadColor);
+			changeFutureState(cellToUpdate, dead, deadColor);
 		}
 		return cellToUpdate;
 	}

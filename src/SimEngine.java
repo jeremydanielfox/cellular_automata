@@ -53,7 +53,7 @@ public class SimEngine {
 	private void setFutureToCurrentStates() {
 		for (Cell c : myGraph.getAllCells()) {
 			c.setCurrentState(c.getFutureState());
-			//c.setFutureState(myModel.getDefaultState());
+			c.setFutureState(myModel.getDefaultState());
 		}
 	}
 

@@ -4,14 +4,15 @@ public class Shark extends AquaticCreature {
 	public Shark(int state) {
 		super(state);
 		// TODO Auto-generated constructor stub
+		energyLevel = 0;
 	}
 
 	public void decreaseEnergy() {
-		energyLevel -= 1;
+		energyLevel += 1;
 	}
 
 	public void increaseEnergy() {
-		energyLevel += 1;
+		energyLevel -= 1;
 	}
 
 	public int getEnergyLevel() {
