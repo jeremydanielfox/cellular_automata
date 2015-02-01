@@ -1,4 +1,4 @@
-public abstract class Inhabitant {
+public class Inhabitant {
 	private int myState;
 
 	public Inhabitant(int state) {
