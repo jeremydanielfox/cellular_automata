@@ -10,12 +10,14 @@ public class CellWithInhabitant extends Cell {
 	public CellWithInhabitant(int id, Shape shape, Set<Point2D> verticies,
 			int defaultState, Color defaultColor) {
 		super(id, shape, verticies, defaultState, defaultColor);
+		myInhabitant = new Inhabitant(defaultState);
 	}
-//
-//	public CellWithInhabitant(int id, int currentState, int futureState,
-//			Shape shape) {
-//		super(id, currentState, futureState, shape);
-//	}
+
+	//
+	// public CellWithInhabitant(int id, int currentState, int futureState,
+	// Shape shape) {
+	// super(id, currentState, futureState, shape);
+	// }
 
 	public void setInhabitant(Inhabitant inhabitant) {
 		myInhabitant = inhabitant;
