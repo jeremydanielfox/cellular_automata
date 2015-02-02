@@ -109,10 +109,7 @@ public class SimBrain extends Application {
 
 	private void playSimulation() {
 		myAnimation.play();
-		myPauseButton.setDisable(false);
-		myPlayButton.setDisable(true);
-		myIncSpeedButton.setDisable(false);
-		myDecSpeedButton.setDisable(false);
+		enableCorrectButtons(true);
 	}
 
 	private void stepSimulation() {
@@ -122,10 +119,14 @@ public class SimBrain extends Application {
 
 	private void pauseSimulation() {
 		myAnimation.pause();
-		myPauseButton.setDisable(true);
-		myPlayButton.setDisable(false);
-		myIncSpeedButton.setDisable(true);
-		myDecSpeedButton.setDisable(true);
+		enableCorrectButtons(false);
+	}
+	
+	private void enableCorrectButtons(boolean simIsPlaying){
+		myPauseButton.setDisable(!simIsPlaying);
+		myPlayButton.setDisable(simIsPlaying);
+		myIncSpeedButton.setDisable(!simIsPlaying);
+		myDecSpeedButton.setDisable(!simIsPlaying);
 	}
 
 	private void incSpeed() {
@@ -161,7 +162,6 @@ public class SimBrain extends Application {
 
 	private void runSim() {
 		myWindow.paintCells(myEngine.getListOfCells());
-		//myAnimation.play();
 	}
 
 	private KeyFrame makeKeyFrame(int frameRate) {
@@ -190,9 +190,6 @@ public class SimBrain extends Application {
 				SCREEN_BORDER_BUFFER);
 		myWindow.setStageTitle(myXMLContents.getTitle() + " by "+ myXMLContents.getAuthor());
 		runSim();
-		//myPauseButton.setDisable(false);
-		//myIncSpeedButton.setDisable(false);
-		//myDecSpeedButton.setDisable(false);
 		myStepButton.setDisable(false);
 		myPlayButton.setDisable(false);
 		}
