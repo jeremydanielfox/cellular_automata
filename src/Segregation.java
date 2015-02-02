@@ -23,7 +23,7 @@ public class Segregation extends BaseModel {
 	public static final Color GROUP_ONE_COLOR = Color.RED;
 	public static final Color GROUP_TWO_COLOR = Color.GREEN;
 	public static final Color DEFAULT_COLOR = EMPTY_COLOR;
-	public static final float RATIO_NEIGHBORS = (float) .33;
+	public static double RATIO_NEIGHBORS;
 
 	public Segregation(Map<String, Double> parameters) {
 		// possibly we should create a setNumPointsForNeighbor method in the
@@ -36,6 +36,7 @@ public class Segregation extends BaseModel {
 		getStateToColorMap().put("empty", EMPTY_COLOR);
 		getStateToColorMap().put("group_one", GROUP_ONE_COLOR);
 		getStateToColorMap().put("group_two", GROUP_TWO_COLOR);
+		RATIO_NEIGHBORS = parameters.get("RatioNeighbors");
 	}
 
 	@Override
