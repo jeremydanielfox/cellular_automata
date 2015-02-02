@@ -71,5 +71,6 @@ public abstract class BaseModel {
 		cellToUpdate.setFutureState(state);
 		cellToUpdate.setColor(stateColor);
 	}
+	
 
 }

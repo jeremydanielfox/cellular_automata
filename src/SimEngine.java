@@ -26,11 +26,19 @@ public class SimEngine {
 		myCellsToConfig = cellsToConfig;
 		ModelFactory myModFactory = new ModelFactory();
 		myModel = myModFactory.createSpecifiedModel(model, parameters);
-		myGraph = new SquareGraph(myParameters.get("columns").intValue(),
-				myParameters.get("rows").intValue(), cellRegionWidth,
-				cellRegionHeight, cellRegionXOffset, cellRegionYOffset,
-				myModel.getSharePointsForNeighbor(), myModel.getDefaultState(),
-				myModel.getDefaultColor(),myModelName);
+		GraphFactory myGraphFactory = new GraphFactory();
+		myGraph = myGraphFactory.createSpecifiedGraph(
+				myParameters.get("columns").intValue(), myParameters
+						.get("rows").intValue(), cellRegionWidth,
+				cellRegionHeight, cellRegionXOffset, cellRegionYOffset, myModel
+						.getSharePointsForNeighbor(),
+				myModel.getDefaultState(), myModel.getDefaultColor(),
+				myModelName);
+//		myGraph = new SquareGraph(myParameters.get("columns").intValue(),
+//				myParameters.get("rows").intValue(), cellRegionWidth,
+//				cellRegionHeight, cellRegionXOffset, cellRegionYOffset,
+//				myModel.getSharePointsForNeighbor(), myModel.getDefaultState(),
+//				myModel.getDefaultColor(), myModelName);
 		// myGraph.initializeCells(myModel.getDefaultState(),
 		// myModel.getDefaultColor());
 		setUpInitCells();
@@ -43,10 +51,6 @@ public class SimEngine {
 	}
 
 	private void determineFutureStates() {
-		/*
-		 * for (Cell c : myGraph.getAllCells()) { myModel.updateFutureState(c,
-		 * myGraph.getNeighbors(c)); }
-		 */
 		myModel.updateFutureStates(myGraph.getAllCells(), myGraph);
 	}
 

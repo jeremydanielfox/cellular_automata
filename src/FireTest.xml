@@ -6,7 +6,7 @@
 	<GridRows>60</GridRows>
 	<GridColumns>60</GridColumns>
 	<Parameters>
-		<probCatch>0.95</probCatch>
+		<probCatch>.6</probCatch>
 	</Parameters>
 	<Configuration>
 		<Cell x="50" y="49" state="burning"> </Cell>

@@ -1,7 +1,9 @@
+import java.util.List;
 import java.util.Set;
 
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
 /**
@@ -13,10 +15,11 @@ public class Cell {
 	private int myID;
 	private int myCurrentState;
 	private int myFutureState;
-	private Set<Point2D> myVerticies;
-	private Shape myShape;
+	private List<Point2D> myVerticies;
+	private Polygon myShape;
 
-	public Cell(int id, Shape shape, Set<Point2D> verticies, int defaultState, Color defaultColor) {
+	public Cell(int id, Polygon shape, List<Point2D> verticies, int defaultState,
+			Color defaultColor) {
 		setID(id);
 		setShape(shape);
 		myVerticies = verticies;
@@ -25,12 +28,12 @@ public class Cell {
 		myShape.setFill(defaultColor);
 	}
 
-//	public Cell(int id, int currentState, int futureState, Shape shape) {
-//		setID(id);
-//		setCurrentState(currentState);
-//		setFutureState(futureState)	;
-//		setShape(shape);
-//	}
+	// public Cell(int id, int currentState, int futureState, Shape shape) {
+	// setID(id);
+	// setCurrentState(currentState);
+	// setFutureState(futureState) ;
+	// setShape(shape);
+	// }
 
 	public int getID() {
 		return myID;
@@ -60,15 +63,29 @@ public class Cell {
 		return myShape;
 	}
 
-	private void setShape(Shape shape) {
+	private void setShape(Polygon shape) {
 		myShape = shape;
 	}
 
-	public Set<Point2D> getVerticies() {
+	public List<Point2D> getVerticies() {
 		return myVerticies;
 	}
-	
-	public void setColor (Color current) {
+
+	public void setShapeVerticies() {
+		Double[] temp = new Double[2 * myVerticies.size()];
+		int count = 0;
+		for (Point2D current : myVerticies) {
+			temp[count] = (double) current.getX();
+			temp[count + 1] = (double) current.getY();
+			count += 2;
+		}
+		myShape.getPoints().addAll(temp);
+	}
+
+	public void setColor(Color current) {
 		myShape.setFill(current);
+	}
+
+	public void setInhabitant(Inhabitant inhabitant) {
 	}
 }
