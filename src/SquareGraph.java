@@ -69,6 +69,7 @@ public class SquareGraph extends BaseGraph {
 								(double) (getYOffset() + (j - 1) * cellHeight) });
 				Cell temp = myFactory.createSpecifiedCell(getModelName(), count,
 						tempShape, tempSet, defaultState, defaultColor);
+				temp.setFutureState(defaultState);
 				addVertex(temp);
 				count++;
 			}
