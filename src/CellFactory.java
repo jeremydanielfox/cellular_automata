@@ -1,13 +1,14 @@
-import java.util.Set;
+import java.util.List;
 
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
 public class CellFactory {
 
-	public Cell createSpecifiedCell(String model, int id, Shape shape,
-			Set<Point2D> verticies, int defaultState, Color defaultColor) {
+	public Cell createSpecifiedCell(String model, int id, Polygon shape,
+			List<Point2D> verticies, int defaultState, Color defaultColor) {
 
 		switch (model) {
 		case "WaTorWorld":

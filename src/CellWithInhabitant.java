@@ -1,13 +1,15 @@
+import java.util.List;
 import java.util.Set;
 
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
 public class CellWithInhabitant extends Cell {
 	private Inhabitant myInhabitant;
 
-	public CellWithInhabitant(int id, Shape shape, Set<Point2D> verticies,
+	public CellWithInhabitant(int id, Polygon shape, List<Point2D> verticies,
 			int defaultState, Color defaultColor) {
 		super(id, shape, verticies, defaultState, defaultColor);
 		myInhabitant = new Inhabitant(defaultState);

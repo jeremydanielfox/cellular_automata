@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javafx.geometry.Point2D;
@@ -23,9 +25,9 @@ public class SquareGraph extends BaseGraph {
 	 */
 	public SquareGraph(int numCellsWidth, int numCellsHeight, int screenWidth,
 			int screenHeight, int xOffset, int yOffset, int points,
-			int defaultState, Color defaultColor,String model) {
+			int defaultState, Color defaultColor, String model) {
 		super(numCellsWidth, numCellsHeight, screenWidth, screenHeight,
-				xOffset, yOffset, points, defaultState, defaultColor,model);
+				xOffset, yOffset, points, defaultState, defaultColor, model);
 	}
 
 	/**
@@ -47,29 +49,31 @@ public class SquareGraph extends BaseGraph {
 		for (int i = 1; i <= getNumCellsAcross(); i++)
 			for (int j = 1; j <= getNumCellsUpDown(); j++) {
 				Polygon tempShape = new Polygon();
-				Set<Point2D> tempSet = new HashSet<>();
-				tempSet.add(new Point2D(getXOffset() + (i - 1) * cellWidth,
+				List<Point2D> tempList = new ArrayList<>();
+				tempList.add(new Point2D(getXOffset() + (i - 1) * cellWidth,
 						getYOffset() + (j - 1) * cellHeight));
-				tempSet.add(new Point2D(getXOffset() + i * cellWidth,
+				tempList.add(new Point2D(getXOffset() + (i - 1) * cellWidth,
+						getYOffset() + j * cellHeight));
+				tempList.add(new Point2D(getXOffset() + i * cellWidth,
+						getYOffset() + j * cellHeight));
+				tempList.add(new Point2D(getXOffset() + i * cellWidth,
 						getYOffset() + (j - 1) * cellHeight));
-				tempSet.add(new Point2D(getXOffset() + (i - 1) * cellWidth,
-						getYOffset() + j * cellHeight));
-				tempSet.add(new Point2D(getXOffset() + i * cellWidth,
-						getYOffset() + j * cellHeight));
-				tempShape
-						.getPoints()
-						.addAll(new Double[] {
-								(double) (getXOffset() + (i - 1) * cellWidth),
-								(double) (getYOffset() + (j - 1) * cellHeight),
-								(double) (getXOffset() + (i - 1) * cellWidth),
-								(double) (getYOffset() + j * cellHeight),
-								(double) (getXOffset() + i * cellWidth),
-								(double) (getYOffset() + j * cellHeight),
-								(double) (getXOffset() + i * cellWidth),
-								(double) (getYOffset() + (j - 1) * cellHeight) });
-				Cell temp = myFactory.createSpecifiedCell(getModelName(), count,
-						tempShape, tempSet, defaultState, defaultColor);
+				// tempShape
+				// .getPoints()
+				// .addAll(new Double[] {
+				// (double) (getXOffset() + (i - 1) * cellWidth),
+				// (double) (getYOffset() + (j - 1) * cellHeight),
+				// (double) (getXOffset() + (i - 1) * cellWidth),
+				// (double) (getYOffset() + j * cellHeight),
+				// (double) (getXOffset() + i * cellWidth),
+				// (double) (getYOffset() + j * cellHeight),
+				// (double) (getXOffset() + i * cellWidth),
+				// (double) (getYOffset() + (j - 1) * cellHeight) });
+				Cell temp = myFactory.createSpecifiedCell(getModelName(),
+						count, tempShape, tempList, defaultState, defaultColor);
+				temp.setShapeVerticies();
 				addVertex(temp);
+				
 				count++;
 			}
 	}
@@ -98,7 +102,9 @@ public class SquareGraph extends BaseGraph {
 		getCell(ID).setCurrentState(myBabyCell.getIntState());
 		getCell(ID).getShape().setFill(color);
 		InhabitantFactory myInhabitantFactory = new InhabitantFactory();
-		getCell(ID).setInhabitant(myInhabitantFactory.createSpecifiedInhabitant(myBabyCell.getStringState(), myBabyCell.getIntState()));
+		getCell(ID).setInhabitant(
+				myInhabitantFactory.createSpecifiedInhabitant(
+						myBabyCell.getStringState(), myBabyCell.getIntState()));
 		System.out.println(color + " " + ID);
 	}
 }

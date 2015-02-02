@@ -132,7 +132,8 @@ public abstract class BaseGraph {
 
 	public int numPointsInCommon(Cell first, Cell second) {
 		Set<Point2D> temp = new HashSet(first.getVerticies());
-		temp.retainAll(second.getVerticies());
+		Set<Point2D> newtemp = new HashSet(second.getVerticies());
+		temp.retainAll(new HashSet(second.getVerticies()));
 		return temp.size();
 	}
 
