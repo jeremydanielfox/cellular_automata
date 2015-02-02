@@ -6,6 +6,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
+/**
+ * This is an extension of the Cell class to create more complex Cells with
+ * Inhabitants This will allow more much more complex phenomena, like simulating
+ * creatures with health or more complex states
+ * 
+ * @author Jeremy
+ *
+ */
 public class CellWithInhabitant extends Cell {
 	private Inhabitant myInhabitant;
 
@@ -14,12 +22,6 @@ public class CellWithInhabitant extends Cell {
 		super(id, shape, verticies, defaultState, defaultColor);
 		myInhabitant = new Inhabitant(defaultState);
 	}
-
-	//
-	// public CellWithInhabitant(int id, int currentState, int futureState,
-	// Shape shape) {
-	// super(id, currentState, futureState, shape);
-	// }
 
 	public void setInhabitant(Inhabitant inhabitant) {
 		myInhabitant = inhabitant;

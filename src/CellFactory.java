@@ -5,6 +5,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
+/**
+ * This is the factory that makes Cell objects depending on the model type
+ * 
+ * @author Jeremy
+ *
+ */
 public class CellFactory {
 
 	public Cell createSpecifiedCell(String model, int id, Polygon shape,

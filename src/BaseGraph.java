@@ -31,7 +31,7 @@ public abstract class BaseGraph {
 
 	public BaseGraph(int numCellsWidth, int numCellsHeight, int screenWidth,
 			int screenHeight, int xOffset, int yOffset, int points,
-			int defaultState, Color defaultColor,String model) {
+			int defaultState, Color defaultColor, String model) {
 		numCellsAcross = numCellsWidth;
 		numCellsUpDown = numCellsHeight;
 		myScreenWidth = screenWidth;
@@ -86,7 +86,8 @@ public abstract class BaseGraph {
 
 	public void addEdge(Cell from, Cell to) {
 		if (from == null || to == null) {
-			System.out.println("Can't addEdge because one ore more of the inputs is not a cell");
+			System.out
+					.println("Can't addEdge because one ore more of the inputs is not a cell");
 			return;
 		}
 		Collection<Cell> temp = getNeighbors(from);
@@ -95,8 +96,9 @@ public abstract class BaseGraph {
 	}
 
 	public void connect(Cell first, Cell second) {
-		if (first==null || second == null) {
-			System.out.println("Can't Connect because one of the inputs is null");
+		if (first == null || second == null) {
+			System.out
+					.println("Can't Connect because one of the inputs is null");
 			return;
 		}
 		addEdge(first, second);
@@ -143,10 +145,14 @@ public abstract class BaseGraph {
 
 	public boolean isNeighbors(Cell first, Cell second) {
 		return numPointsInCommon(first, second) >= getMinPointsInCommon()
-				&& !first.equals(second);
+				&& !first.equals(second) || additionalNeighborCondition(first,second);
 	}
-	
-	public String getModelName () {
+
+	public boolean additionalNeighborCondition(Cell first, Cell second) {
+		return false;
+	}
+
+	public String getModelName() {
 		return myModel;
 	}
 
