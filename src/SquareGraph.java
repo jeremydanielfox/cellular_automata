@@ -58,22 +58,11 @@ public class SquareGraph extends BaseGraph {
 						getYOffset() + j * cellHeight));
 				tempList.add(new Point2D(getXOffset() + i * cellWidth,
 						getYOffset() + (j - 1) * cellHeight));
-				// tempShape
-				// .getPoints()
-				// .addAll(new Double[] {
-				// (double) (getXOffset() + (i - 1) * cellWidth),
-				// (double) (getYOffset() + (j - 1) * cellHeight),
-				// (double) (getXOffset() + (i - 1) * cellWidth),
-				// (double) (getYOffset() + j * cellHeight),
-				// (double) (getXOffset() + i * cellWidth),
-				// (double) (getYOffset() + j * cellHeight),
-				// (double) (getXOffset() + i * cellWidth),
-				// (double) (getYOffset() + (j - 1) * cellHeight) });
 				Cell temp = myFactory.createSpecifiedCell(getModelName(),
 						count, tempShape, tempList, defaultState, defaultColor);
-				temp.setShapeVerticies();
+				temp.setFutureState(defaultState);
 				addVertex(temp);
-				
+
 				count++;
 			}
 	}

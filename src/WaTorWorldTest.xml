@@ -3,14 +3,20 @@
 	<Model>WaTorWorld</Model>
 	<Author> Sierra and Megan</Author>
 	<Title>Sharks and Fish</Title>
-	<GridRows>2</GridRows>
-	<GridColumns>2</GridColumns>
+	<GridRows>10</GridRows>
+	<GridColumns>10</GridColumns>
 	<Parameters>
-		<energyLevel>10</energyLevel>
+		<energyLevel>6</energyLevel>
 		<timeTillReproduce>5</timeTillReproduce>
 	</Parameters>
 	<Configuration>
 		<Cell x="1" y="1" state="fish"> </Cell>
 		<Cell x="1" y="2" state="shark"> </Cell>
+		<Cell x="5" y="5" state="fish"> </Cell>
+		<Cell x="5" y="6" state="fish"> </Cell>
+		<Cell x="4" y="3" state="fish"> </Cell>
+		<Cell x="8" y="7" state="fish"> </Cell>
+		<Cell x="8" y="10" state="shark"> </Cell>
+		<Cell x="2" y="2" state="fish"> </Cell>
 	</Configuration>
 </Information>
