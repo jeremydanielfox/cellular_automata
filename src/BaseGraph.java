@@ -101,6 +101,8 @@ public abstract class BaseGraph {
 					.println("Can't Connect because one of the inputs is null");
 			return;
 		}
+		if (first==second)
+			return;
 		addEdge(first, second);
 		addEdge(second, first);
 	}

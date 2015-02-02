@@ -21,8 +21,13 @@ public class ToroidSquareGraph extends SquareGraph {
 	public boolean additionalNeighborCondition(Cell first, Cell second) {
 		return second.getID() - first.getID() == getNumCellsAcross() - 1
 				&& second.getID() % getNumCellsAcross() == 0
+				|| second.getID() - first.getID() == 1
+				&& first.getID() % getNumCellsAcross() ==0
+				|| second.getID() - first.getID() == 2 * getNumCellsAcross() - 1
+				&& second.getID() % getNumCellsAcross() == 0
 				|| second.getID() - first.getID() == getNumCellsAcross()
-						* (getNumCellsUpDown() - 1);
+						* (getNumCellsUpDown() - 1)
+				|| second.getID() - first.getID() == getNumCellsAcross()
+						* (getNumCellsUpDown() - 1)-1;
 	}
-
 }
