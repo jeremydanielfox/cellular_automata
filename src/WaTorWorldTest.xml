@@ -7,7 +7,7 @@
 	<GridColumns>10</GridColumns>
 	<Parameters>
 		<energyLevel>6</energyLevel>
-		<timeTillReproduce>5</timeTillReproduce>
+		<timeTillReproduce>8</timeTillReproduce>
 	</Parameters>
 	<Configuration>
 		<Cell x="1" y="1" state="fish"> </Cell>

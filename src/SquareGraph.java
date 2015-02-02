@@ -62,7 +62,7 @@ public class SquareGraph extends BaseGraph {
 						count, tempShape, tempList, defaultState, defaultColor);
 				temp.setFutureState(defaultState);
 				addVertex(temp);
-
+				temp.setShapeVerticies();
 				count++;
 			}
 	}
