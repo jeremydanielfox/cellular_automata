@@ -13,14 +13,14 @@ public class GraphFactory {
 			String model) {
 
 		switch (model) {
-		case "WaTorWorld":
-			return new ToroidSquareGraph(numCellsWidth, numCellsHeight,
-					screenWidth, screenHeight, xOffset, yOffset, points,
-					defaultState, defaultColor, model);
-		case "GameOfLife":
-			return new ToroidSquareGraph(numCellsWidth, numCellsHeight,
-					screenWidth, screenHeight, xOffset, yOffset, points,
-					defaultState, defaultColor, model);
+//		case "WaTorWorld":
+//			return new ToroidSquareGraph(numCellsWidth, numCellsHeight,
+//					screenWidth, screenHeight, xOffset, yOffset, points,
+//					defaultState, defaultColor, model);
+//		case "GameOfLife":
+//			return new ToroidSquareGraph(numCellsWidth, numCellsHeight,
+//					screenWidth, screenHeight, xOffset, yOffset, points,
+//					defaultState, defaultColor, model);
 		default:
 			return new SquareGraph(numCellsWidth, numCellsHeight, screenWidth,
 					screenHeight, xOffset, yOffset, points, defaultState,

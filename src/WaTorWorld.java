@@ -140,9 +140,12 @@ public class WaTorWorld extends BaseModel {
 
 	private Cell getCellToMoveTo(BaseGraph graph, Cell c, int state) {
 		Cell toMove = null;
-		for (Cell cell : graph.getNeighbors(c)) {
+		List<Cell> myCells = new ArrayList<Cell>(graph.getNeighbors(c));
+		Collections.shuffle(myCells);
+		for (Cell cell : myCells) {
 			if (cell.getCurrentState() == state) {
 				toMove = cell;
+				break;
 			}
 		}
 		return toMove;

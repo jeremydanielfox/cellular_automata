@@ -104,7 +104,7 @@ public abstract class BaseGraph {
 		addEdge(first, second);
 		addEdge(second, first);
 	}
-
+//return an unmodifiable version
 	public Iterable<Cell> getAllCells() {
 		return myEdges.keySet();
 	}
@@ -158,7 +158,7 @@ public abstract class BaseGraph {
 
 	public abstract void initializeCells(int defaultState, Color defaultColor);
 
-	protected abstract void calculateValues();
+	public abstract void calculateValues();
 
 	public abstract int calculateID(int row, int col);
 
