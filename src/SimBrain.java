@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -49,6 +50,8 @@ public class SimBrain extends Application {
 	private static final int CELL_REGION_WIDTH = SimWindow.WINDOW_WIDTH-2*SCREEN_BORDER_BUFFER;
 	private static final int CELL_REGION_HEIGHT = SimWindow.WINDOW_HEIGHT-2*SCREEN_BORDER_BUFFER;
 	private static final int INITIAL_FRAME_RATE = 2500;
+	private static final int CONTROL_PANEL_BUTTON_SPACING = 10;
+	private static final int CONTROL_PANEL_MAX_HEIGHT = 50 ;
 
 	@Override
 	public void start(Stage s) throws Exception {
@@ -62,11 +65,13 @@ public class SimBrain extends Application {
 	}
 
 	private HBox makeControlPanel() {
-		HBox controlPanel = new HBox(10);
-		controlPanel.setMaxHeight(50);
+		HBox controlPanel = new HBox(CONTROL_PANEL_BUTTON_SPACING);
+		controlPanel.setMaxHeight(CONTROL_PANEL_MAX_HEIGHT);
 		controlPanel.setPrefWidth(SimWindow.WINDOW_WIDTH);
 		controlPanel.setAlignment(Pos.BOTTOM_CENTER);
-		controlPanel.getChildren().add(makeUploadFileButton());
+		Button uploadFileButton = makeButton(UPLOAD_FILE_TEXT, false);
+		uploadFileButton.setOnAction(e->startNewSim());
+		controlPanel.getChildren().add(uploadFileButton);
 		myPlayButton = makeButton(PLAY_TEXT, true);
 		myPlayButton.setOnAction(e -> playSimulation());
 		controlPanel.getChildren().add(myPlayButton);
@@ -81,21 +86,14 @@ public class SimBrain extends Application {
 		controlPanel.getChildren().add(myDecSpeedButton);
 		myStepButton = makeButton(STEP_BUTTON_TEXT, true);
 		myStepButton.setOnAction(e -> stepSimulation());
-		
 		controlPanel.getChildren().add(myStepButton);
 		return controlPanel;
 	}
-	
+
 	private Button makeButton(String text, boolean disabled){
 		Button newButton = new Button(text);
 		newButton.setDisable(disabled);
 		return newButton;
-	}
-	
-	private Button makeUploadFileButton() {
-		Button uploadFile = new Button(UPLOAD_FILE_TEXT);
-		uploadFile.setOnAction(e -> startNewSim());
-		return uploadFile;
 	}
 
 	private File uploadFile() {
@@ -111,6 +109,11 @@ public class SimBrain extends Application {
 		myAnimation.play();
 		enableCorrectButtons(true);
 	}
+	
+	private void enableCorrectButtons(boolean isPlaying){
+		myPauseButton.setDisable(!isPlaying);
+		myPlayButton.setDisable(isPlaying);
+	}
 
 	private void stepSimulation() {
 		pauseSimulation();
@@ -121,20 +124,15 @@ public class SimBrain extends Application {
 		myAnimation.pause();
 		enableCorrectButtons(false);
 	}
-	
-	private void enableCorrectButtons(boolean simIsPlaying){
-		myPauseButton.setDisable(!simIsPlaying);
-		myPlayButton.setDisable(simIsPlaying);
-		myIncSpeedButton.setDisable(!simIsPlaying);
-		myDecSpeedButton.setDisable(!simIsPlaying);
-	}
 
 	private void incSpeed() {
+		Animation.Status previousStatus = myAnimation.getStatus();
 		myAnimation.stop();
 		changeFramesPerSecondValue(-1);
 		initializeAnimationTimeline();
-		runSim();
-		playSimulation();
+		paintNewSim();
+		if(previousStatus.equals(Animation.Status.RUNNING))
+			playSimulation();
 		myDecSpeedButton.setDisable(false);
 		System.out.println("inc speed");
 	}
@@ -152,15 +150,18 @@ public class SimBrain extends Application {
 	}
 
 	private void decSpeed() {
+		Animation.Status previousStatus = myAnimation.getStatus();
 		myAnimation.stop();
 		changeFramesPerSecondValue(1);
 		initializeAnimationTimeline();
-		runSim();
-		playSimulation();
+		paintNewSim();
+		if(previousStatus.equals(Animation.Status.RUNNING))
+			playSimulation();
+		myIncSpeedButton.setDisable(false);
 		System.out.println("DEC SPEED");
 	}
 
-	private void runSim() {
+	private void paintNewSim() {
 		myWindow.paintCells(myEngine.getListOfCells());
 	}
 
@@ -184,14 +185,19 @@ public class SimBrain extends Application {
 		File modelSetUp = uploadFile();
 		if (modelSetUp != null) {
 			readFile(modelSetUp);
-		myEngine = new SimEngine(myXMLContents.getModel(),
-				myXMLContents.getParams(), myXMLContents.getCellsToConfig(),
-				CELL_REGION_WIDTH, CELL_REGION_HEIGHT, SCREEN_BORDER_BUFFER,
-				SCREEN_BORDER_BUFFER);
-		myWindow.setStageTitle(myXMLContents.getTitle() + " by "+ myXMLContents.getAuthor());
-		runSim();
-		myStepButton.setDisable(false);
-		myPlayButton.setDisable(false);
+			myEngine = new SimEngine(myXMLContents.getModel(),
+					myXMLContents.getParams(), myXMLContents.getCellsToConfig(),
+					CELL_REGION_WIDTH, CELL_REGION_HEIGHT, SCREEN_BORDER_BUFFER,
+					SCREEN_BORDER_BUFFER);
+			myWindow.setStageTitle(myXMLContents.getTitle() + " by "+ myXMLContents.getAuthor());
+			myAnimation.stop();
+			framesPerSecond = INITIAL_FRAME_RATE;
+			initializeAnimationTimeline();
+			paintNewSim();
+			myStepButton.setDisable(false);
+			myIncSpeedButton.setDisable(false);
+			myDecSpeedButton.setDisable(false);
+			enableCorrectButtons(false);
 		}
 	}
 
