@@ -49,11 +49,11 @@ public class WaTorWorld extends BaseModel {
 			BaseGraph graph) {
 		for (Cell c : cellsToUpdate) {
 			if (c.getCurrentState() == SHARK) {
-				//lines switched
-//				Inhabitant currentShark = ((CellWithInhabitant) c)
-//						.getInhabitant();
-				 Shark currentShark = ((Shark) ((CellWithInhabitant)
-				 c).getInhabitant());
+				// lines switched
+				// Inhabitant currentShark = ((CellWithInhabitant) c)
+				// .getInhabitant();
+				Shark currentShark = ((Shark) ((CellWithInhabitant) c)
+						.getInhabitant());
 				if (currentShark.getEnergyLevel() < sharkEnergy
 						&& countNeighbors(FISH, graph.getNeighbors(c)) > 0) {
 					moveShark(graph, c, currentShark, FISH);
@@ -68,14 +68,14 @@ public class WaTorWorld extends BaseModel {
 		}
 		for (Cell c : cellsToUpdate) {
 			if (c.getCurrentState() == FISH) {
-//				Inhabitant currentFish = ((CellWithInhabitant) c)
-//						.getInhabitant();
-				 AquaticCreature currentFish = ((AquaticCreature)
-				 ((CellWithInhabitant) c).getInhabitant());
+				// Inhabitant currentFish = ((CellWithInhabitant) c)
+				// .getInhabitant();
+				AquaticCreature currentFish = ((AquaticCreature) ((CellWithInhabitant) c)
+						.getInhabitant());
 				if (countNeighbors(0, graph.getNeighbors(c)) > 0
 						&& currentFish.getReproductionCounter() == timeTillReproduce) {
 					currentFish.resetReproductionCounter();
-					Cell cellToMoveTo = getCellToMoveToForFish(graph, c, WATER);
+					Cell cellToMoveTo = getCellToMoveTo(graph, c, WATER);
 					if (cellToMoveTo != null) {
 						changeStateAndInhabitant(cellToMoveTo, currentFish,
 								FISH, FISH_COLOR);
@@ -83,7 +83,7 @@ public class WaTorWorld extends BaseModel {
 								FISH, FISH_COLOR);
 					}
 				} else {
-					Cell cellToMoveTo = getCellToMoveToForFish(graph, c, WATER);
+					Cell cellToMoveTo = getCellToMoveTo(graph, c, WATER);
 					if (cellToMoveTo != null) {
 						currentFish.increaseReproductionCounter();
 						changeStateAndInhabitant(cellToMoveTo, currentFish,
@@ -110,7 +110,8 @@ public class WaTorWorld extends BaseModel {
 					SHARK_COLOR);
 			if (currentShark.getReproductionCounter() == timeTillReproduce) {
 				currentShark.resetReproductionCounter();
-				changeStateAndInhabitant(c, new Shark(SHARK), SHARK, SHARK_COLOR);
+				changeStateAndInhabitant(c, new Shark(SHARK), SHARK,
+						SHARK_COLOR);
 			} else {
 				changeStateAndInhabitant(c, new Inhabitant(WATER), WATER,
 						WATER_COLOR);
@@ -128,11 +129,6 @@ public class WaTorWorld extends BaseModel {
 		currentShark.increaseReproductionCounter();
 	}
 
-	private void increaseSharkCounters(Shark currentShark) {
-		currentShark.increaseEnergy();
-		currentShark.increaseReproductionCounter();
-	}
-
 	private void changeStateAndInhabitant(Cell c, Inhabitant i, int state,
 			Color stateColor) {
 		((CellWithInhabitant) c).setInhabitant(i);
@@ -144,7 +140,9 @@ public class WaTorWorld extends BaseModel {
 		List<Cell> myCells = new ArrayList<Cell>(graph.getNeighbors(c));
 		Collections.shuffle(myCells);
 		for (Cell cell : myCells) {
-			if (cell.getCurrentState() == state) {
+			if (cell.getCurrentState() == state
+					&& (c.getCurrentState() != FISH || (c.getCurrentState() == FISH && cell
+							.getFutureState() == state))) {
 				toMove = cell;
 				break;
 			}
@@ -152,7 +150,7 @@ public class WaTorWorld extends BaseModel {
 		return toMove;
 	}
 
-	private Cell getCellToMoveToForFish(BaseGraph graph, Cell c, int state) {
+/*	private Cell getCellToMoveToForFish(BaseGraph graph, Cell c, int state) {
 		Cell toMove = null;
 		List<Cell> myCells = new ArrayList<Cell>(graph.getNeighbors(c));
 		Collections.shuffle(myCells);
@@ -164,7 +162,7 @@ public class WaTorWorld extends BaseModel {
 			}
 		}
 		return toMove;
-	}
+	}*/
 
 	@Override
 	public Color getDefaultColor() {
