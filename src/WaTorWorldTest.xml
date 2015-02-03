@@ -6,7 +6,7 @@
 	<GridRows>10</GridRows>
 	<GridColumns>10</GridColumns>
 	<Parameters>
-		<energyLevel>6</energyLevel>
+		<energyLevel>10</energyLevel>
 		<timeTillReproduce>8</timeTillReproduce>
 	</Parameters>
 	<Configuration>

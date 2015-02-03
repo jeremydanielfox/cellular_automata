@@ -1,4 +1,5 @@
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -75,16 +76,7 @@ public abstract class BaseGraph {
 		myEdges.put(myCell, temp);
 	}
 
-	public void removeVertex(Cell myCell) {
-		if (myCell == null) {
-			System.out.println("Can't remove vertex because not a cell");
-			return;
-		}
-		if (myEdges.containsKey(myCell))
-			myEdges.remove(myCell);
-	}
-
-	public void addEdge(Cell from, Cell to) {
+	private void addEdge(Cell from, Cell to) {
 		if (from == null || to == null) {
 			System.out
 					.println("Can't addEdge because one ore more of the inputs is not a cell");
@@ -106,7 +98,7 @@ public abstract class BaseGraph {
 	}
 
 	public Iterable<Cell> getAllCells() {
-		return myEdges.keySet();
+		return Collections.unmodifiableSet(myEdges.keySet());
 	}
 
 	public Cell getCell(int ID) {
@@ -158,7 +150,7 @@ public abstract class BaseGraph {
 
 	public abstract void initializeCells(int defaultState, Color defaultColor);
 
-	protected abstract void calculateValues();
+	public abstract void calculateValues();
 
 	public abstract int calculateID(int row, int col);
 

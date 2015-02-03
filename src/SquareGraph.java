@@ -33,7 +33,7 @@ public class SquareGraph extends BaseGraph {
 	/**
 	 * Calculate the width and height of each cell
 	 */
-	protected void calculateValues() {
+	public void calculateValues() {
 		cellWidth = getMyScreenWidth() / getNumCellsAcross();
 		cellHeight = getMyScreenHeight() / getNumCellsUpDown();
 	}
