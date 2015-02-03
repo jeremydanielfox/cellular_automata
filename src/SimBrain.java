@@ -42,11 +42,15 @@ public class SimBrain extends Application {
 	private static final int MIN_FRAME_PER_SECOND = 0;
 	private static final int MAX_FRAME_PER_SECOND = 5000;
 	private static final int SCREEN_BORDER_BUFFER = 50;
-	private static final int CELL_REGION_WIDTH = SimWindow.WINDOW_WIDTH-2*SCREEN_BORDER_BUFFER;
-	private static final int CELL_REGION_HEIGHT = SimWindow.WINDOW_HEIGHT-2*SCREEN_BORDER_BUFFER;
+	private static final int CELL_REGION_WIDTH = SimWindow.WINDOW_WIDTH - 2
+			* SCREEN_BORDER_BUFFER;
+	private static final int CELL_REGION_HEIGHT = SimWindow.WINDOW_HEIGHT - 2
+			* SCREEN_BORDER_BUFFER;
 	private static final int INITIAL_FRAME_RATE = 2500;
 	private static final int CONTROL_PANEL_BUTTON_SPACING = 10;
-	private static final int CONTROL_PANEL_MAX_HEIGHT = 50 ;
+	private static final int CONTROL_PANEL_MAX_HEIGHT = 50;
+	private static final int DEC_FRAME_RATE_MULTIPLIER = 1;
+	private static final int INC_FRAME_RATE_MULTIPLIER = -1;
 
 	@Override
 	public void start(Stage s) throws Exception {
@@ -65,20 +69,24 @@ public class SimBrain extends Application {
 		controlPanel.setMaxHeight(CONTROL_PANEL_MAX_HEIGHT);
 		controlPanel.setPrefWidth(SimWindow.WINDOW_WIDTH);
 		controlPanel.setAlignment(Pos.BOTTOM_CENTER);
-		Button uploadFileButton = makeButton(myResources.getString("UploadButtonText"), false);
-		uploadFileButton.setOnAction(e->startNewSim());
+		Button uploadFileButton = makeButton(
+				myResources.getString("UploadButtonText"), false);
+		uploadFileButton.setOnAction(e -> startNewSim());
 		controlPanel.getChildren().add(uploadFileButton);
 		myPlayButton = makeButton(myResources.getString("PlayButtonText"), true);
 		myPlayButton.setOnAction(e -> playSimulation());
 		controlPanel.getChildren().add(myPlayButton);
-		myPauseButton = makeButton(myResources.getString("PauseButtonText"), true);
+		myPauseButton = makeButton(myResources.getString("PauseButtonText"),
+				true);
 		myPauseButton.setOnAction(e -> pauseSimulation());
 		controlPanel.getChildren().add(myPauseButton);
-		myIncSpeedButton = makeButton(myResources.getString("IncSpeedButtonText"), true);
-		myIncSpeedButton.setOnAction(e -> incSpeed());
+		myIncSpeedButton = makeButton(
+				myResources.getString("IncSpeedButtonText"), true);
+		myIncSpeedButton.setOnAction(e -> changeFrameSpeed(INC_FRAME_RATE_MULTIPLIER));
 		controlPanel.getChildren().add(myIncSpeedButton);
-		myDecSpeedButton = makeButton(myResources.getString("DecSpeedButtonText"), true);
-		myDecSpeedButton.setOnAction(e -> decSpeed());
+		myDecSpeedButton = makeButton(
+				myResources.getString("DecSpeedButtonText"), true);
+		myDecSpeedButton.setOnAction(e -> changeFrameSpeed(DEC_FRAME_RATE_MULTIPLIER));
 		controlPanel.getChildren().add(myDecSpeedButton);
 		myStepButton = makeButton(myResources.getString("StepButtonText"), true);
 		myStepButton.setOnAction(e -> stepSimulation());
@@ -86,7 +94,7 @@ public class SimBrain extends Application {
 		return controlPanel;
 	}
 
-	private Button makeButton(String text, boolean disabled){
+	private Button makeButton(String text, boolean disabled) {
 		Button newButton = new Button(text);
 		newButton.setDisable(disabled);
 		return newButton;
@@ -105,8 +113,8 @@ public class SimBrain extends Application {
 		myAnimation.play();
 		enableCorrectButtons(true);
 	}
-	
-	private void enableCorrectButtons(boolean isPlaying){
+
+	private void enableCorrectButtons(boolean isPlaying) {
 		myPauseButton.setDisable(!isPlaying);
 		myPlayButton.setDisable(isPlaying);
 	}
@@ -127,10 +135,42 @@ public class SimBrain extends Application {
 		changeFramesPerSecondValue(-1);
 		initializeAnimationTimeline();
 		paintNewSim();
-		if(previousStatus.equals(Animation.Status.RUNNING))
+		if (previousStatus.equals(Animation.Status.RUNNING))
 			playSimulation();
 		myDecSpeedButton.setDisable(false);
 		System.out.println("inc speed");
+	}
+
+	private void decSpeed() {
+		Animation.Status previousStatus = myAnimation.getStatus();
+		myAnimation.stop();
+		changeFramesPerSecondValue(1);
+		initializeAnimationTimeline();
+		paintNewSim();
+		if (previousStatus.equals(Animation.Status.RUNNING))
+			playSimulation();
+		myIncSpeedButton.setDisable(false);
+		System.out.println("DEC SPEED");
+	}
+
+	private void changeFrameSpeed(int speedChangeMultiplier) {
+		Animation.Status previousStatus = myAnimation.getStatus();
+		myAnimation.stop();
+		changeFramesPerSecondValue(speedChangeMultiplier);
+		if (speedChangeMultiplier < 0)
+			myDecSpeedButton.setDisable(false);
+		else
+			myIncSpeedButton.setDisable(false);
+		initializeAnimationTimeline();
+		paintNewSim();
+		if (previousStatus.equals(Animation.Status.RUNNING)) {
+			playSimulation();
+			enableCorrectButtons(true);
+		}
+		else if (previousStatus.equals(Animation.Status.PAUSED)){
+			enableCorrectButtons(false);
+		}
+
 	}
 
 	public void changeFramesPerSecondValue(int i) {
@@ -143,18 +183,6 @@ public class SimBrain extends Application {
 		}
 		framesPerSecond += i * FRAME_SPEED_CHANGE_VALUE;
 		System.out.println(framesPerSecond);
-	}
-
-	private void decSpeed() {
-		Animation.Status previousStatus = myAnimation.getStatus();
-		myAnimation.stop();
-		changeFramesPerSecondValue(1);
-		initializeAnimationTimeline();
-		paintNewSim();
-		if(previousStatus.equals(Animation.Status.RUNNING))
-			playSimulation();
-		myIncSpeedButton.setDisable(false);
-		System.out.println("DEC SPEED");
 	}
 
 	private void paintNewSim() {
@@ -182,10 +210,12 @@ public class SimBrain extends Application {
 		if (modelSetUp != null) {
 			readFile(modelSetUp);
 			myEngine = new SimEngine(myXMLContents.getModel(),
-					myXMLContents.getParams(), myXMLContents.getCellsToConfig(),
-					CELL_REGION_WIDTH, CELL_REGION_HEIGHT, SCREEN_BORDER_BUFFER,
+					myXMLContents.getParams(),
+					myXMLContents.getCellsToConfig(), CELL_REGION_WIDTH,
+					CELL_REGION_HEIGHT, SCREEN_BORDER_BUFFER,
 					SCREEN_BORDER_BUFFER);
-			myWindow.setStageTitle(myXMLContents.getTitle() + " by "+ myXMLContents.getAuthor());
+			myWindow.setStageTitle(myXMLContents.getTitle() + " by "
+					+ myXMLContents.getAuthor());
 			myAnimation.stop();
 			framesPerSecond = INITIAL_FRAME_RATE;
 			initializeAnimationTimeline();
