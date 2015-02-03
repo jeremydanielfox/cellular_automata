@@ -1,11 +1,8 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.xml.sax.SAXException;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -18,7 +15,10 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
- * This class is responsible for running the simulation.
+ * This class is responsible for running the simulation and acts as the
+ * "controller." It makes sure the XML file is read, controls the time line of
+ * the simulation animation, and updates the simulation and the view for each
+ * frame update.
  * 
  * @author Sierra Smith
  *
@@ -56,7 +56,8 @@ public class SimBrain extends Application {
 	public void start(Stage s) throws Exception {
 		myStage = s;
 		myResources = ResourceBundle.getBundle("resources/English");
-		myWindow = new SimWindow(s, makeControlPanel());
+		myWindow = new SimWindow(s, makeControlPanel(),
+				myResources.getString("InitialWindowTitle"));
 		initializeAnimationTimeline();
 	}
 
@@ -82,11 +83,13 @@ public class SimBrain extends Application {
 		controlPanel.getChildren().add(myPauseButton);
 		myIncSpeedButton = makeButton(
 				myResources.getString("IncSpeedButtonText"), true);
-		myIncSpeedButton.setOnAction(e -> changeFrameSpeed(INC_FRAME_RATE_MULTIPLIER));
+		myIncSpeedButton
+				.setOnAction(e -> changeFrameSpeed(INC_FRAME_RATE_MULTIPLIER));
 		controlPanel.getChildren().add(myIncSpeedButton);
 		myDecSpeedButton = makeButton(
 				myResources.getString("DecSpeedButtonText"), true);
-		myDecSpeedButton.setOnAction(e -> changeFrameSpeed(DEC_FRAME_RATE_MULTIPLIER));
+		myDecSpeedButton
+				.setOnAction(e -> changeFrameSpeed(DEC_FRAME_RATE_MULTIPLIER));
 		controlPanel.getChildren().add(myDecSpeedButton);
 		myStepButton = makeButton(myResources.getString("StepButtonText"), true);
 		myStepButton.setOnAction(e -> stepSimulation());
@@ -129,30 +132,6 @@ public class SimBrain extends Application {
 		enableCorrectButtons(false);
 	}
 
-	private void incSpeed() {
-		Animation.Status previousStatus = myAnimation.getStatus();
-		myAnimation.stop();
-		changeFramesPerSecondValue(-1);
-		initializeAnimationTimeline();
-		paintNewSim();
-		if (previousStatus.equals(Animation.Status.RUNNING))
-			playSimulation();
-		myDecSpeedButton.setDisable(false);
-		System.out.println("inc speed");
-	}
-
-	private void decSpeed() {
-		Animation.Status previousStatus = myAnimation.getStatus();
-		myAnimation.stop();
-		changeFramesPerSecondValue(1);
-		initializeAnimationTimeline();
-		paintNewSim();
-		if (previousStatus.equals(Animation.Status.RUNNING))
-			playSimulation();
-		myIncSpeedButton.setDisable(false);
-		System.out.println("DEC SPEED");
-	}
-
 	private void changeFrameSpeed(int speedChangeMultiplier) {
 		Animation.Status previousStatus = myAnimation.getStatus();
 		myAnimation.stop();
@@ -162,12 +141,11 @@ public class SimBrain extends Application {
 		else
 			myIncSpeedButton.setDisable(false);
 		initializeAnimationTimeline();
-		paintNewSim();
+		paintSim();
 		if (previousStatus.equals(Animation.Status.RUNNING)) {
 			playSimulation();
 			enableCorrectButtons(true);
-		}
-		else if (previousStatus.equals(Animation.Status.PAUSED)){
+		} else if (previousStatus.equals(Animation.Status.PAUSED)) {
 			enableCorrectButtons(false);
 		}
 
@@ -182,10 +160,9 @@ public class SimBrain extends Application {
 			return;
 		}
 		framesPerSecond += i * FRAME_SPEED_CHANGE_VALUE;
-		System.out.println(framesPerSecond);
 	}
 
-	private void paintNewSim() {
+	private void paintSim() {
 		myWindow.paintCells(myEngine.getListOfCells());
 	}
 
@@ -219,7 +196,7 @@ public class SimBrain extends Application {
 			myAnimation.stop();
 			framesPerSecond = INITIAL_FRAME_RATE;
 			initializeAnimationTimeline();
-			paintNewSim();
+			paintSim();
 			myStepButton.setDisable(false);
 			myIncSpeedButton.setDisable(false);
 			myDecSpeedButton.setDisable(false);

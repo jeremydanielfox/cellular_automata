@@ -27,7 +27,6 @@ public class WaTorWorld extends BaseModel {
 
 	public WaTorWorld(Map<String, Double> parameters) {
 		super(parameters, 2);
-		// TODO Auto-generated constructor stub
 		getStateToIntMap().put("water", WATER);
 		getStateToIntMap().put("fish", FISH);
 		getStateToIntMap().put("shark", SHARK);
@@ -41,7 +40,6 @@ public class WaTorWorld extends BaseModel {
 
 	@Override
 	public Cell updateFutureState(Cell cellToUpdate, Collection<Cell> neighbors) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -49,15 +47,11 @@ public class WaTorWorld extends BaseModel {
 			BaseGraph graph) {
 		for (Cell c : cellsToUpdate) {
 			if (c.getCurrentState() == SHARK) {
-				// lines switched
-				// Inhabitant currentShark = ((CellWithInhabitant) c)
-				// .getInhabitant();
 				Shark currentShark = ((Shark) ((CellWithInhabitant) c)
 						.getInhabitant());
 				if (currentShark.getEnergyLevel() < sharkEnergy
 						&& countNeighbors(FISH, graph.getNeighbors(c)) > 0) {
 					moveShark(graph, c, currentShark, FISH);
-					// CHANGED BELOW LINE
 				} else if (currentShark.getEnergyLevel() >= sharkEnergy) {
 					changeStateAndInhabitant(c, new Inhabitant(WATER), WATER,
 							WATER_COLOR);
@@ -68,8 +62,6 @@ public class WaTorWorld extends BaseModel {
 		}
 		for (Cell c : cellsToUpdate) {
 			if (c.getCurrentState() == FISH) {
-				// Inhabitant currentFish = ((CellWithInhabitant) c)
-				// .getInhabitant();
 				AquaticCreature currentFish = ((AquaticCreature) ((CellWithInhabitant) c)
 						.getInhabitant());
 				if (countNeighbors(0, graph.getNeighbors(c)) > 0
@@ -104,7 +96,6 @@ public class WaTorWorld extends BaseModel {
 		Cell cellToMoveTo = getCellToMoveTo(graph, c, stateToCheckAgainst);
 		if (cellToMoveTo != null) {
 			changeSharkCounters(currentShark, stateToCheckAgainst);
-			// increaseSharkCounters(currentShark);
 			cellToMoveTo.setCurrentState(DEFAULT_STATE);
 			changeStateAndInhabitant(cellToMoveTo, currentShark, SHARK,
 					SHARK_COLOR);
@@ -150,29 +141,13 @@ public class WaTorWorld extends BaseModel {
 		return toMove;
 	}
 
-/*	private Cell getCellToMoveToForFish(BaseGraph graph, Cell c, int state) {
-		Cell toMove = null;
-		List<Cell> myCells = new ArrayList<Cell>(graph.getNeighbors(c));
-		Collections.shuffle(myCells);
-		for (Cell cell : myCells) {
-			if (cell.getCurrentState() == state
-					&& cell.getFutureState() == state) {
-				toMove = cell;
-				break;
-			}
-		}
-		return toMove;
-	}*/
-
 	@Override
 	public Color getDefaultColor() {
-		// TODO Auto-generated method stub
 		return DEFAULT_COLOR;
 	}
 
 	@Override
 	public int getDefaultState() {
-		// TODO Auto-generated method stub
 		return DEFAULT_STATE;
 	}
 

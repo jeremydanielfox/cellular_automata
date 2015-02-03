@@ -1,13 +1,18 @@
- import java.util.Collection;
-import java.util.List;
-
+import java.util.Collection;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+/**
+ * This class acts as the "view" for the simulation. It displays the stage that
+ * the simulation runs, the control panel, and displays the cells of the
+ * simulation.
+ * 
+ * @author sierrasmith95
+ *
+ */
 public class SimWindow {
 	private Stage myStage;
 	private Scene myScene;
@@ -19,9 +24,9 @@ public class SimWindow {
 	public static final int SIM_WINDOW_X_OFFSET = 25;
 	public static final int SIM_WINDOW_Y_OFFSET = 25;
 
-	public SimWindow(Stage stage, HBox controls) {
+	public SimWindow(Stage stage, HBox controls, String title) {
 		myStage = stage;
-		myStage.setTitle("Cellular Automata");
+		myStage.setTitle(title);
 		myRoot = new Group();
 		myCellRegion = new Group();
 		myRoot.getChildren().add(controls);
