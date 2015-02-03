@@ -12,25 +12,25 @@ import javafx.scene.paint.Color;
  */
 
 public class Fire extends BaseModel {
-	private static final int empty = 0;
-	private static final int tree = 1;
-	private static final int burning = 2;
-	private static final int defaultState = tree;
-	private static final Color emptyColor = Color.YELLOW;
-	private static final Color treeColor = Color.FORESTGREEN;
-	private static final Color burningColor = Color.RED;
-	private static final Color defaultColor = treeColor;
+	private static final int EMPTY = 0;
+	private static final int TREE = 1;
+	private static final int BURNING = 2;
+	private static final int DEFAULT_STATE = TREE;
+	private static final Color EMPTY_COLOR = Color.YELLOW;
+	private static final Color TREE_COLOR = Color.FORESTGREEN;
+	private static final Color BURNING_COLOR = Color.RED;
+	private static final Color DEFAULT_COLOR = TREE_COLOR;
 	private double probCatch;
 
 	public Fire(Map<String, Double> parameters) {
 		super(parameters, 2);
 		// TODO Auto-generated constructor stub
-		getStateToIntMap().put("empty", empty);
-		getStateToIntMap().put("tree", tree);
-		getStateToIntMap().put("burning", burning);
-		getStateToColorMap().put("empty", emptyColor);
-		getStateToColorMap().put("tree", treeColor);
-		getStateToColorMap().put("burning", burningColor);
+		getStateToIntMap().put("empty", EMPTY);
+		getStateToIntMap().put("tree", TREE);
+		getStateToIntMap().put("burning", BURNING);
+		getStateToColorMap().put("empty", EMPTY_COLOR);
+		getStateToColorMap().put("tree", TREE_COLOR);
+		getStateToColorMap().put("burning", BURNING_COLOR);
 
 		probCatch = parameters.get("probCatch");
 	}
@@ -40,14 +40,14 @@ public class Fire extends BaseModel {
 		// TODO Auto-generated method stub
 		double random = new Random().nextDouble();
 
-		if (cellToUpdate.getCurrentState() == tree
+		if (cellToUpdate.getCurrentState() == TREE
 				&& countNeighbors(2, neighbors) > 0 && random < probCatch) {
-			changeFutureState(cellToUpdate, burning, burningColor);
-		} else if (cellToUpdate.getCurrentState() == burning
-				|| cellToUpdate.getCurrentState() == empty) {
-			changeFutureState(cellToUpdate, empty, emptyColor);
+			changeFutureState(cellToUpdate, BURNING, BURNING_COLOR);
+		} else if (cellToUpdate.getCurrentState() == BURNING
+				|| cellToUpdate.getCurrentState() == EMPTY) {
+			changeFutureState(cellToUpdate, EMPTY, EMPTY_COLOR);
 		} else {
-			changeFutureState(cellToUpdate, tree, treeColor);
+			changeFutureState(cellToUpdate, TREE, TREE_COLOR);
 		}
 		return cellToUpdate;
 	}
@@ -55,13 +55,13 @@ public class Fire extends BaseModel {
 	@Override
 	public Color getDefaultColor() {
 		// TODO Auto-generated method stub
-		return defaultColor;
+		return DEFAULT_COLOR;
 	}
 
 	@Override
 	public int getDefaultState() {
 		// TODO Auto-generated method stub
-		return defaultState;
+		return DEFAULT_STATE;
 	}
 
 }
