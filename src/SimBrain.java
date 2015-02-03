@@ -35,13 +35,8 @@ public class SimBrain extends Application {
 	private Button myDecSpeedButton;
 	private Button myStepButton;
 	private int framesPerSecond = 2500;
+	private ResourceBundle myResources;
 
-	private static final String UPLOAD_FILE_TEXT = "Upload XML File";
-	private static final String PLAY_TEXT = "Play";
-	private static final String PAUSE_TEXT = "Pause";
-	private static final String INC_SPEED_TEXT = "+";
-	private static final String DEC_SPEED_TEXT = "-";
-	private static final String STEP_BUTTON_TEXT = "Step";
 	private static final int NUM_FRAMES_PER_SECOND = 10;
 	private static final int FRAME_SPEED_CHANGE_VALUE = 300;
 	private static final int MIN_FRAME_PER_SECOND = 0;
@@ -56,6 +51,7 @@ public class SimBrain extends Application {
 	@Override
 	public void start(Stage s) throws Exception {
 		myStage = s;
+		myResources = ResourceBundle.getBundle("resources/English");
 		myWindow = new SimWindow(s, makeControlPanel());
 		initializeAnimationTimeline();
 	}
@@ -69,22 +65,22 @@ public class SimBrain extends Application {
 		controlPanel.setMaxHeight(CONTROL_PANEL_MAX_HEIGHT);
 		controlPanel.setPrefWidth(SimWindow.WINDOW_WIDTH);
 		controlPanel.setAlignment(Pos.BOTTOM_CENTER);
-		Button uploadFileButton = makeButton(UPLOAD_FILE_TEXT, false);
+		Button uploadFileButton = makeButton(myResources.getString("UploadButtonText"), false);
 		uploadFileButton.setOnAction(e->startNewSim());
 		controlPanel.getChildren().add(uploadFileButton);
-		myPlayButton = makeButton(PLAY_TEXT, true);
+		myPlayButton = makeButton(myResources.getString("PlayButtonText"), true);
 		myPlayButton.setOnAction(e -> playSimulation());
 		controlPanel.getChildren().add(myPlayButton);
-		myPauseButton = makeButton(PAUSE_TEXT, true);
+		myPauseButton = makeButton(myResources.getString("PauseButtonText"), true);
 		myPauseButton.setOnAction(e -> pauseSimulation());
 		controlPanel.getChildren().add(myPauseButton);
-		myIncSpeedButton = makeButton(INC_SPEED_TEXT, true);
+		myIncSpeedButton = makeButton(myResources.getString("IncSpeedButtonText"), true);
 		myIncSpeedButton.setOnAction(e -> incSpeed());
 		controlPanel.getChildren().add(myIncSpeedButton);
-		myDecSpeedButton = makeButton(DEC_SPEED_TEXT, true);
+		myDecSpeedButton = makeButton(myResources.getString("DecSpeedButtonText"), true);
 		myDecSpeedButton.setOnAction(e -> decSpeed());
 		controlPanel.getChildren().add(myDecSpeedButton);
-		myStepButton = makeButton(STEP_BUTTON_TEXT, true);
+		myStepButton = makeButton(myResources.getString("StepButtonText"), true);
 		myStepButton.setOnAction(e -> stepSimulation());
 		controlPanel.getChildren().add(myStepButton);
 		return controlPanel;
