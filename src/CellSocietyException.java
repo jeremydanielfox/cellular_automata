@@ -10,6 +10,8 @@ public class CellSocietyException extends RuntimeException{
 	 */
 	public static final String MISSING_INFO_MESSAGE = "The XML file is missing one of the following tags:\n \"Model\", "
 			+ "\"GridRows\", \"GridColumns\".";
+	public static final String INCORRECT_MODEL_MESSAGE = "The model given does not match a model implemented\n by "
+			+ "this simulation.";
 	
 	private static final long serialVersionUID = 1L;
 	private Stage myStage;

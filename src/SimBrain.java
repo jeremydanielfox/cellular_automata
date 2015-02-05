@@ -196,15 +196,15 @@ public class SimBrain extends Application {
 		if (modelSetUp != null) {
 			try{
 			readFile(modelSetUp);
-			}catch(CellSocietyException error){
-				error.displayError();
-				return;
-			}
 			myEngine = new SimEngine(myXMLContents.getModel(),
 					myXMLContents.getParams(),
 					myXMLContents.getCellsToConfig(), CELL_REGION_WIDTH,
 					CELL_REGION_HEIGHT, SCREEN_BORDER_BUFFER,
 					SCREEN_BORDER_BUFFER);
+			}catch(CellSocietyException error){
+				error.displayError();
+				return;
+			}
 			myWindow.setStageTitle(myXMLContents.getTitle() + " by "
 					+ myXMLContents.getAuthor());
 			myAnimation.stop();

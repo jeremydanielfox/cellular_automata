@@ -14,7 +14,6 @@ public class SimEngine {
 	private Map<String, Double> myParameters;
 	private List<ConfigCellInfo> myCellsToConfig;
 
-	// while we don't have factories
 	private BaseGraph myGraph;
 	private BaseModel myModel;
 
