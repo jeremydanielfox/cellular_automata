@@ -1,4 +1,6 @@
 
+
+
 public class InhabitantFactory {
 
 	public Inhabitant createSpecifiedInhabitant(String inhabitant, int state) {

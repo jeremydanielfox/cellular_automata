@@ -21,6 +21,7 @@ import javafx.scene.paint.Color;
 public abstract class BaseGraph {
 
 	private Map<Cell, Collection<Cell>> myEdges = new HashMap<>();
+	private CellPointMap myCellPointMap= new CellPointMap();
 	private int MIN_POINTS_IN_COMMON;
 	private int horizontalOffset;
 	private int verticalOffset;
@@ -33,6 +34,7 @@ public abstract class BaseGraph {
 	public BaseGraph(int numCellsWidth, int numCellsHeight, int screenWidth,
 			int screenHeight, int xOffset, int yOffset, int points,
 			int defaultState, Color defaultColor, String model) {
+		
 		numCellsAcross = numCellsWidth;
 		numCellsUpDown = numCellsHeight;
 		myScreenWidth = screenWidth;
@@ -41,9 +43,11 @@ public abstract class BaseGraph {
 		verticalOffset = yOffset;
 		MIN_POINTS_IN_COMMON = points;
 		myModel = model;
+		initializeConstants();
 		calculateValues();
 		initializeCells(defaultState, defaultColor);
 		connectCells();
+		manageEdgeConditions();
 
 	}
 
@@ -62,9 +66,19 @@ public abstract class BaseGraph {
 	public int getMyScreenHeight() {
 		return myScreenHeight;
 	}
+	
+	public CellPointMap getCellPointMap() {
+		return myCellPointMap;
+	}
 
 	public Collection<Cell> getNeighbors(Cell myCell) {
 		return myEdges.get(myCell);
+	}
+	
+	public Cell getNeighbor(Cell myCell, Point2D change) {
+		Point2D myPoint = getCellPointMap().get(myCell);
+		Point2D temp = myPoint.add(change);
+		return myCellPointMap.get(temp);
 	}
 
 	public void addVertex(Cell myCell) {
@@ -93,6 +107,8 @@ public abstract class BaseGraph {
 					.println("Can't Connect because one of the inputs is null");
 			return;
 		}
+		if (first.equals(second))
+			return;
 		addEdge(first, second);
 		addEdge(second, first);
 	}
@@ -117,36 +133,41 @@ public abstract class BaseGraph {
 		return verticalOffset;
 	}
 
-	public void connectCells() {
-		for (Cell first : this.getAllCells())
-			for (Cell second : this.getAllCells())
-				if (isNeighbors(first, second))
-					connect(first, second);
-	}
+	public abstract void connectCells();
+	
+	public abstract void manageEdgeConditions();
+//	{
+//		for (Cell first : this.getAllCells())
+//			for (Cell second : this.getAllCells())
+//				if (isNeighbors(first, second))
+//					connect(first, second);
+//	}
+//
+//	public int numPointsInCommon(Cell first, Cell second) {
+//		Set<Point2D> temp = new HashSet(first.getVerticies());
+//		Set<Point2D> newtemp = new HashSet(second.getVerticies());
+//		temp.retainAll(new HashSet(second.getVerticies()));
+//		return temp.size();
+//	}
+//
+//	public int getMinPointsInCommon() {
+//		return MIN_POINTS_IN_COMMON;
+//	}
+//
+//	public boolean isNeighbors(Cell first, Cell second) {
+//		return numPointsInCommon(first, second) >= getMinPointsInCommon()
+//				&& !first.equals(second) || additionalNeighborCondition(first,second);
+//	}
 
-	public int numPointsInCommon(Cell first, Cell second) {
-		Set<Point2D> temp = new HashSet(first.getVerticies());
-		Set<Point2D> newtemp = new HashSet(second.getVerticies());
-		temp.retainAll(new HashSet(second.getVerticies()));
-		return temp.size();
-	}
-
-	public int getMinPointsInCommon() {
-		return MIN_POINTS_IN_COMMON;
-	}
-
-	public boolean isNeighbors(Cell first, Cell second) {
-		return numPointsInCommon(first, second) >= getMinPointsInCommon()
-				&& !first.equals(second) || additionalNeighborCondition(first,second);
-	}
-
-	public boolean additionalNeighborCondition(Cell first, Cell second) {
-		return false;
-	}
+//	public boolean additionalNeighborCondition(Cell first, Cell second) {
+//		return false;
+//	}
 
 	public String getModelName() {
 		return myModel;
 	}
+	
+	public abstract void initializeConstants();
 
 	public abstract void initializeCells(int defaultState, Color defaultColor);
 
