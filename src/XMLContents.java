@@ -31,7 +31,7 @@ public class XMLContents {
 	private Document myDoc;
 
 	public XMLContents(File file) throws ParserConfigurationException,
-			SAXException, IOException {
+	SAXException, IOException {
 		myFile = file;
 		cellsToConfigure = new ArrayList<>();
 		myParameters = new HashMap<>();
@@ -39,22 +39,42 @@ public class XMLContents {
 	}
 
 	public void readXML() throws ParserConfigurationException, SAXException,
-			IOException {
+	IOException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		myDoc = builder.parse(myFile);
-		myModel = extractSpecifiedTag("Model");
-		myAuthor = extractSpecifiedTag("Author");
-		myTitle = extractSpecifiedTag("Title");
-		myParameters.put("rows",
-				Double.parseDouble(extractSpecifiedTag("GridRows")));
+		try{
+			myModel = extractSpecifiedTag("Model");
+			myParameters.put("rows",
+					Double.parseDouble(extractSpecifiedTag("GridRows")));
 
-		myParameters.put("columns",
-				Double.parseDouble(extractSpecifiedTag("GridColumns")));
+			myParameters.put("columns",
+					Double.parseDouble(extractSpecifiedTag("GridColumns")));
+		}catch(NullPointerException e){
+			throw new CellSocietyException(CellSocietyException.MISSING_INFO_MESSAGE);
+		}
+		readAuthor();
+		readTitle();
 		extractConfig();
 		extractParams();
 	}
 
+	private void readAuthor(){
+		try{
+			myAuthor = extractSpecifiedTag("Author");
+		}catch(NullPointerException e){
+			myAuthor = "User";
+		}
+	}
+	
+	private void readTitle(){
+		try{
+			myTitle = extractSpecifiedTag("Title");
+		}catch(NullPointerException e){
+			myTitle = myModel;
+		}
+	}
+	
 	private void extractParams() {
 		NodeList paramList = myDoc.getElementsByTagName("Parameters");
 		if (paramList.getLength() != 0) {

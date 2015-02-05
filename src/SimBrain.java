@@ -1,14 +1,18 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
+
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.xml.sax.SAXException;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -94,7 +98,12 @@ public class SimBrain extends Application {
 		myStepButton = makeButton(myResources.getString("StepButtonText"), true);
 		myStepButton.setOnAction(e -> stepSimulation());
 		controlPanel.getChildren().add(myStepButton);
+
 		return controlPanel;
+	}
+	
+	private void respondToSlider(){
+		
 	}
 
 	private Button makeButton(String text, boolean disabled) {
@@ -185,7 +194,12 @@ public class SimBrain extends Application {
 	private void startNewSim() {
 		File modelSetUp = uploadFile();
 		if (modelSetUp != null) {
+			try{
 			readFile(modelSetUp);
+			}catch(CellSocietyException error){
+				error.displayError();
+				return;
+			}
 			myEngine = new SimEngine(myXMLContents.getModel(),
 					myXMLContents.getParams(),
 					myXMLContents.getCellsToConfig(), CELL_REGION_WIDTH,
@@ -207,7 +221,8 @@ public class SimBrain extends Application {
 	private void readFile(File file) {
 		try {
 			myXMLContents = new XMLContents(file);
-		} catch (ParserConfigurationException | SAXException | IOException e) {
+		} 
+		catch (ParserConfigurationException | SAXException | IOException e) {
 			e.printStackTrace();
 		}
 	}
