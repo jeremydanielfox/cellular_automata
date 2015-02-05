@@ -21,6 +21,7 @@ import javafx.scene.paint.Color;
 public abstract class BaseGraph {
 
 	private Map<Cell, Collection<Cell>> myEdges = new HashMap<>();
+	private CellPointMap myCellPointMap= new CellPointMap();
 	private int MIN_POINTS_IN_COMMON;
 	private int horizontalOffset;
 	private int verticalOffset;
@@ -33,6 +34,7 @@ public abstract class BaseGraph {
 	public BaseGraph(int numCellsWidth, int numCellsHeight, int screenWidth,
 			int screenHeight, int xOffset, int yOffset, int points,
 			int defaultState, Color defaultColor, String model) {
+		
 		numCellsAcross = numCellsWidth;
 		numCellsUpDown = numCellsHeight;
 		myScreenWidth = screenWidth;
@@ -62,9 +64,19 @@ public abstract class BaseGraph {
 	public int getMyScreenHeight() {
 		return myScreenHeight;
 	}
+	
+	public CellPointMap getCellPointMap() {
+		return myCellPointMap;
+	}
 
 	public Collection<Cell> getNeighbors(Cell myCell) {
 		return myEdges.get(myCell);
+	}
+	
+	public Cell getNeighbor(Cell myCell, Point2D change) {
+		Point2D myPoint = getCellPointMap().get(myCell);
+		Point2D temp = myPoint.add(change);
+		return myCellPointMap.get(temp);
 	}
 
 	public void addVertex(Cell myCell) {
@@ -93,6 +105,8 @@ public abstract class BaseGraph {
 					.println("Can't Connect because one of the inputs is null");
 			return;
 		}
+		if (first.equals(second))
+			return;
 		addEdge(first, second);
 		addEdge(second, first);
 	}
