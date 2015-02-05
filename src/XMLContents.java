@@ -13,6 +13,14 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+/**
+ * This class takes in an XML file and parses the file into different fields
+ * based on the expected contents/tags in the file. It then stores that
+ * information and hands it out to other classes who ask for it.
+ * 
+ * @author sierrasmith95
+ *
+ */
 public class XMLContents {
 	private File myFile;
 	private String myModel;
@@ -35,26 +43,19 @@ public class XMLContents {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		myDoc = builder.parse(myFile);
-
 		myModel = extractSpecifiedTag("Model");
-
 		myAuthor = extractSpecifiedTag("Author");
-
 		myTitle = extractSpecifiedTag("Title");
-
 		myParameters.put("rows",
 				Double.parseDouble(extractSpecifiedTag("GridRows")));
 
 		myParameters.put("columns",
 				Double.parseDouble(extractSpecifiedTag("GridColumns")));
-
 		extractConfig();
 		extractParams();
-
 	}
 
 	private void extractParams() {
-		System.out.println("ExtractingParams");
 		NodeList paramList = myDoc.getElementsByTagName("Parameters");
 		if (paramList.getLength() != 0) {
 			Element firstParam = (Element) paramList.item(0);
@@ -71,7 +72,6 @@ public class XMLContents {
 							double param = Double.parseDouble(paramElem
 									.getChildNodes().item(0).getNodeValue());
 							myParameters.put(tag, param);
-							System.out.println(tag + " " + param);
 						}
 					}
 				}
@@ -84,7 +84,6 @@ public class XMLContents {
 	}
 
 	private void extractConfig() {
-		System.out.println("ExtractingCellsToConfig");
 		NodeList configList = myDoc.getElementsByTagName("Configuration");
 		if (configList.getLength() != 0) {
 			Element firstConfig = (Element) configList.item(0);
@@ -93,10 +92,8 @@ public class XMLContents {
 
 				if (node.getNodeType() == Node.ELEMENT_NODE) {
 					Element elem = (Element) node;
-
 					NodeList configCells = elem.getElementsByTagName("Cell");
 					if (configCells.getLength() != 0) {
-
 						for (int m = 0; m < configCells.getLength(); m++) {
 							int row = Integer.parseInt(configCells.item(m)
 									.getAttributes().getNamedItem("x")
@@ -108,7 +105,6 @@ public class XMLContents {
 									.getNamedItem("state").getNodeValue());
 							cellsToConfigure.add(new ConfigCellInfo(row, col,
 									state));
-							System.out.println(row + " " + col + " " + state);
 						}
 					}
 				}

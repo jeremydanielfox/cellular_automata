@@ -104,7 +104,6 @@ public class SquareGraph extends BaseGraph {
 		getCell(ID).setInhabitant(
 				myInhabitantFactory.createSpecifiedInhabitant(
 						myBabyCell.getStringState(), myBabyCell.getIntState()));
-		System.out.println(color + " " + ID);
 	}
 
 	@Override
