@@ -43,6 +43,7 @@ public abstract class BaseGraph {
 		verticalOffset = yOffset;
 		MIN_POINTS_IN_COMMON = points;
 		myModel = model;
+		initializeConstants();
 		calculateValues();
 		initializeCells(defaultState, defaultColor);
 		connectCells();
@@ -165,6 +166,8 @@ public abstract class BaseGraph {
 	public String getModelName() {
 		return myModel;
 	}
+	
+	public abstract void initializeConstants();
 
 	public abstract void initializeCells(int defaultState, Color defaultColor);
 

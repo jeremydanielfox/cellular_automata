@@ -11,10 +11,10 @@ public class SquareGraph extends BaseGraph {
 	private int cellWidth;
 	private int cellHeight;
 
-	Point2D RIGHT = new Point2D(1, 0);
-	Point2D LEFT = new Point2D(-1, 0);
-	Point2D UP = new Point2D(0, -1);
-	Point2D DOWN = new Point2D(0, 1);
+	private Point2D RIGHT;
+	private Point2D LEFT;
+	private Point2D UP;
+	private Point2D DOWN;
 
 	/**
 	 * The constructor for a SquareGraph takes in the desired number of cells
@@ -33,10 +33,17 @@ public class SquareGraph extends BaseGraph {
 			int defaultState, Color defaultColor, String model) {
 		super(numCellsWidth, numCellsHeight, screenWidth, screenHeight,
 				xOffset, yOffset, points, defaultState, defaultColor, model);
-		Point2D RIGHT = new Point2D(1, 0);
-		Point2D LEFT = new Point2D(-1, 0);
-		Point2D UP = new Point2D(0, -1);
-		Point2D DOWN = new Point2D(0, 1);
+		// Point2D RIGHT = new Point2D(1, 0);
+		// Point2D LEFT = new Point2D(-1, 0);
+		// Point2D UP = new Point2D(0, -1);
+		// Point2D DOWN = new Point2D(0, 1);
+	}
+
+	public void initializeConstants() {
+		RIGHT = new Point2D(1, 0);
+		LEFT = new Point2D(-1, 0);
+		UP = new Point2D(0, -1);
+		DOWN = new Point2D(0, 1);
 	}
 
 	/**
@@ -109,51 +116,52 @@ public class SquareGraph extends BaseGraph {
 	@Override
 	public void connectCells() {
 		for (Cell current : this.getAllCells()) {
-//			Cell neighbor = getNeighbor(current, RIGHT);
-//			if (neighbor != null)
-//				connect(current, neighbor);
-//			neighbor = getNeighbor(current, LEFT);
-//			if (neighbor != null)
-//				connect(current, neighbor);
-//			neighbor = getNeighbor(current, DOWN);
-//			if (neighbor != null)
-//				connect(current, neighbor);
-//			neighbor = getNeighbor(current, UP);
-//			if (neighbor != null)
-//				connect(current, neighbor);
-			Cell neighbor = getNeighbor(current, new Point2D(1,0));
+			Cell neighbor = getNeighbor(current, RIGHT);
 			if (neighbor != null)
 				connect(current, neighbor);
-			neighbor = getNeighbor(current, new Point2D(-1,0));
+			neighbor = getNeighbor(current, LEFT);
 			if (neighbor != null)
 				connect(current, neighbor);
-			neighbor = getNeighbor(current, new Point2D(0,1));
+			neighbor = getNeighbor(current, DOWN);
 			if (neighbor != null)
 				connect(current, neighbor);
-			neighbor = getNeighbor(current, new Point2D(0,-1));
+			neighbor = getNeighbor(current, UP);
 			if (neighbor != null)
 				connect(current, neighbor);
+			// Cell neighbor = getNeighbor(current, new Point2D(1,0));
+			// if (neighbor != null)
+			// connect(current, neighbor);
+			// neighbor = getNeighbor(current, new Point2D(-1,0));
+			// if (neighbor != null)
+			// connect(current, neighbor);
+			// neighbor = getNeighbor(current, new Point2D(0,1));
+			// if (neighbor != null)
+			// connect(current, neighbor);
+			// neighbor = getNeighbor(current, new Point2D(0,-1));
+			// if (neighbor != null)
+			// connect(current, neighbor);
 		}
 
-
 	}
-//	public static void main(String[] args) {
-//	SquareGraph myGraph = new SquareGraph(3,3,100,100,0,0,1,0,Color.BEIGE,"");
-//	for (Cell current: myGraph.getAllCells())	{
-//		printNeighbors(current, myGraph);
-//	}
-//	}
-//	public static void printNeighbors(Cell myCell, BaseGraph myGraph) {
-//		System.out.println();
-//		System.out.println(myCell.getID());
-//		for (Cell current:myGraph.getNeighbors(myCell)) {
-//			System.out.println(current.getID());
-//		}
-//	}
+
+	// public static void main(String[] args) {
+	// SquareGraph myGraph = new
+	// SquareGraph(3,3,100,100,0,0,1,0,Color.BEIGE,"");
+	// for (Cell current: myGraph.getAllCells()) {
+	// printNeighbors(current, myGraph);
+	// }
+	// }
+	// public static void printNeighbors(Cell myCell, BaseGraph myGraph) {
+	// System.out.println();
+	// System.out.println(myCell.getID());
+	// for (Cell current:myGraph.getNeighbors(myCell)) {
+	// System.out.println(current.getID());
+	// }
+	// }
 
 	@Override
 	public void manageEdgeConditions() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
