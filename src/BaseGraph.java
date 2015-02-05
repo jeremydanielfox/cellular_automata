@@ -46,6 +46,7 @@ public abstract class BaseGraph {
 		calculateValues();
 		initializeCells(defaultState, defaultColor);
 		connectCells();
+		manageEdgeConditions();
 
 	}
 
@@ -131,32 +132,35 @@ public abstract class BaseGraph {
 		return verticalOffset;
 	}
 
-	public void connectCells() {
-		for (Cell first : this.getAllCells())
-			for (Cell second : this.getAllCells())
-				if (isNeighbors(first, second))
-					connect(first, second);
-	}
+	public abstract void connectCells();
+	
+	public abstract void manageEdgeConditions();
+//	{
+//		for (Cell first : this.getAllCells())
+//			for (Cell second : this.getAllCells())
+//				if (isNeighbors(first, second))
+//					connect(first, second);
+//	}
+//
+//	public int numPointsInCommon(Cell first, Cell second) {
+//		Set<Point2D> temp = new HashSet(first.getVerticies());
+//		Set<Point2D> newtemp = new HashSet(second.getVerticies());
+//		temp.retainAll(new HashSet(second.getVerticies()));
+//		return temp.size();
+//	}
+//
+//	public int getMinPointsInCommon() {
+//		return MIN_POINTS_IN_COMMON;
+//	}
+//
+//	public boolean isNeighbors(Cell first, Cell second) {
+//		return numPointsInCommon(first, second) >= getMinPointsInCommon()
+//				&& !first.equals(second) || additionalNeighborCondition(first,second);
+//	}
 
-	public int numPointsInCommon(Cell first, Cell second) {
-		Set<Point2D> temp = new HashSet(first.getVerticies());
-		Set<Point2D> newtemp = new HashSet(second.getVerticies());
-		temp.retainAll(new HashSet(second.getVerticies()));
-		return temp.size();
-	}
-
-	public int getMinPointsInCommon() {
-		return MIN_POINTS_IN_COMMON;
-	}
-
-	public boolean isNeighbors(Cell first, Cell second) {
-		return numPointsInCommon(first, second) >= getMinPointsInCommon()
-				&& !first.equals(second) || additionalNeighborCondition(first,second);
-	}
-
-	public boolean additionalNeighborCondition(Cell first, Cell second) {
-		return false;
-	}
+//	public boolean additionalNeighborCondition(Cell first, Cell second) {
+//		return false;
+//	}
 
 	public String getModelName() {
 		return myModel;

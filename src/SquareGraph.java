@@ -135,6 +135,7 @@ public class SquareGraph extends BaseGraph {
 				connect(current, neighbor);
 		}
 
+
 	}
 //	public static void main(String[] args) {
 //	SquareGraph myGraph = new SquareGraph(3,3,100,100,0,0,1,0,Color.BEIGE,"");
@@ -149,4 +150,10 @@ public class SquareGraph extends BaseGraph {
 //			System.out.println(current.getID());
 //		}
 //	}
+
+	@Override
+	public void manageEdgeConditions() {
+		// TODO Auto-generated method stub
+		
+	}
 }
