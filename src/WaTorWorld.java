@@ -168,7 +168,7 @@ public class WaTorWorld extends BaseModel {
 
 	@Override
 	public Color getDefaultColor() {
-		// TODO Auto-generated method stub
+
 		return DEFAULT_COLOR;
 	}
 
