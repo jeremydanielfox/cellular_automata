@@ -1,15 +1,23 @@
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
+
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.xml.sax.SAXException;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -47,8 +55,8 @@ public class SimBrain extends Application {
 	private static final int CELL_REGION_HEIGHT = SimWindow.WINDOW_HEIGHT - 2
 			* SCREEN_BORDER_BUFFER;
 	private static final int INITIAL_FRAME_RATE = 2500;
-	private static final int CONTROL_PANEL_BUTTON_SPACING = 10;
-	private static final int CONTROL_PANEL_MAX_HEIGHT = 50;
+	public static final int CONTROL_PANEL_BUTTON_SPACING = 10;
+	public static final int CONTROL_PANEL_MAX_HEIGHT = 50;
 	private static final int DEC_FRAME_RATE_MULTIPLIER = 1;
 	private static final int INC_FRAME_RATE_MULTIPLIER = -1;
 
@@ -59,6 +67,7 @@ public class SimBrain extends Application {
 		myWindow = new SimWindow(s, makeControlPanel(),
 				myResources.getString("InitialWindowTitle"));
 		initializeAnimationTimeline();
+		// myWindow.addHBox(test.getParameterControls());
 	}
 
 	public static void main(String[] args) {
@@ -142,13 +151,17 @@ public class SimBrain extends Application {
 			myIncSpeedButton.setDisable(false);
 		initializeAnimationTimeline();
 		paintSim();
-		if (previousStatus.equals(Animation.Status.RUNNING)) {
+		restoreLastAnimationStatus(previousStatus);
+
+	}
+
+	private void restoreLastAnimationStatus(Animation.Status prevStatus) {
+		if (prevStatus.equals(Animation.Status.RUNNING)) {
 			playSimulation();
 			enableCorrectButtons(true);
-		} else if (previousStatus.equals(Animation.Status.PAUSED)) {
+		} else if (prevStatus.equals(Animation.Status.PAUSED)) {
 			enableCorrectButtons(false);
 		}
-
 	}
 
 	public void changeFramesPerSecondValue(int i) {
@@ -185,12 +198,17 @@ public class SimBrain extends Application {
 	private void startNewSim() {
 		File modelSetUp = uploadFile();
 		if (modelSetUp != null) {
-			readFile(modelSetUp);
-			myEngine = new SimEngine(myXMLContents.getModel(),
-					myXMLContents.getParams(),
-					myXMLContents.getCellsToConfig(), CELL_REGION_WIDTH,
-					CELL_REGION_HEIGHT, SCREEN_BORDER_BUFFER,
-					SCREEN_BORDER_BUFFER);
+			try {
+				readFile(modelSetUp);
+				myEngine = new SimEngine(myXMLContents.getModel(),
+						myXMLContents.getParams(),
+						myXMLContents.getCellsToConfig(), CELL_REGION_WIDTH,
+						CELL_REGION_HEIGHT, SCREEN_BORDER_BUFFER,
+						SCREEN_BORDER_BUFFER);
+			} catch (CellSocietyException error) {
+				error.displayError();
+				return;
+			}
 			myWindow.setStageTitle(myXMLContents.getTitle() + " by "
 					+ myXMLContents.getAuthor());
 			myAnimation.stop();
@@ -201,6 +219,26 @@ public class SimBrain extends Application {
 			myIncSpeedButton.setDisable(false);
 			myDecSpeedButton.setDisable(false);
 			enableCorrectButtons(false);
+
+			// added for testing
+//			Map<String, ArrayList<Double>> paramMap = new HashMap<>();
+//			ArrayList<Double> toAdd = new ArrayList<Double>();
+//			toAdd.add(0, (double) 0);
+//			toAdd.add(1, (double) 5);
+//			toAdd.add(2, 2.5);
+//			paramMap.put("probCatch", toAdd);
+//			toAdd.add(0, (double) 0);
+//			toAdd.add(1, (double) 5);
+//			toAdd.add(2, 2.5);
+//			paramMap.put("second", toAdd);
+			
+			Map<String, ArrayList<Double>> paramMap = myEngine.getParamMap();
+			
+			if (paramMap.keySet().size() > 0) {
+				ParameterControlBox myParamControls = new ParameterControlBox(
+						this, paramMap);
+				myWindow.addControlPanel(myParamControls.getParameterControls());
+			}
 		}
 	}
 
@@ -210,5 +248,12 @@ public class SimBrain extends Application {
 		} catch (ParserConfigurationException | SAXException | IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void updateParameter(String paramName, Double paramValue) {
+		Animation.Status previousStatus = myAnimation.getStatus();
+		myAnimation.pause();
+		myEngine.changeParam(paramName, paramValue);
+		restoreLastAnimationStatus(previousStatus);
 	}
 }

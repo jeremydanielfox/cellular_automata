@@ -7,7 +7,7 @@
 	<GridColumns>5</GridColumns>
 		
 	<Parameters>
-		<RatioNeighbors>0.33</RatioNeighbors>
+		<HappinessRatio>0.33</HappinessRatio>
 	</Parameters>
 
 	<Configuration>

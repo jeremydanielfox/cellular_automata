@@ -26,12 +26,14 @@ public class XMLContents {
 	private String myModel;
 	private String myAuthor;
 	private String myTitle;
+	private String myGraphType;
+	private String myEdgeType;
 	private Map<String, Double> myParameters;
 	private List<ConfigCellInfo> cellsToConfigure;
 	private Document myDoc;
 
 	public XMLContents(File file) throws ParserConfigurationException,
-			SAXException, IOException {
+	SAXException, IOException {
 		myFile = file;
 		cellsToConfigure = new ArrayList<>();
 		myParameters = new HashMap<>();
@@ -39,22 +41,58 @@ public class XMLContents {
 	}
 
 	public void readXML() throws ParserConfigurationException, SAXException,
-			IOException {
+	IOException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		myDoc = builder.parse(myFile);
-		myModel = extractSpecifiedTag("Model");
-		myAuthor = extractSpecifiedTag("Author");
-		myTitle = extractSpecifiedTag("Title");
-		myParameters.put("rows",
-				Double.parseDouble(extractSpecifiedTag("GridRows")));
+		try{
+			myModel = extractSpecifiedTag("Model");
+			myParameters.put("rows",
+					Double.parseDouble(extractSpecifiedTag("GridRows")));
 
-		myParameters.put("columns",
-				Double.parseDouble(extractSpecifiedTag("GridColumns")));
+			myParameters.put("columns",
+					Double.parseDouble(extractSpecifiedTag("GridColumns")));
+		}catch(NullPointerException e){
+			throw new CellSocietyException(CellSocietyException.MISSING_INFO_MESSAGE);
+		}
+		readAuthor();
+		readTitle();
 		extractConfig();
 		extractParams();
 	}
 
+	private void readGraphType(){
+		try{
+			myGraphType = extractSpecifiedTag("GraphType");
+		}catch(NullPointerException e){
+			myGraphType = "Square";
+		}
+	}
+	
+	private void readEdgeType(){
+		try{
+			myEdgeType = extractSpecifiedTag("EdgeType");
+		}catch(NullPointerException e){
+			myEdgeType = "Finite";
+		}
+	}
+	
+	private void readAuthor(){
+		try{
+			myAuthor = extractSpecifiedTag("Author");
+		}catch(NullPointerException e){
+			myAuthor = "User";
+		}
+	}
+	
+	private void readTitle(){
+		try{
+			myTitle = extractSpecifiedTag("Title");
+		}catch(NullPointerException e){
+			myTitle = myModel;
+		}
+	}
+	
 	private void extractParams() {
 		NodeList paramList = myDoc.getElementsByTagName("Parameters");
 		if (paramList.getLength() != 0) {
@@ -123,7 +161,15 @@ public class XMLContents {
 	public String getAuthor() {
 		return myAuthor;
 	}
+	
+	public String getEdgeType(){
+		return myEdgeType;
+	}
 
+	public String getGraphType(){
+		return myGraphType;
+	}
+	
 	private String extractSpecifiedTag(String tag) {
 		NodeList myList = myDoc.getElementsByTagName(tag);
 		return myList.item(0).getChildNodes().item(0).getNodeValue();

@@ -16,7 +16,7 @@ public class ModelFactory {
 		case "WaTorWorld":
 			return new WaTorWorld(parameters);
 		default:
-			return new GameOfLife(parameters);
+			throw new CellSocietyException(CellSocietyException.INCORRECT_MODEL_MESSAGE);
 		}
 
 	}
