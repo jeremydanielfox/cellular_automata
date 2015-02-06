@@ -21,6 +21,7 @@ public class SimWindow {
 	private Group myRoot;
 	private Group myCellRegion;
 	private VBox myControlPanels;
+	private HBox myParamControls;
 
 	public static final int WINDOW_HEIGHT = 600;
 	public static final int WINDOW_WIDTH = 600;
@@ -49,7 +50,11 @@ public class SimWindow {
 	}
 	
 	public void addControlPanel(HBox toAdd){
-		myControlPanels.getChildren().add(toAdd);
+		if(myParamControls != null){
+			myControlPanels.getChildren().remove(myParamControls);
+		}
+		myParamControls = toAdd;
+		myControlPanels.getChildren().add(myParamControls);
 	}
 
 	public void setStageTitle(String newTitle) {

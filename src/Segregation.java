@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +26,7 @@ public class Segregation extends BaseModel {
 	public static final Color DEFAULT_COLOR = EMPTY_COLOR;
 	private static final double MIN_RATIO_NEIGHBORS = 0;
 	private static final double MAX_RATIO_NEIGHBORS = 1.0;
-	public static double RATIO_NEIGHBORS;
+//	public static double happinessRatio;
 
 	public Segregation(Map<String, Double> parameters) {
 		// possibly we should create a setNumPointsForNeighbor method in the
@@ -38,14 +39,14 @@ public class Segregation extends BaseModel {
 		getStateToColorMap().put("empty", EMPTY_COLOR);
 		getStateToColorMap().put("group_one", GROUP_ONE_COLOR);
 		getStateToColorMap().put("group_two", GROUP_TWO_COLOR);
-		getParameterValuesMap().put("minRatioNeighbors", MIN_RATIO_NEIGHBORS);
-		getParameterValuesMap().put("maxRatioNeighbors", MAX_RATIO_NEIGHBORS);
+//		getParameterValuesMap().put("minRatioNeighbors", MIN_RATIO_NEIGHBORS);
+//		getParameterValuesMap().put("maxRatioNeighbors", MAX_RATIO_NEIGHBORS);
 		
 		try {
-			RATIO_NEIGHBORS = parameters.get("RatioNeighbors");
-			getParameterValuesMap().put("currentRatioNeighbors", RATIO_NEIGHBORS);
+//			happinessRatio = parameters.get("RatioNeighbors");
+			getParameterValuesMap().put("happinessRatio", parameters.get("HappinessRatio"));
 		} catch (NullPointerException e) {
-			getParameterValuesMap().put("currentRatioNeighbors", (MIN_RATIO_NEIGHBORS + MAX_RATIO_NEIGHBORS) / 2);
+			getParameterValuesMap().put("happinessRatio", (MIN_RATIO_NEIGHBORS + MAX_RATIO_NEIGHBORS) / 2);
 		}
 	}
 
@@ -119,7 +120,7 @@ public class Segregation extends BaseModel {
 		}
 		float ratio = countDifferent / (float) myNeighbors.size();
 
-		return ratio <= RATIO_NEIGHBORS;
+		return ratio <= getParameterValuesMap().get("happinessRatio");
 	}
 
 	private List<Cell> getRandomCollection(BaseGraph myGraph) {
@@ -127,6 +128,17 @@ public class Segregation extends BaseModel {
 		myCells.addAll((Collection<? extends Cell>) myGraph.getAllCells());
 		Collections.shuffle(myCells);
 		return myCells;
+	}
+
+	@Override
+	public Map<String, ArrayList<Double>> getParamNameMinMaxCur() {
+		Map<String, ArrayList<Double>> toReturn = new HashMap<>();
+		ArrayList<Double> minMaxCurReproduce = new ArrayList<>();
+		minMaxCurReproduce.add(0, MIN_RATIO_NEIGHBORS);
+		minMaxCurReproduce.add(1, MAX_RATIO_NEIGHBORS);
+		minMaxCurReproduce.add(2, getParameterValuesMap().get("happinessRatio"));
+		toReturn.put("happinessRatio", minMaxCurReproduce);
+		return toReturn;
 	}
 
 }

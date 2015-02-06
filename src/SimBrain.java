@@ -221,17 +221,19 @@ public class SimBrain extends Application {
 			enableCorrectButtons(false);
 
 			// added for testing
-			Map<String, ArrayList<Double>> paramMap = new HashMap<>();
-			ArrayList<Double> toAdd = new ArrayList<Double>();
-			toAdd.add(0, (double) 0);
-			toAdd.add(1, (double) 5);
-			toAdd.add(2, 2.5);
-			paramMap.put("probCatch", toAdd);
-			toAdd.add(0, (double) 0);
-			toAdd.add(1, (double) 5);
-			toAdd.add(2, 2.5);
-			paramMap.put("second", toAdd);
-
+//			Map<String, ArrayList<Double>> paramMap = new HashMap<>();
+//			ArrayList<Double> toAdd = new ArrayList<Double>();
+//			toAdd.add(0, (double) 0);
+//			toAdd.add(1, (double) 5);
+//			toAdd.add(2, 2.5);
+//			paramMap.put("probCatch", toAdd);
+//			toAdd.add(0, (double) 0);
+//			toAdd.add(1, (double) 5);
+//			toAdd.add(2, 2.5);
+//			paramMap.put("second", toAdd);
+			
+			Map<String, ArrayList<Double>> paramMap = myEngine.getParamMap();
+			
 			if (paramMap.keySet().size() > 0) {
 				ParameterControlBox myParamControls = new ParameterControlBox(
 						this, paramMap);

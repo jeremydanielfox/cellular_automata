@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javafx.beans.value.ChangeListener;
@@ -24,9 +22,6 @@ public class ParameterControlBox {
 		myParameterControls.setPrefWidth(SimWindow.WINDOW_WIDTH);
 		myParameterControls.setAlignment(Pos.BOTTOM_CENTER);
 		myParams = new ArrayList<String>(paramsToAdd.keySet());
-		for(int i = 0; i < myParams.size(); i++){
-			System.out.println(myParams.get(i));
-		}
 		generateHBox(paramsToAdd);
 	}
 
@@ -49,8 +44,6 @@ public class ParameterControlBox {
 	}
 
 	private void paramChanged(Slider activeSlider){
-		System.out.println(myParams.get(mySliders.indexOf(activeSlider)));
-		System.out.println(activeSlider.getValue());
 		myBrain.updateParameter(myParams.get(mySliders.indexOf(activeSlider)), activeSlider.getValue());
 	}
 

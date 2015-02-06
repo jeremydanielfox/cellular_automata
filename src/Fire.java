@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -22,7 +24,7 @@ public class Fire extends BaseModel {
 	private static final Color DEFAULT_COLOR = TREE_COLOR;
 	private static final double MIN_PROB_CATCH = 0;
 	private static final double MAX_PROB_CATCH = 1.0;
-	private double probCatch;
+//	private double probCatch;
 
 	public Fire(Map<String, Double> parameters) {
 		super(parameters, 2);
@@ -32,24 +34,23 @@ public class Fire extends BaseModel {
 		getStateToColorMap().put("empty", EMPTY_COLOR);
 		getStateToColorMap().put("tree", TREE_COLOR);
 		getStateToColorMap().put("burning", BURNING_COLOR);
-		getParameterValuesMap().put("minProbCatch", MIN_PROB_CATCH);
-		getParameterValuesMap().put("maxProbCatch", MAX_PROB_CATCH);
+//		getParameterValuesMap().put("minProbCatch", MIN_PROB_CATCH);
+//		getParameterValuesMap().put("maxProbCatch", MAX_PROB_CATCH);
 		
 		try {
-			probCatch = parameters.get("probCatch");
-			getParameterValuesMap().put("currentProbCatch", probCatch);
+//			probCatch = parameters.get("probCatch");
+			getParameterValuesMap().put("probCatch", parameters.get("probCatch"));
 		} catch (NullPointerException e) {
-			getParameterValuesMap().put("currentProbCatch", (MIN_PROB_CATCH + MAX_PROB_CATCH) / 2);
+			getParameterValuesMap().put("probCatch", (MIN_PROB_CATCH + MAX_PROB_CATCH) / 2);
 		}
 	}
 
 	@Override
 	public Cell updateFutureState(Cell cellToUpdate, Collection<Cell> neighbors) {
-		// TODO Auto-generated method stub
 		double random = new Random().nextDouble();
 
 		if (cellToUpdate.getCurrentState() == TREE
-				&& countNeighbors(2, neighbors) > 0 && random < probCatch) {
+				&& countNeighbors(2, neighbors) > 0 && random < getParameterValuesMap().get("probCatch")) {
 			changeFutureState(cellToUpdate, BURNING, BURNING_COLOR);
 		} else if (cellToUpdate.getCurrentState() == BURNING
 				|| cellToUpdate.getCurrentState() == EMPTY) {
@@ -62,14 +63,23 @@ public class Fire extends BaseModel {
 
 	@Override
 	public Color getDefaultColor() {
-		// TODO Auto-generated method stub
 		return DEFAULT_COLOR;
 	}
 
 	@Override
 	public int getDefaultState() {
-		// TODO Auto-generated method stub
 		return DEFAULT_STATE;
+	}
+
+	@Override
+	public Map<String, ArrayList<Double>> getParamNameMinMaxCur() {
+		Map<String, ArrayList<Double>> toReturn = new HashMap<>();
+		ArrayList<Double> minMaxCur = new ArrayList<>();
+		minMaxCur.add(0, MIN_PROB_CATCH);
+		minMaxCur.add(1, MAX_PROB_CATCH);
+		minMaxCur.add(2, getParameterValuesMap().get("probCatch"));
+		toReturn.put("probCatch", minMaxCur);
+		return toReturn;
 	}
 
 }

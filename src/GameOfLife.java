@@ -1,5 +1,9 @@
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
 import javafx.scene.paint.Color;
 
 /**
@@ -30,7 +34,6 @@ public class GameOfLife extends BaseModel {
 
 	@Override
 	public Cell updateFutureState(Cell cellToUpdate, Collection<Cell> neighbors) {
-		// TODO Auto-generated method stub
 		int aliveNeighbors = countNeighbors(ALIVE, neighbors);
 		if ((cellToUpdate.getCurrentState() == DEAD && aliveNeighbors == NUM_LIVE_NEIGHBORS_TO_REVIVE)
 				|| (cellToUpdate.getCurrentState() == ALIVE && (aliveNeighbors == NUM_LIVE_NEIGHBORS_TO_LIVE || aliveNeighbors == NUM_LIVE_NEIGHBORS_TO_REVIVE))) {
@@ -49,4 +52,5 @@ public class GameOfLife extends BaseModel {
 	public int getDefaultState() {
 		return DEFAULT_STATE;
 	}
+
 }
