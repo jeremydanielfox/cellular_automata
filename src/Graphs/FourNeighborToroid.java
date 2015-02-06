@@ -18,8 +18,8 @@ public class FourNeighborToroid extends EdgeManager {
 	}
 
 	protected void linkEdges() {
-		connectWithOpposite(getLeftCol(),HORIZONTAL);
-		connectWithOpposite(getTopRow(),VERTICAL);
+		connectWithOpposite(getLeftCol(), HORIZONTAL);
+		connectWithOpposite(getTopRow(), VERTICAL);
 	}
 
 	private void connectWithOpposite(List<Cell> currentList, boolean sideways) {
