@@ -34,8 +34,7 @@ public class FourNeighborToroid extends EdgeManager {
 	private void connectWithRight() {
 		for (Cell current : getLeftCol()) {
 			Point2D currentPoint = getGraph().getCellPointMap().get(current);
-			Point2D temp = new Point2D(getGraph().getNumCellsAcross(),
-					currentPoint.getY());
+			Point2D temp = getRight(currentPoint);
 			Cell tempCell = getGraph().getCellPointMap().get(temp);
 			getGraph().connect(tempCell, current);
 		}
@@ -44,11 +43,20 @@ public class FourNeighborToroid extends EdgeManager {
 	private void connectWithBottom() {
 		for (Cell current : getTopRow()) {
 			Point2D currentPoint = getGraph().getCellPointMap().get(current);
-			Point2D temp = new Point2D(currentPoint.getX(), getGraph()
-					.getNumCellsUpDown());
+			Point2D temp = getBottom(currentPoint);
 			Cell tempCell = getGraph().getCellPointMap().get(temp);
 			getGraph().connect(tempCell, current);
 		}
+	}
+	
+	protected Point2D getRight(Point2D current)	 {
+		return new Point2D(getGraph().getNumCellsAcross(),
+				current.getY());
+	}
+	
+	protected Point2D getBottom(Point2D current) {
+		return new Point2D(current.getX(), getGraph()
+				.getNumCellsUpDown());
 	}
 
 }
