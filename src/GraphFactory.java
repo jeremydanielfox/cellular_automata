@@ -26,10 +26,7 @@ public class GraphFactory {
 		case "EightNeighor":
 			return new EightNeighborSquareGraph(numCellsWidth,numCellsHeight,screenWidth,screenHeight,
 					xOffset,yOffset,points,defaultState,defaultColor,model);
-//		case "WaTorWorld":
-//			return new ToroidSquareGraph(numCellsWidth, numCellsHeight,
-//					screenWidth, screenHeight, xOffset, yOffset, points,
-//					defaultState, defaultColor, model);
+
 		case "GameOfLife":
 			return new EightNeighborSquareGraph(numCellsWidth, numCellsHeight,
 					screenWidth, screenHeight, xOffset, yOffset, points,
