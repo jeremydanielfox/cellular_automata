@@ -1,3 +1,5 @@
+package CellsAndComponents;
+
 public class Shark extends AquaticCreature {
 	private int energyLevel;
 

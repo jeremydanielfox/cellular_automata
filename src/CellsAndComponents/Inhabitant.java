@@ -1,3 +1,4 @@
+package CellsAndComponents;
 /**
  * This is the Inhabitant class that pairs with the CellWithInhabitant Object
  * 

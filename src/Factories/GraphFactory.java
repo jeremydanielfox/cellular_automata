@@ -1,3 +1,7 @@
+package Factories;
+import Graphs.BaseGraph;
+import Graphs.EightNeighborSquareGraph;
+import Graphs.SquareGraph;
 import javafx.scene.paint.Color;
 
 /**

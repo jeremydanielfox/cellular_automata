@@ -1,6 +1,8 @@
+package Graphs;
 import java.util.HashMap;
 import java.util.Map;
 
+import CellsAndComponents.Cell;
 import javafx.geometry.Point2D;
 
 /**

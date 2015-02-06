@@ -1,6 +1,8 @@
+package Graphs;
 import java.util.ArrayList;
 import java.util.List;
 
+import CellsAndComponents.Cell;
 import javafx.geometry.Point2D;
 
 /**

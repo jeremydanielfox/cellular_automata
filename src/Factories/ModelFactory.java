@@ -1,5 +1,13 @@
+package Factories;
 
 import java.util.Map;
+
+import Exceptions.CellSocietyException;
+import Models.BaseModel;
+import Models.Fire;
+import Models.GameOfLife;
+import Models.Segregation;
+import Models.WaTorWorld;
 
 public class ModelFactory {
 

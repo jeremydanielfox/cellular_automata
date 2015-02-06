@@ -1,3 +1,5 @@
+package Graphs;
+import CellsAndComponents.Cell;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 

@@ -3,6 +3,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import CellsAndComponents.Cell;
+import Factories.GraphFactory;
+import Factories.ModelFactory;
+import Graphs.BaseGraph;
+import Graphs.ConfigCellInfo;
+import Models.BaseModel;
+
 /**
  * This class changes the states of cells, connects model and graph.
  * 

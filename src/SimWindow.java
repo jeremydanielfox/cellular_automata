@@ -1,5 +1,6 @@
 import java.util.Collection;
 
+import CellsAndComponents.Cell;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;

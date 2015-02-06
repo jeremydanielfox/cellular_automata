@@ -1,3 +1,5 @@
+package Graphs;
+
 
 public class ConfigCellInfo {
 	private final int DEFAULT_STATE = 0;

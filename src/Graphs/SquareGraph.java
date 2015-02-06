@@ -1,8 +1,13 @@
+package Graphs;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import CellsAndComponents.Cell;
+import Factories.CellFactory;
+import Factories.EdgeManagerFactory;
+import Factories.InhabitantFactory;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;

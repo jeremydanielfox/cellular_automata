@@ -1,8 +1,11 @@
+package Models;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import CellsAndComponents.Cell;
+import Graphs.BaseGraph;
 import javafx.scene.paint.Color;
 
 /**

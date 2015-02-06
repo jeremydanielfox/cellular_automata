@@ -1,3 +1,4 @@
+package Models;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -5,6 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import CellsAndComponents.AquaticCreature;
+import CellsAndComponents.Cell;
+import CellsAndComponents.CellWithInhabitant;
+import CellsAndComponents.Inhabitant;
+import CellsAndComponents.Shark;
+import Graphs.BaseGraph;
 import javafx.scene.paint.Color;
 
 /**

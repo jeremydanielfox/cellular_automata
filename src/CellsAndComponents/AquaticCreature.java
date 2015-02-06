@@ -1,3 +1,5 @@
+package CellsAndComponents;
+
 public class AquaticCreature extends Inhabitant {
 	private int reproductionCounter;
 

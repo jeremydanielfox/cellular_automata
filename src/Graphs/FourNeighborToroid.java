@@ -1,5 +1,7 @@
+package Graphs;
 import java.util.List;
 
+import CellsAndComponents.Cell;
 import javafx.geometry.Point2D;
 
 public class FourNeighborToroid extends EdgeManager {
