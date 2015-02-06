@@ -23,6 +23,8 @@ public class Segregation extends BaseModel {
 	public static final Color GROUP_ONE_COLOR = Color.RED;
 	public static final Color GROUP_TWO_COLOR = Color.GREEN;
 	public static final Color DEFAULT_COLOR = EMPTY_COLOR;
+	private static final double MIN_RATIO_NEIGHBORS = 0;
+	private static final double MAX_RATIO_NEIGHBORS = 1.0;
 	public static double RATIO_NEIGHBORS;
 
 	public Segregation(Map<String, Double> parameters) {
@@ -36,7 +38,15 @@ public class Segregation extends BaseModel {
 		getStateToColorMap().put("empty", EMPTY_COLOR);
 		getStateToColorMap().put("group_one", GROUP_ONE_COLOR);
 		getStateToColorMap().put("group_two", GROUP_TWO_COLOR);
-		RATIO_NEIGHBORS = parameters.get("RatioNeighbors");
+		getParameterValuesMap().put("minRatioNeighbors", MIN_RATIO_NEIGHBORS);
+		getParameterValuesMap().put("maxRatioNeighbors", MAX_RATIO_NEIGHBORS);
+		
+		try {
+			RATIO_NEIGHBORS = parameters.get("RatioNeighbors");
+			getParameterValuesMap().put("currentRatioNeighbors", RATIO_NEIGHBORS);
+		} catch (NullPointerException e) {
+			getParameterValuesMap().put("currentRatioNeighbors", (MIN_RATIO_NEIGHBORS + MAX_RATIO_NEIGHBORS) / 2);
+		}
 	}
 
 	@Override

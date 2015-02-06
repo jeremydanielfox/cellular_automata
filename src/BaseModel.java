@@ -15,11 +15,13 @@ public abstract class BaseModel {
 	private int numPointsForNeighbor;
 	private Map<String, Integer> stateToInt;
 	private Map<String, Color> stateToColor;
+	private Map<String, Double> parameterValues;
 
 	public BaseModel(Map<String, Double> parameters, int points) {
 		numPointsForNeighbor = points;
 		stateToInt = new HashMap<String, Integer>();
 		stateToColor = new HashMap<String, Color>();
+		parameterValues = new HashMap<String, Double>();
 	}
 
 	public Map<String, Integer> getStateToIntMap() {
@@ -28,6 +30,10 @@ public abstract class BaseModel {
 
 	public Map<String, Color> getStateToColorMap() {
 		return stateToColor;
+	}
+	
+	public Map<String, Double> getParameterValuesMap() {
+		return parameterValues;
 	}
 
 	public abstract Cell updateFutureState(Cell cellToUpdate,

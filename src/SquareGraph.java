@@ -11,6 +11,11 @@ public class SquareGraph extends BaseGraph {
 	private int cellWidth;
 	private int cellHeight;
 
+	private Point2D RIGHT;
+	private Point2D LEFT;
+	private Point2D UP;
+	private Point2D DOWN;
+
 	/**
 	 * The constructor for a SquareGraph takes in the desired number of cells
 	 * across the grid in each direction, as well as the screen size in pixels
@@ -28,6 +33,17 @@ public class SquareGraph extends BaseGraph {
 			int defaultState, Color defaultColor, String model) {
 		super(numCellsWidth, numCellsHeight, screenWidth, screenHeight,
 				xOffset, yOffset, points, defaultState, defaultColor, model);
+		// Point2D RIGHT = new Point2D(1, 0);
+		// Point2D LEFT = new Point2D(-1, 0);
+		// Point2D UP = new Point2D(0, -1);
+		// Point2D DOWN = new Point2D(0, 1);
+	}
+
+	public void initializeConstants() {
+		RIGHT = new Point2D(1, 0);
+		LEFT = new Point2D(-1, 0);
+		UP = new Point2D(0, -1);
+		DOWN = new Point2D(0, 1);
 	}
 
 	/**
@@ -61,6 +77,7 @@ public class SquareGraph extends BaseGraph {
 				Cell temp = myFactory.createSpecifiedCell(getModelName(),
 						count, tempShape, tempList, defaultState, defaultColor);
 				temp.setFutureState(defaultState);
+				getCellPointMap().put(temp, new Point2D(i, j));
 				addVertex(temp);
 				temp.setShapeVerticies();
 				count++;
@@ -94,5 +111,45 @@ public class SquareGraph extends BaseGraph {
 		getCell(ID).setInhabitant(
 				myInhabitantFactory.createSpecifiedInhabitant(
 						myBabyCell.getStringState(), myBabyCell.getIntState()));
+	}
+
+	@Override
+	public void connectCells() {
+		for (Cell current : this.getAllCells()) {
+			checkConnect(current, RIGHT);
+			checkConnect(current, LEFT);
+			checkConnect(current, DOWN);
+			checkConnect(current, UP);
+		}
+	}
+
+	public void checkConnect(Cell myCell, Point2D myPoint) {
+		Cell neighbor = getNeighbor(myCell, myPoint);
+		if (neighbor != null)
+			connect(myCell, neighbor);
+	}
+
+	// public static void main(String[] args) {
+	// SquareGraph myGraph = new
+	// SquareGraph(3,3,100,100,0,0,1,0,Color.BEIGE,"");
+	// for (Cell current: myGraph.getAllCells()) {
+	// printNeighbors(current, myGraph);
+	// }
+	// }
+	// public static void printNeighbors(Cell myCell, BaseGraph myGraph) {
+	// System.out.println();
+	// System.out.println(myCell.getID());
+	// for (Cell current:myGraph.getNeighbors(myCell)) {
+	// System.out.println(current.getID());
+	// }
+	// }
+
+	@Override
+	public void manageEdgeConditions() {
+		// TODO Auto-generated method stub
+		EdgeManagerFactory myManagerFactory = new EdgeManagerFactory();
+		EdgeManager myEdgeManager = myManagerFactory.createSpecifiedManager(
+				getType() + getEdgeType(), this);
+
 	}
 }
