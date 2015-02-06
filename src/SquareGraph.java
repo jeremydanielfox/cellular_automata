@@ -116,32 +116,17 @@ public class SquareGraph extends BaseGraph {
 	@Override
 	public void connectCells() {
 		for (Cell current : this.getAllCells()) {
-			Cell neighbor = getNeighbor(current, RIGHT);
-			if (neighbor != null)
-				connect(current, neighbor);
-			neighbor = getNeighbor(current, LEFT);
-			if (neighbor != null)
-				connect(current, neighbor);
-			neighbor = getNeighbor(current, DOWN);
-			if (neighbor != null)
-				connect(current, neighbor);
-			neighbor = getNeighbor(current, UP);
-			if (neighbor != null)
-				connect(current, neighbor);
-			// Cell neighbor = getNeighbor(current, new Point2D(1,0));
-			// if (neighbor != null)
-			// connect(current, neighbor);
-			// neighbor = getNeighbor(current, new Point2D(-1,0));
-			// if (neighbor != null)
-			// connect(current, neighbor);
-			// neighbor = getNeighbor(current, new Point2D(0,1));
-			// if (neighbor != null)
-			// connect(current, neighbor);
-			// neighbor = getNeighbor(current, new Point2D(0,-1));
-			// if (neighbor != null)
-			// connect(current, neighbor);
+			checkConnect(current,RIGHT);
+			checkConnect(current,LEFT);
+			checkConnect(current,DOWN);
+			checkConnect(current,UP);
 		}
-
+	}
+	
+	public void checkConnect(Cell myCell,Point2D myPoint) {
+		Cell neighbor = getNeighbor(myCell, myPoint);
+		if (neighbor != null)
+			connect(myCell, neighbor);
 	}
 
 	// public static void main(String[] args) {
