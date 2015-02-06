@@ -24,7 +24,6 @@ public class Fire extends BaseModel {
 
 	public Fire(Map<String, Double> parameters) {
 		super(parameters, 2);
-		// TODO Auto-generated constructor stub
 		getStateToIntMap().put("empty", EMPTY);
 		getStateToIntMap().put("tree", TREE);
 		getStateToIntMap().put("burning", BURNING);

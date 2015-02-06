@@ -17,27 +17,17 @@ public class ParameterControlBox {
 	private ArrayList<Slider> mySliders;
 	private SimBrain myBrain;
 
-	public ParameterControlBox(SimBrain brain){
+	public ParameterControlBox(SimBrain brain, Map<String, ArrayList<Double>> paramsToAdd){
 		myBrain = brain;
 		myParameterControls = new HBox(SimBrain.CONTROL_PANEL_BUTTON_SPACING);
 		myParameterControls.setMaxHeight(SimBrain.CONTROL_PANEL_MAX_HEIGHT);
 		myParameterControls.setPrefWidth(SimWindow.WINDOW_WIDTH);
 		myParameterControls.setAlignment(Pos.BOTTOM_CENTER);
-		Map<String, ArrayList<Double>> paramMap = new HashMap<>();
-		ArrayList<Double> toAdd = new ArrayList<Double>();
-		toAdd.add(0, (double) 0);
-		toAdd.add(1, (double) 5);
-		toAdd.add(2, 2.5);
-		paramMap.put("probCatch", toAdd);
-		toAdd.add(0, (double) 0);
-		toAdd.add(1, (double) 5);
-		toAdd.add(2, 2.5);
-		paramMap.put("second", toAdd);
-		myParams = new ArrayList<String>(paramMap.keySet());
+		myParams = new ArrayList<String>(paramsToAdd.keySet());
 		for(int i = 0; i < myParams.size(); i++){
 			System.out.println(myParams.get(i));
 		}
-		generateHBox(paramMap);
+		generateHBox(paramsToAdd);
 	}
 
 	private void generateHBox(Map<String, ArrayList<Double>> paramMap){

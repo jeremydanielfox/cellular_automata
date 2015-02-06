@@ -26,6 +26,8 @@ public class XMLContents {
 	private String myModel;
 	private String myAuthor;
 	private String myTitle;
+	private String myGraphType;
+	private String myEdgeType;
 	private Map<String, Double> myParameters;
 	private List<ConfigCellInfo> cellsToConfigure;
 	private Document myDoc;
@@ -59,6 +61,22 @@ public class XMLContents {
 		extractParams();
 	}
 
+	private void readGraphType(){
+		try{
+			myGraphType = extractSpecifiedTag("GraphType");
+		}catch(NullPointerException e){
+			myGraphType = "Square";
+		}
+	}
+	
+	private void readEdgeType(){
+		try{
+			myEdgeType = extractSpecifiedTag("EdgeType");
+		}catch(NullPointerException e){
+			myEdgeType = "Finite";
+		}
+	}
+	
 	private void readAuthor(){
 		try{
 			myAuthor = extractSpecifiedTag("Author");
@@ -143,7 +161,15 @@ public class XMLContents {
 	public String getAuthor() {
 		return myAuthor;
 	}
+	
+	public String getEdgeType(){
+		return myEdgeType;
+	}
 
+	public String getGraphType(){
+		return myGraphType;
+	}
+	
 	private String extractSpecifiedTag(String tag) {
 		NodeList myList = myDoc.getElementsByTagName(tag);
 		return myList.item(0).getChildNodes().item(0).getNodeValue();

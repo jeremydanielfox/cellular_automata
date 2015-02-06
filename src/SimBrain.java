@@ -1,5 +1,8 @@
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -64,7 +67,7 @@ public class SimBrain extends Application {
 		myWindow = new SimWindow(s, makeControlPanel(),
 				myResources.getString("InitialWindowTitle"));
 		initializeAnimationTimeline();
-		//myWindow.addHBox(test.getParameterControls());
+		// myWindow.addHBox(test.getParameterControls());
 	}
 
 	public static void main(String[] args) {
@@ -151,8 +154,8 @@ public class SimBrain extends Application {
 		restoreLastAnimationStatus(previousStatus);
 
 	}
-	
-	private void restoreLastAnimationStatus(Animation.Status prevStatus){
+
+	private void restoreLastAnimationStatus(Animation.Status prevStatus) {
 		if (prevStatus.equals(Animation.Status.RUNNING)) {
 			playSimulation();
 			enableCorrectButtons(true);
@@ -195,14 +198,14 @@ public class SimBrain extends Application {
 	private void startNewSim() {
 		File modelSetUp = uploadFile();
 		if (modelSetUp != null) {
-			try{
-			readFile(modelSetUp);
-			myEngine = new SimEngine(myXMLContents.getModel(),
-					myXMLContents.getParams(),
-					myXMLContents.getCellsToConfig(), CELL_REGION_WIDTH,
-					CELL_REGION_HEIGHT, SCREEN_BORDER_BUFFER,
-					SCREEN_BORDER_BUFFER);
-			}catch(CellSocietyException error){
+			try {
+				readFile(modelSetUp);
+				myEngine = new SimEngine(myXMLContents.getModel(),
+						myXMLContents.getParams(),
+						myXMLContents.getCellsToConfig(), CELL_REGION_WIDTH,
+						CELL_REGION_HEIGHT, SCREEN_BORDER_BUFFER,
+						SCREEN_BORDER_BUFFER);
+			} catch (CellSocietyException error) {
 				error.displayError();
 				return;
 			}
@@ -216,21 +219,36 @@ public class SimBrain extends Application {
 			myIncSpeedButton.setDisable(false);
 			myDecSpeedButton.setDisable(false);
 			enableCorrectButtons(false);
-			ParameterControlBox myParamControls = new ParameterControlBox(this);
-			myWindow.addControlPanel(myParamControls.getParameterControls());
+
+			// added for testing
+			Map<String, ArrayList<Double>> paramMap = new HashMap<>();
+			ArrayList<Double> toAdd = new ArrayList<Double>();
+			toAdd.add(0, (double) 0);
+			toAdd.add(1, (double) 5);
+			toAdd.add(2, 2.5);
+			paramMap.put("probCatch", toAdd);
+			toAdd.add(0, (double) 0);
+			toAdd.add(1, (double) 5);
+			toAdd.add(2, 2.5);
+			paramMap.put("second", toAdd);
+
+			if (paramMap.keySet().size() > 0) {
+				ParameterControlBox myParamControls = new ParameterControlBox(
+						this, paramMap);
+				myWindow.addControlPanel(myParamControls.getParameterControls());
+			}
 		}
 	}
 
 	private void readFile(File file) {
 		try {
 			myXMLContents = new XMLContents(file);
-		} 
-		catch (ParserConfigurationException | SAXException | IOException e) {
+		} catch (ParserConfigurationException | SAXException | IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void updateParameter(String paramName, Double paramValue){
+
+	public void updateParameter(String paramName, Double paramValue) {
 		Animation.Status previousStatus = myAnimation.getStatus();
 		myAnimation.pause();
 		myEngine.changeParam(paramName, paramValue);
