@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +35,14 @@ public abstract class BaseModel {
 	
 	public Map<String, Double> getParameterValuesMap() {
 		return parameterValues;
+	}
+	
+	public Map<String, ArrayList<Double>> getParamNameMinMaxCur(){
+		return new HashMap<String, ArrayList<Double>>();
+	}
+	
+	public void changeParam(String param, Double value){
+		parameterValues.put(param, value);
 	}
 
 	public abstract Cell updateFutureState(Cell cellToUpdate,

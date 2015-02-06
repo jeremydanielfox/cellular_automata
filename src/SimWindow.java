@@ -1,7 +1,9 @@
 import java.util.Collection;
+
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -18,6 +20,8 @@ public class SimWindow {
 	private Scene myScene;
 	private Group myRoot;
 	private Group myCellRegion;
+	private VBox myControlPanels;
+	private HBox myParamControls;
 
 	public static final int WINDOW_HEIGHT = 600;
 	public static final int WINDOW_WIDTH = 600;
@@ -29,7 +33,9 @@ public class SimWindow {
 		myStage.setTitle(title);
 		myRoot = new Group();
 		myCellRegion = new Group();
-		myRoot.getChildren().add(controls);
+		myControlPanels = new VBox();
+		myControlPanels.getChildren().add(controls);
+		myRoot.getChildren().add(myControlPanels);
 		myRoot.getChildren().add(myCellRegion);
 		myScene = new Scene(myRoot, WINDOW_WIDTH, WINDOW_HEIGHT, Color.WHITE);
 		myStage.setScene(myScene);
@@ -41,6 +47,14 @@ public class SimWindow {
 		for (Cell c : collection) {
 			myCellRegion.getChildren().add(c.getShape());
 		}
+	}
+	
+	public void addControlPanel(HBox toAdd){
+		if(myParamControls != null){
+			myControlPanels.getChildren().remove(myParamControls);
+		}
+		myParamControls = toAdd;
+		myControlPanels.getChildren().add(myParamControls);
 	}
 
 	public void setStageTitle(String newTitle) {

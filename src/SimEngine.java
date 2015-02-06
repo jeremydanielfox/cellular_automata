@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -70,5 +71,13 @@ public class SimEngine {
 			myGraph.updateStateOfCell(c,
 					myModel.getColorForStringState(c.getStringState()));
 		}
+	}
+
+	public void changeParam(String paramName, Double paramValue) {
+		myModel.changeParam(paramName, paramValue);
+	}
+	
+	public Map<String, ArrayList<Double>> getParamMap(){
+		return myModel.getParamNameMinMaxCur();
 	}
 }
