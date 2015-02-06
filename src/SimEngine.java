@@ -71,4 +71,9 @@ public class SimEngine {
 					myModel.getColorForStringState(c.getStringState()));
 		}
 	}
+
+	public void changeParam(String paramName, Double paramValue) {
+		// TODO Auto-generated method stub
+		
+	}
 }

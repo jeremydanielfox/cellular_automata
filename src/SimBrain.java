@@ -14,6 +14,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -51,8 +52,8 @@ public class SimBrain extends Application {
 	private static final int CELL_REGION_HEIGHT = SimWindow.WINDOW_HEIGHT - 2
 			* SCREEN_BORDER_BUFFER;
 	private static final int INITIAL_FRAME_RATE = 2500;
-	private static final int CONTROL_PANEL_BUTTON_SPACING = 10;
-	private static final int CONTROL_PANEL_MAX_HEIGHT = 50;
+	public static final int CONTROL_PANEL_BUTTON_SPACING = 10;
+	public static final int CONTROL_PANEL_MAX_HEIGHT = 50;
 	private static final int DEC_FRAME_RATE_MULTIPLIER = 1;
 	private static final int INC_FRAME_RATE_MULTIPLIER = -1;
 
@@ -63,6 +64,7 @@ public class SimBrain extends Application {
 		myWindow = new SimWindow(s, makeControlPanel(),
 				myResources.getString("InitialWindowTitle"));
 		initializeAnimationTimeline();
+		//myWindow.addHBox(test.getParameterControls());
 	}
 
 	public static void main(String[] args) {
@@ -98,12 +100,7 @@ public class SimBrain extends Application {
 		myStepButton = makeButton(myResources.getString("StepButtonText"), true);
 		myStepButton.setOnAction(e -> stepSimulation());
 		controlPanel.getChildren().add(myStepButton);
-
 		return controlPanel;
-	}
-	
-	private void respondToSlider(){
-		
 	}
 
 	private Button makeButton(String text, boolean disabled) {
@@ -151,13 +148,17 @@ public class SimBrain extends Application {
 			myIncSpeedButton.setDisable(false);
 		initializeAnimationTimeline();
 		paintSim();
-		if (previousStatus.equals(Animation.Status.RUNNING)) {
+		restoreLastAnimationStatus(previousStatus);
+
+	}
+	
+	private void restoreLastAnimationStatus(Animation.Status prevStatus){
+		if (prevStatus.equals(Animation.Status.RUNNING)) {
 			playSimulation();
 			enableCorrectButtons(true);
-		} else if (previousStatus.equals(Animation.Status.PAUSED)) {
+		} else if (prevStatus.equals(Animation.Status.PAUSED)) {
 			enableCorrectButtons(false);
 		}
-
 	}
 
 	public void changeFramesPerSecondValue(int i) {
@@ -215,6 +216,8 @@ public class SimBrain extends Application {
 			myIncSpeedButton.setDisable(false);
 			myDecSpeedButton.setDisable(false);
 			enableCorrectButtons(false);
+			ParameterControlBox myParamControls = new ParameterControlBox(this);
+			myWindow.addControlPanel(myParamControls.getParameterControls());
 		}
 	}
 
@@ -225,5 +228,12 @@ public class SimBrain extends Application {
 		catch (ParserConfigurationException | SAXException | IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void updateParameter(String paramName, Double paramValue){
+		Animation.Status previousStatus = myAnimation.getStatus();
+		myAnimation.pause();
+		myEngine.changeParam(paramName, paramValue);
+		restoreLastAnimationStatus(previousStatus);
 	}
 }
