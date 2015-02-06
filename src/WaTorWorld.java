@@ -22,6 +22,10 @@ public class WaTorWorld extends BaseModel {
 	private static final Color FISH_COLOR = Color.YELLOW;
 	private static final Color SHARK_COLOR = Color.PURPLE;
 	private static final Color DEFAULT_COLOR = WATER_COLOR;
+	private static final double MIN_SHARK_ENERGY = 1;
+	private static final double MAX_SHARK_ENERGY = 100;
+	private static final double MIN_TIME_TILL_REPRODUCE = 1;
+	private static final double MAX_TIME_TILL_REPRODUCE = 100;
 	private int sharkEnergy;
 	private int timeTillReproduce;
 
@@ -33,9 +37,20 @@ public class WaTorWorld extends BaseModel {
 		getStateToColorMap().put("water", WATER_COLOR);
 		getStateToColorMap().put("fish", FISH_COLOR);
 		getStateToColorMap().put("shark", SHARK_COLOR);
+		getParameterValuesMap().put("minSharkEnergy", MIN_SHARK_ENERGY);
+		getParameterValuesMap().put("maxSharkEnergy", MAX_SHARK_ENERGY);
+		getParameterValuesMap().put("minTimeTillReproduce", MIN_TIME_TILL_REPRODUCE);
+		getParameterValuesMap().put("maxTimeTillReproduce", MAX_TIME_TILL_REPRODUCE);
 
-		sharkEnergy = parameters.get("energyLevel").intValue();
-		timeTillReproduce = parameters.get("timeTillReproduce").intValue();
+		try {
+			sharkEnergy = parameters.get("energyLevel").intValue();
+			timeTillReproduce = parameters.get("timeTillReproduce").intValue();
+			getParameterValuesMap().put("currentSharkEnergy", parameters.get("energyLevel"));
+			getParameterValuesMap().put("currentTimeTillReproduce", parameters.get("timeTillReproduce"));
+		} catch (NullPointerException e) {
+			getParameterValuesMap().put("currentSharkEnergy", (MIN_SHARK_ENERGY + MAX_SHARK_ENERGY) / 2);
+			getParameterValuesMap().put("currentTimeTillReproduce", (MIN_TIME_TILL_REPRODUCE + MAX_TIME_TILL_REPRODUCE) / 2);		}
+
 	}
 
 	@Override
