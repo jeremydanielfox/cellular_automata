@@ -20,6 +20,8 @@ public class Fire extends BaseModel {
 	private static final Color TREE_COLOR = Color.FORESTGREEN;
 	private static final Color BURNING_COLOR = Color.RED;
 	private static final Color DEFAULT_COLOR = TREE_COLOR;
+	private static final double MIN_PROB_CATCH = 0;
+	private static final double MAX_PROB_CATCH = 1.0;
 	private double probCatch;
 
 	public Fire(Map<String, Double> parameters) {
@@ -30,8 +32,15 @@ public class Fire extends BaseModel {
 		getStateToColorMap().put("empty", EMPTY_COLOR);
 		getStateToColorMap().put("tree", TREE_COLOR);
 		getStateToColorMap().put("burning", BURNING_COLOR);
-
-		probCatch = parameters.get("probCatch");
+		getParameterValuesMap().put("minProbCatch", MIN_PROB_CATCH);
+		getParameterValuesMap().put("maxProbCatch", MAX_PROB_CATCH);
+		
+		try {
+			probCatch = parameters.get("probCatch");
+			getParameterValuesMap().put("currentProbCatch", probCatch);
+		} catch (NullPointerException e) {
+			getParameterValuesMap().put("currentProbCatch", (MIN_PROB_CATCH + MAX_PROB_CATCH) / 2);
+		}
 	}
 
 	@Override
