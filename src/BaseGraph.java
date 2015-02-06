@@ -30,6 +30,8 @@ public abstract class BaseGraph {
 	private int myScreenWidth;
 	private int myScreenHeight;
 	private String myModel;
+	private String myEdgeType;
+	private String myType;
 
 	public BaseGraph(int numCellsWidth, int numCellsHeight, int screenWidth,
 			int screenHeight, int xOffset, int yOffset, int points,
@@ -167,6 +169,13 @@ public abstract class BaseGraph {
 		return myModel;
 	}
 	
+	public String getEdgeType() {
+		return myEdgeType;
+	}
+	
+	public String getType() {
+		return myType;
+	}
 	public abstract void initializeConstants();
 
 	public abstract void initializeCells(int defaultState, Color defaultColor);

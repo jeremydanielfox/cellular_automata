@@ -116,14 +116,14 @@ public class SquareGraph extends BaseGraph {
 	@Override
 	public void connectCells() {
 		for (Cell current : this.getAllCells()) {
-			checkConnect(current,RIGHT);
-			checkConnect(current,LEFT);
-			checkConnect(current,DOWN);
-			checkConnect(current,UP);
+			checkConnect(current, RIGHT);
+			checkConnect(current, LEFT);
+			checkConnect(current, DOWN);
+			checkConnect(current, UP);
 		}
 	}
-	
-	public void checkConnect(Cell myCell,Point2D myPoint) {
+
+	public void checkConnect(Cell myCell, Point2D myPoint) {
 		Cell neighbor = getNeighbor(myCell, myPoint);
 		if (neighbor != null)
 			connect(myCell, neighbor);
@@ -147,6 +147,9 @@ public class SquareGraph extends BaseGraph {
 	@Override
 	public void manageEdgeConditions() {
 		// TODO Auto-generated method stub
+		EdgeManagerFactory myManagerFactory = new EdgeManagerFactory();
+		EdgeManager myEdgeManager = myManagerFactory.createSpecifiedManager(
+				getType() + getEdgeType(), this);
 
 	}
 }
