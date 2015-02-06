@@ -4,7 +4,7 @@ import java.util.List;
 
 import CellsAndComponents.Cell;
 import javafx.geometry.Point2D;
-
+//this class was changed during discussion
 public class FourNeighborToroid extends EdgeManager {
 	private final Point2D RIGHT = new Point2D(1, 0);
 	private final Point2D LEFT = new Point2D(-1, 0);
