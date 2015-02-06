@@ -1,15 +1,13 @@
 package Graphs;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import CellsAndComponents.Cell;
 import javafx.geometry.Point2D;
+
 //this class was changed during discussion
 public class FourNeighborToroid extends EdgeManager {
-	private final Point2D RIGHT = new Point2D(1, 0);
-	private final Point2D LEFT = new Point2D(-1, 0);
-	private final Point2D UP = new Point2D(0, -1);
-	private final Point2D DOWN = new Point2D(0, 1);
 	private final boolean VERTICAL = false;
 	private final boolean HORIZONTAL = true;
 
@@ -23,16 +21,30 @@ public class FourNeighborToroid extends EdgeManager {
 	}
 
 	private void connectWithOpposite(List<Cell> currentList, boolean sideways) {
-		for (Cell current : currentList) {
-			Point2D currentPoint = getGraph().getCellPointMap().get(current);
-			Point2D temp;
+		for (Cell currentCell : currentList) {
+			Point2D currentPoint = getGraph().getCellPointMap()
+					.get(currentCell);
+			List<Point2D> pointList = new ArrayList<>();
 			if (sideways)
-				temp = getRight(currentPoint);
+				sidewaysCondition(pointList, currentPoint);
 			else
-				temp = getBottom(currentPoint);
-			Cell tempCell = getGraph().getCellPointMap().get(temp);
-			getGraph().connect(tempCell, current);
+				verticalCondition(pointList, currentPoint);
+			for (Point2D currentNewPoint : pointList) {
+				Cell tempCell = getGraph().getCellPointMap().get(
+						currentNewPoint);
+				getGraph().connect(tempCell, currentCell);
+			}
 		}
+	}
+
+	protected void sidewaysCondition(List<Point2D> pointList,
+			Point2D currentPoint) {
+		pointList.add(getRight(currentPoint));
+	}
+
+	protected void verticalCondition(List<Point2D> pointList,
+			Point2D currentPoint) {
+		pointList.add(getBottom(currentPoint));
 	}
 
 	protected Point2D getRight(Point2D current) {
