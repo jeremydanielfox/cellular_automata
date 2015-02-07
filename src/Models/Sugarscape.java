@@ -58,8 +58,11 @@ public class Sugarscape extends BaseModel {
 
 	public Collection<Cell> updateFutureStates(Iterable<Cell> cellsToUpdate,
 			BaseGraph graph) {
-		ArrayList<Cell> shuffledCells = new ArrayList<Cell>(
-				(ArrayList<Cell>) cellsToUpdate);
+		ArrayList<Cell> shuffledCells = new ArrayList<Cell>();
+		for (Cell c : cellsToUpdate) {
+			shuffledCells.add(c);
+		}
+		// (ArrayList<Cell>) cellsToUpdate);
 		Collections.shuffle(shuffledCells);
 		for (Cell c : shuffledCells) {
 			AdvancedCell curCell = (AdvancedCell) c;
@@ -69,15 +72,18 @@ public class Sugarscape extends BaseModel {
 				ArrayList<AdvancedCell> possibleMaxSugar = (ArrayList<AdvancedCell>) findMaxSugarCells(possibleCells);
 				AdvancedCell toMoveTo = getClosest(possibleMaxSugar, curCell,
 						graph);
-				moveAgent(toMoveTo, curCell);
-				((Agent) toMoveTo.getInhabitants().get(0))
-						.addSugar(((Sugar) toMoveTo.getPatch())
-								.getSugarAmount());
-				((Sugar) toMoveTo.getPatch()).takeAllSugar();
-				if (((Agent) toMoveTo.getInhabitants().get(0)).checkDead()) {
-					toMoveTo.getInhabitants().remove(0);
-				} else {
-					changeFutureState(toMoveTo, WITH_AGENT, WITH_AGENT_COLOR);
+				if (toMoveTo != null) {
+					moveAgent(toMoveTo, curCell);
+					((Agent) toMoveTo.getInhabitants().get(0))
+							.addSugar(((Sugar) toMoveTo.getPatch())
+									.getSugarAmount());
+					((Sugar) toMoveTo.getPatch()).takeAllSugar();
+					if (((Agent) toMoveTo.getInhabitants().get(0)).checkDead()) {
+						toMoveTo.getInhabitants().remove(0);
+					} else {
+						changeFutureState(toMoveTo, WITH_AGENT,
+								WITH_AGENT_COLOR);
+					}
 				}
 			}
 		}
@@ -101,18 +107,26 @@ public class Sugarscape extends BaseModel {
 	@Override
 	public void setUpCellContents(BaseGraph graph,
 			Iterable<ConfigCellInfo> cellsToConfig) {
-		
+
+		for (Cell c : graph.getAllCells()) {
+			AdvancedCell cell = (AdvancedCell) c;
+			cell.setPatch(new Sugar(DEFAULT_MAX_SUGAR));
+		}
+
 		for (ConfigCellInfo c : cellsToConfig) {
-			try{
+			try {
 				c.setIntState(Integer.parseInt(c.getStringState()));
-			}catch(NumberFormatException e){
+			} catch (NumberFormatException e) {
 				c.setIntState(DEFAULT_MAX_SUGAR);
 			}
-			updateStateOfCell(graph, c, calculateColorForSugarLevel(c.getIntState()));
+			updateStateOfCell(graph, c,
+					calculateColorForSugarLevel(c.getIntState()));
 		}
-		
-		ArrayList<Cell> shuffledCells = new ArrayList<Cell>(
-				(ArrayList<Cell>) graph.getAllCells());
+
+		ArrayList<Cell> shuffledCells = new ArrayList<Cell>();
+		for (Cell c : graph.getAllCells()) {
+			shuffledCells.add(c);
+		}
 		Collections.shuffle(shuffledCells);
 		for (int i = 0; i < getParameterValuesMap().get("numAgents"); i++) {
 			AdvancedCell toAddto = (AdvancedCell) shuffledCells.get(i);
@@ -120,20 +134,20 @@ public class Sugarscape extends BaseModel {
 			toAddto.setCurrentState(getIntForState("agent"));
 		}
 	}
-	
+
 	@Override
-	public void addAdditionalCellInfo(Cell c, ConfigCellInfo myBabyCell){
-		AdvancedCell curCell = (AdvancedCell)c;
+	public void addAdditionalCellInfo(Cell c, ConfigCellInfo myBabyCell) {
+		AdvancedCell curCell = (AdvancedCell) c;
 		Patch newPatch = new Sugar(myBabyCell.getIntState());
 		curCell.setPatch(newPatch);
 	}
-	
-	private Color calculateColorForSugarLevel(int sugarLevel){
+
+	private Color calculateColorForSugarLevel(int sugarLevel) {
 		return Color.ORANGE;
 	}
 
-	private Collection<AdvancedCell> getVacantPatchesInSight(
-			AdvancedCell curCell, BaseGraph graph) {
+	private List<AdvancedCell> getVacantPatchesInSight(AdvancedCell curCell,
+			BaseGraph graph) {
 		int vision = ((Agent) curCell.getInhabitants().get(0)).getVision();
 		List<AdvancedCell> possibleCells = new ArrayList<AdvancedCell>();
 		for (int i = 1; i <= vision; i++) {
@@ -164,7 +178,7 @@ public class Sugarscape extends BaseModel {
 		return null;
 	}
 
-	private Collection<AdvancedCell> findMaxSugarCells(
+	private List<AdvancedCell> findMaxSugarCells(
 			ArrayList<AdvancedCell> possibleCells) {
 		int maxSugar = 0;
 		for (AdvancedCell curCell : possibleCells) {
