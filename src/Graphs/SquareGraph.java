@@ -11,9 +11,6 @@ import Factories.CellFactory;
 import Factories.InhabitantFactory;
 
 public class SquareGraph extends BaseGraph {
-	private int cellWidth;
-	private int cellHeight;
-
 	private Point2D RIGHT;
 	private Point2D LEFT;
 	private Point2D UP;
@@ -34,10 +31,6 @@ public class SquareGraph extends BaseGraph {
 	public SquareGraph(Polygon[][] myShapes, int numCellsWidth, int numCellsHeight,
 			int defaultState, Color defaultColor, String model) {
 		super(myShapes, numCellsWidth, numCellsHeight, defaultState, defaultColor, model);
-		// Point2D RIGHT = new Point2D(1, 0);
-		// Point2D LEFT = new Point2D(-1, 0);
-		// Point2D UP = new Point2D(0, -1);
-		// Point2D DOWN = new Point2D(0, 1);
 	}
 
 	public void initializeConstants() {
@@ -45,14 +38,6 @@ public class SquareGraph extends BaseGraph {
 		LEFT = new Point2D(-1, 0);
 		UP = new Point2D(0, -1);
 		DOWN = new Point2D(0, 1);
-	}
-
-	/**
-	 * Calculate the width and height of each cell
-	 */
-	public void calculateValues() {
-		cellWidth = getMyScreenWidth() / getNumCellsAcross();
-		cellHeight = getMyScreenHeight() / getNumCellsUpDown();
 	}
 
 	/**
@@ -65,16 +50,7 @@ public class SquareGraph extends BaseGraph {
 		CellFactory myFactory = new CellFactory();
 		for (int i = 0; i < getNumCellsUpDown(); i++)
 			for (int j = 0; j < getNumCellsAcross(); j++) {
-//				Polygon tempShape = new Polygon();
 				List<Point2D> tempList = new ArrayList<>();
-//				tempList.add(new Point2D(getXOffset() + (i - 1) * cellWidth,
-//						getYOffset() + (j - 1) * cellHeight));
-//				tempList.add(new Point2D(getXOffset() + (i - 1) * cellWidth,
-//						getYOffset() + j * cellHeight));
-//				tempList.add(new Point2D(getXOffset() + i * cellWidth,
-//						getYOffset() + j * cellHeight));
-//				tempList.add(new Point2D(getXOffset() + i * cellWidth,
-//						getYOffset() + (j - 1) * cellHeight));
 				Cell temp = myFactory.createSpecifiedCell(getModelName(),
 						count, myShapes[i][j], tempList, defaultState, defaultColor);
 				temp.setFutureState(defaultState);

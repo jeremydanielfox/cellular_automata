@@ -25,12 +25,8 @@ public abstract class BaseGraph {
 
 	private Map<Cell, Collection<Cell>> myEdges = new HashMap<>();
 	private CellPointMap myCellPointMap = new CellPointMap();
-	private int horizontalOffset;
-	private int verticalOffset;
 	private int numCellsAcross;
 	private int numCellsUpDown;
-	private int myScreenWidth;
-	private int myScreenHeight;
 	private String myModel;
 	private String myEdgeType;
 	private String myType;
@@ -42,14 +38,9 @@ public abstract class BaseGraph {
 
 		numCellsAcross = myShapes.length;
 		numCellsUpDown = myShapes[0].length;
-		// myScreenWidth = screenWidth;
-		// myScreenHeight = screenHeight;
-		// horizontalOffset = xOffset;
-		// verticalOffset = yOffset;
 		myModel = model;
 		isWrapped = false;
 		initializeConstants();
-		calculateValues();
 		initializeCells(myShapes, defaultState, defaultColor);
 		connectCells();
 		manageEdgeConditions();
@@ -72,13 +63,6 @@ public abstract class BaseGraph {
 		return numCellsUpDown;
 	}
 
-	public int getMyScreenWidth() {
-		return myScreenWidth;
-	}
-
-	public int getMyScreenHeight() {
-		return myScreenHeight;
-	}
 
 	public CellPointMap getCellPointMap() {
 		return myCellPointMap;
@@ -138,14 +122,6 @@ public abstract class BaseGraph {
 
 	}
 
-	public int getXOffset() {
-		return horizontalOffset;
-	}
-
-	public int getYOffset() {
-		return verticalOffset;
-	}
-
 	public abstract void connectCells();
 
 	public abstract void manageEdgeConditions();
@@ -190,8 +166,6 @@ public abstract class BaseGraph {
 
 	public abstract void initializeCells(Polygon[][] myShapes,
 			int defaultState, Color defaultColor);
-
-	public abstract void calculateValues();
 
 	public abstract int calculateID(int row, int col);
 

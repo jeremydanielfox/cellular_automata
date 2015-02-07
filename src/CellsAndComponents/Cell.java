@@ -1,6 +1,6 @@
 package CellsAndComponents;
+
 import java.util.List;
-import java.util.Set;
 
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
@@ -19,8 +19,8 @@ public class Cell {
 	private List<Point2D> myVerticies;
 	private Polygon myShape;
 
-	public Cell(int id, Polygon shape, List<Point2D> verticies, int defaultState,
-			Color defaultColor) {
+	public Cell(int id, Polygon shape, List<Point2D> verticies,
+			int defaultState, Color defaultColor) {
 		setID(id);
 		setShape(shape);
 		myVerticies = verticies;
@@ -76,8 +76,8 @@ public class Cell {
 		Double[] temp = new Double[2 * myVerticies.size()];
 		int count = 0;
 		for (Point2D current : myVerticies) {
-			temp[count] = (double) current.getX();
-			temp[count + 1] = (double) current.getY();
+			temp[count] = current.getX();
+			temp[count + 1] = current.getY();
 			count += 2;
 		}
 		myShape.getPoints().addAll(temp);
