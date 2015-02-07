@@ -73,12 +73,12 @@ public class SimEngine {
 	}
 
 	private void setUpInitCells() {
-		myModel.assignAdditionalCellInfo(myGraph);
-		for (ConfigCellInfo c : myCellsToConfig) {
-			c.setIntState(myModel.getIntForState(c.getStringState()));
-			myGraph.updateStateOfCell(c,
-					myModel.getColorForStringState(c.getStringState()));
-		}
+		myModel.setUpCellContents(myGraph, myCellsToConfig);
+//		for (ConfigCellInfo c : myCellsToConfig) {
+//			c.setIntState(myModel.getIntForState(c.getStringState()));
+//			myGraph.updateStateOfCell(c,
+//					myModel.getColorForStringState(c.getStringState()));
+//		}
 	}
 
 	public void changeParam(String paramName, Double paramValue) {

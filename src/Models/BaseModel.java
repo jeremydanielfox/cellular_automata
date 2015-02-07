@@ -6,9 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import CellsAndComponents.Cell;
-import Graphs.BaseGraph;
+import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import CellsAndComponents.Cell;
+import Factories.InhabitantFactory;
+import Graphs.BaseGraph;
+import Graphs.ConfigCellInfo;
 
 /**
  * This the abstract model class that every type of model will extend
@@ -32,7 +35,7 @@ public abstract class BaseModel {
 
 	protected void initializeMaps(List<String> states, List<Integer> stateInts,
 			List<Color> stateColors) {
-		for(int i = 0; i < states.size(); i++){
+		for (int i = 0; i < states.size(); i++) {
 			stateToInt.put(states.get(i), stateInts.get(i));
 			stateToColor.put(states.get(i), stateColors.get(i));
 		}
@@ -84,9 +87,6 @@ public abstract class BaseModel {
 	public int getSharePointsForNeighbor() {
 		return numPointsForNeighbor;
 	}
-	
-	public void assignAdditionalCellInfo(BaseGraph graph) {
-	}
 
 	public int countNeighbors(int state, Collection<Cell> neighbors) {
 		int neighborsWithState = 0;
@@ -102,5 +102,37 @@ public abstract class BaseModel {
 		cellToUpdate.setFutureState(state);
 		cellToUpdate.setColor(stateColor);
 	}
+
+	public void setUpCellContents(BaseGraph graph,
+			Iterable<ConfigCellInfo> cellsToConfig) {
+		
+		for (ConfigCellInfo c : cellsToConfig) {
+			c.setIntState(getIntForState(c.getStringState()));
+			updateStateOfCell(graph, c, getColorForStringState(c.getStringState()));
+		}
+
+	}
+	
+	public void updateStateOfCell(BaseGraph graph, ConfigCellInfo myBabyCell, Color color) {
+		if (myBabyCell == null) {
+			System.out
+					.println("Can't update state of cell because ConfigCellInfo is null");
+			return;
+		}
+		Cell current = graph.getCell(new Point2D(myBabyCell.getRow(), myBabyCell.getCol()));
+		current.setCurrentState(myBabyCell.getIntState());
+		current.getShape().setFill(color);
+		addAdditionalCellInfo(current, myBabyCell);
+//		needs to be overriden, deleted from sugarscape, and added only in water world
+//		InhabitantFactory myInhabitantFactory = new InhabitantFactory();
+//		current.setInhabitant(
+//				myInhabitantFactory.createSpecifiedInhabitant(
+//						myBabyCell.getStringState(), myBabyCell.getIntState()));
+	}
+	
+	public void addAdditionalCellInfo(Cell c, ConfigCellInfo myBabyCell){
+	}
+	
+	
 
 }

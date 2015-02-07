@@ -68,11 +68,13 @@ public class XMLContents {
 		extractParams();
 	}
 
+	//private void setSpecifiedVariable(String variable, )
+	
 	private void readGraphType(){
 		try{
 			myGraphType = extractSpecifiedTag("GraphType");
 		}catch(NullPointerException e){
-			myGraphType = "Square";
+			myGraphType = "FourNeighborSquareGraph";
 		}
 	}
 	

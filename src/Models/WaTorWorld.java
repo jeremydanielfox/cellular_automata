@@ -7,13 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javafx.scene.paint.Color;
 import CellsAndComponents.AquaticCreature;
 import CellsAndComponents.Cell;
 import CellsAndComponents.CellWithInhabitant;
 import CellsAndComponents.Inhabitant;
 import CellsAndComponents.Shark;
+import Factories.InhabitantFactory;
 import Graphs.BaseGraph;
-import javafx.scene.paint.Color;
+import Graphs.ConfigCellInfo;
 
 /**
  * This class implements the WaTorWorld model and extends BaseModel.
@@ -45,15 +47,9 @@ public class WaTorWorld extends BaseModel {
 		List<Integer> myInts = new ArrayList<>(Arrays.asList(WATER, FISH, SHARK));
 		initializeMaps(myStates, myInts, myColors);
 		try {
-//			sharkEnergy = parameters.get("energyLevel").intValue();
-//			timeTillReproduce = parameters.get("timeTillReproduce").intValue();
 			getParameterValuesMap().put("sharkEnergy", parameters.get("energyLevel"));
 			getParameterValuesMap().put("timeTillReproduce", parameters.get("timeTillReproduce"));
-//			getParameterValuesMap().put("currentSharkEnergy", parameters.get("energyLevel"));
-//			getParameterValuesMap().put("currentTimeTillReproduce", parameters.get("timeTillReproduce"));
 		} catch (NullPointerException e) {
-//			getParameterValuesMap().put("currentSharkEnergy", (MIN_SHARK_ENERGY + MAX_SHARK_ENERGY) / 2);
-//			getParameterValuesMap().put("currentTimeTillReproduce", (MIN_TIME_TILL_REPRODUCE + MAX_TIME_TILL_REPRODUCE) / 2);
 			getParameterValuesMap().put("sharkEnergy", MIN_SHARK_ENERGY);
 			getParameterValuesMap().put("timeTillReproduce", MAX_TIME_TILL_REPRODUCE);
 			}
@@ -187,6 +183,15 @@ public class WaTorWorld extends BaseModel {
 		minMaxCurSharkEnergy.add(2, getParameterValuesMap().get("sharkEnergy"));
 		toReturn.put("sharkEnergy", minMaxCurSharkEnergy);
 		return toReturn;
+	}
+	
+	@Override
+	public void addAdditionalCellInfo(Cell c, ConfigCellInfo myBabyCell){
+		CellWithInhabitant curCell = (CellWithInhabitant)c;
+		InhabitantFactory myInhabitantFactory = new InhabitantFactory();
+		curCell.setInhabitant(
+				myInhabitantFactory.createSpecifiedInhabitant(
+						myBabyCell.getStringState(), myBabyCell.getIntState()));
 	}
 
 }
