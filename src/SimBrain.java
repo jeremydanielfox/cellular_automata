@@ -1,27 +1,28 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
-import Exceptions.CellSocietyException;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.shape.Polygon;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
+import visuals.CellRegionDivider;
+import Exceptions.CellSocietyException;
+import Factories.CellRegionDividerFactory;
 
 /**
  * This class is responsible for running the simulation and acts as the
@@ -68,7 +69,6 @@ public class SimBrain extends Application {
 		myWindow = new SimWindow(s, makeControlPanel(),
 				myResources.getString("InitialWindowTitle"));
 		initializeAnimationTimeline();
-		// myWindow.addHBox(test.getParameterControls());
 	}
 
 	public static void main(String[] args) {
@@ -201,6 +201,17 @@ public class SimBrain extends Application {
 		if (modelSetUp != null) {
 			try {
 				readFile(modelSetUp);
+				CellRegionDividerFactory myDividerFactory = new CellRegionDividerFactory();
+				int cellsAcross = (myXMLContents.getParams().get("columns"))
+						.intValue();
+				int cellsVertical = (myXMLContents.getParams().get("rows"))
+						.intValue();
+				CellRegionDivider myDivider = myDividerFactory
+						.createSpecifiedDivider(cellsAcross, cellsVertical,
+								CELL_REGION_HEIGHT, CELL_REGION_WIDTH,
+								SCREEN_BORDER_BUFFER, SCREEN_BORDER_BUFFER,
+								myXMLContents.getGraphType());
+				Polygon[][] myPolygons = myDivider.divideSpace();
 				myEngine = new SimEngine(myXMLContents.getModel(),
 						myXMLContents.getParams(),
 						myXMLContents.getCellsToConfig(), CELL_REGION_WIDTH,
@@ -220,9 +231,9 @@ public class SimBrain extends Application {
 			myIncSpeedButton.setDisable(false);
 			myDecSpeedButton.setDisable(false);
 			enableCorrectButtons(false);
-			
+
 			Map<String, ArrayList<Double>> paramMap = myEngine.getParamMap();
-			
+
 			if (paramMap.keySet().size() > 0) {
 				ParameterControlBox myParamControls = new ParameterControlBox(
 						this, paramMap);
