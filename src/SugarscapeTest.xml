@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Information>
 	<GraphType>FourNeighborSquareGraph</GraphType>
-	<Model>Fire</Model>
+	<Model>Sugarscape</Model>
     <GraphType>Square</GraphType>
-	<Author> Sierra and Megan</Author>
-	<Title>Forest Fire</Title>
-	<GridRows>60</GridRows>
-	<GridColumns>60</GridColumns>
+	<Author>Megan and Sierra</Author>
+	<Title>Sugarscape</Title>
+	<GridRows>5</GridRows>
+	<GridColumns>5</GridColumns>
 	<Parameters>
-		<probCatch>.6</probCatch>
+		<numAgents>10</numAgents>
 	</Parameters>
 	<Configuration>
-		<Cell x="50" y="49" state="burning"> </Cell>
-		<Cell x="51" y="49" state="burning"> </Cell>
-		<Cell x="49" y="50" state="burning"> </Cell>
-		<Cell x="50" y="50" state="burning"> </Cell>
-		<Cell x="50" y="51" state="burning"> </Cell>
+		<Cell x="1" y="2" state="5"> </Cell>
+		<Cell x="1" y="3" state="5"> </Cell>
+		<Cell x="2" y="2" state="5"> </Cell>
+		<Cell x="2" y="3" state="5"> </Cell>
+		<Cell x="4" y="4" state="3"> </Cell>
+		<Cell x="3" y="4" state="3"> </Cell>
 	</Configuration>
 </Information>
