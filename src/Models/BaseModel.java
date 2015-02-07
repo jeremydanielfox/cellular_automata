@@ -1,7 +1,9 @@
 package Models;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import CellsAndComponents.Cell;
@@ -28,6 +30,14 @@ public abstract class BaseModel {
 		parameterValues = new HashMap<String, Double>();
 	}
 
+	protected void initializeMaps(List<String> states, List<Integer> stateInts,
+			List<Color> stateColors) {
+		for(int i = 0; i < states.size(); i++){
+			stateToInt.put(states.get(i), stateInts.get(i));
+			stateToColor.put(states.get(i), stateColors.get(i));
+		}
+	}
+
 	public Map<String, Integer> getStateToIntMap() {
 		return stateToInt;
 	}
@@ -35,16 +45,16 @@ public abstract class BaseModel {
 	public Map<String, Color> getStateToColorMap() {
 		return stateToColor;
 	}
-	
+
 	public Map<String, Double> getParameterValuesMap() {
 		return parameterValues;
 	}
-	
-	public Map<String, ArrayList<Double>> getParamNameMinMaxCur(){
+
+	public Map<String, ArrayList<Double>> getParamNameMinMaxCur() {
 		return new HashMap<String, ArrayList<Double>>();
 	}
-	
-	public void changeParam(String param, Double value){
+
+	public void changeParam(String param, Double value) {
 		parameterValues.put(param, value);
 	}
 
@@ -89,6 +99,5 @@ public abstract class BaseModel {
 		cellToUpdate.setFutureState(state);
 		cellToUpdate.setColor(stateColor);
 	}
-	
 
 }

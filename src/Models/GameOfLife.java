@@ -1,5 +1,6 @@
 package Models;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -28,10 +29,10 @@ public class GameOfLife extends BaseModel {
 
 	public GameOfLife(Map<String, Double> parameters) {
 		super(parameters, NUM_POINTS_FOR_NEIGHBOR);
-		getStateToIntMap().put("dead", DEAD);
-		getStateToIntMap().put("alive", ALIVE);
-		getStateToColorMap().put("dead", DEAD_COLOR);
-		getStateToColorMap().put("alive", ALIVE_COLOR);
+		List<String> myStates = new ArrayList<String>(Arrays.asList("dead", "alive"));
+		List<Color> myColors = new ArrayList<>(Arrays.asList(DEAD_COLOR, ALIVE_COLOR));
+		List<Integer> myInts = new ArrayList<>(Arrays.asList(DEAD, ALIVE));
+		initializeMaps(myStates, myInts, myColors);
 	}
 
 	@Override
