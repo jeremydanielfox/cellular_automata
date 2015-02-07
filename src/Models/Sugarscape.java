@@ -7,13 +7,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import CellsAndComponents.Inhabitant;
-import CellsAndComponents.Sugar;
-import CellsAndComponents.Agent;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
-import CellsAndComponents.Cell;
 import CellsAndComponents.AdvancedCell;
+import CellsAndComponents.Agent;
+import CellsAndComponents.Cell;
+import CellsAndComponents.Inhabitant;
+import CellsAndComponents.Patch;
+import CellsAndComponents.Sugar;
 import Graphs.BaseGraph;
 import Graphs.ConfigCellInfo;
 
@@ -31,6 +32,7 @@ public class Sugarscape extends BaseModel {
 	private static final Color WITH_AGENT_COLOR = Color.RED;
 	private static final double MIN_NUM_AGENTS = 0;
 	private static final double MAX_NUM_AGENTS = 100;
+	private static final int DEFAULT_MAX_SUGAR = 10;
 	private int sugarGrowCounter;
 
 	public Sugarscape(Map<String, Double> parameters) {
@@ -101,8 +103,12 @@ public class Sugarscape extends BaseModel {
 			Iterable<ConfigCellInfo> cellsToConfig) {
 		
 		for (ConfigCellInfo c : cellsToConfig) {
-			
-			//c.setIntState(getIntForState(c.getStringState()));
+			try{
+				c.setIntState(Integer.parseInt(c.getStringState()));
+			}catch(NumberFormatException e){
+				c.setIntState(DEFAULT_MAX_SUGAR);
+			}
+			updateStateOfCell(graph, c, calculateColorForSugarLevel(c.getIntState()));
 		}
 		
 		ArrayList<Cell> shuffledCells = new ArrayList<Cell>(
@@ -113,6 +119,17 @@ public class Sugarscape extends BaseModel {
 			toAddto.addInhabitant(new Agent(WITH_AGENT));
 			toAddto.setCurrentState(getIntForState("agent"));
 		}
+	}
+	
+	@Override
+	public void addAdditionalCellInfo(Cell c, ConfigCellInfo myBabyCell){
+		AdvancedCell curCell = (AdvancedCell)c;
+		Patch newPatch = new Sugar(myBabyCell.getIntState());
+		curCell.setPatch(newPatch);
+	}
+	
+	private Color calculateColorForSugarLevel(int sugarLevel){
+		return Color.ORANGE;
 	}
 
 	private Collection<AdvancedCell> getVacantPatchesInSight(

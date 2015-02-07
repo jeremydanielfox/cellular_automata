@@ -1,7 +1,7 @@
 package Graphs;
 
 public class ConfigCellInfo {
-	private final int DEFAULT_STATE = 0;
+	private static final int DEFAULT_STATE = 0;
 
 	private int myRow;
 	private int myCol;
@@ -12,11 +12,7 @@ public class ConfigCellInfo {
 		myRow = row;
 		myCol = col;
 		myState = state;
-		try{
-			myIntState = Integer.parseInt(state);
-		}catch(NumberFormatException e){
-			myIntState = DEFAULT_STATE;
-		}
+		myIntState = DEFAULT_STATE;
 		
 	}
 
