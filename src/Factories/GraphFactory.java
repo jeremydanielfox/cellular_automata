@@ -3,8 +3,8 @@ package Factories;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import Graphs.BaseGraph;
-import Graphs.EightNeighborSquareGraph;
-import Graphs.SquareGraph;
+import Graphs.EightNeighorBasicGraph;
+import Graphs.BasicGraph;
 
 /**
  * This is the factory to make new graphs
@@ -29,23 +29,23 @@ public class GraphFactory {
 
 		switch (model) {
 		case "FourNeighborSquareGraph":
-			return new SquareGraph(myShapes, numCellsWidth,
+			return new BasicGraph(myShapes, numCellsWidth,
 					numCellsHeight, defaultState, defaultColor, model);
 		case "FourNeighborTriangleGraph":
-			return new SquareGraph(myShapes, numCellsWidth,
+			return new BasicGraph(myShapes, numCellsWidth,
 					numCellsHeight, defaultState, defaultColor, model);
 		case "EightNeighborTriangleGraph":
-			return new EightNeighborSquareGraph(myShapes, numCellsWidth,
+			return new EightNeighorBasicGraph(myShapes, numCellsWidth,
 					numCellsHeight, defaultState, defaultColor, model);
 		case "EightNeighor":
-			return new EightNeighborSquareGraph(myShapes, numCellsWidth,
+			return new EightNeighorBasicGraph(myShapes, numCellsWidth,
 					numCellsHeight, defaultState, defaultColor, model);
 
 		case "GameOfLife":
-			return new EightNeighborSquareGraph(myShapes, numCellsWidth,
+			return new EightNeighorBasicGraph(myShapes, numCellsWidth,
 					numCellsHeight, defaultState, defaultColor, model);
 		default:
-			return new SquareGraph(myShapes, numCellsWidth, numCellsHeight,
+			return new BasicGraph(myShapes, numCellsWidth, numCellsHeight,
 					defaultState, defaultColor, model);
 		}
 
