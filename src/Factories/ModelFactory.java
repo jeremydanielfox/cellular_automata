@@ -3,6 +3,7 @@ package Factories;
 import java.util.Map;
 
 import Exceptions.CellSocietyException;
+import Graphs.BaseGraph;
 import Models.BaseModel;
 import Models.Fire;
 import Models.GameOfLife;

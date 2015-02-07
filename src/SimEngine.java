@@ -32,8 +32,8 @@ public class SimEngine {
 		myParameters = parameters;
 		myCellsToConfig = cellsToConfig;
 		ModelFactory myModFactory = new ModelFactory();
-		myModel = myModFactory.createSpecifiedModel(model, parameters);
 		GraphFactory myGraphFactory = new GraphFactory();
+		myModel = myModFactory.createSpecifiedModel(model, parameters);
 		myGraph = myGraphFactory.createSpecifiedGraph(
 				myParameters.get("columns").intValue(), myParameters
 						.get("rows").intValue(), cellRegionWidth,
@@ -41,6 +41,7 @@ public class SimEngine {
 						.getSharePointsForNeighbor(),
 				myModel.getDefaultState(), myModel.getDefaultColor(),
 				myModelName);
+
 //		myGraph = new SquareGraph(myParameters.get("columns").intValue(),
 //				myParameters.get("rows").intValue(), cellRegionWidth,
 //				cellRegionHeight, cellRegionXOffset, cellRegionYOffset,
@@ -73,6 +74,7 @@ public class SimEngine {
 	}
 
 	private void setUpInitCells() {
+		myModel.assignAdditionalCellInfo(myGraph);
 		for (ConfigCellInfo c : myCellsToConfig) {
 			c.setIntState(myModel.getIntForState(c.getStringState()));
 			myGraph.updateStateOfCell(c,

@@ -28,6 +28,8 @@ public class Sugarscape extends BaseModel {
 	private static final int SUGAR_GROW_BACK_INTERVAL = 1;
 	private static final int WITH_AGENT = -1;
 	private static final Color WITH_AGENT_COLOR = Color.RED;
+	private static final double MIN_NUM_AGENTS = 0;
+	private static final double MAX_NUM_AGENTS = 100;
 	private int sugarGrowCounter;
 
 	public Sugarscape(Map<String, Double> parameters) {
@@ -37,6 +39,13 @@ public class Sugarscape extends BaseModel {
 		List<Integer> myInts = new ArrayList<>(Arrays.asList(WITH_AGENT));
 		initializeMaps(myStates, myInts, myColors);
 		sugarGrowCounter = 0;
+		try {
+			getParameterValuesMap().put("numAgents",
+					parameters.get("numAgents"));
+		} catch (NullPointerException e) {
+			getParameterValuesMap().put("numAgents",
+					(MIN_NUM_AGENTS + MAX_NUM_AGENTS) / 2);
+		}
 	}
 
 	@Override
@@ -47,7 +56,7 @@ public class Sugarscape extends BaseModel {
 	public Collection<Cell> updateFutureStates(Iterable<Cell> cellsToUpdate,
 			BaseGraph graph) {
 		ArrayList<Cell> shuffledCells = new ArrayList<Cell>(
-				(Collection) cellsToUpdate);
+				(ArrayList<Cell>) cellsToUpdate);
 		Collections.shuffle(shuffledCells);
 		for (Cell c : shuffledCells) {
 			AdvancedCell curCell = (AdvancedCell) c;
@@ -84,6 +93,16 @@ public class Sugarscape extends BaseModel {
 			}
 		}
 		return shuffledCells;
+	}
+
+	public void assignAdditionalCellInfo(BaseGraph graph) {
+		ArrayList<Cell> shuffledCells = new ArrayList<Cell>(
+				(ArrayList<Cell>) graph.getAllCells());
+		Collections.shuffle(shuffledCells);
+		for (int i = 0; i < getParameterValuesMap().get("numAgents"); i++) {
+			AdvancedCell toAddto = (AdvancedCell) shuffledCells.get(i);
+			toAddto.addInhabitant(new Agent(WITH_AGENT));
+		}
 	}
 
 	private Collection<AdvancedCell> getVacantPatchesInSight(
