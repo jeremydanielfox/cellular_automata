@@ -5,11 +5,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
-import CellsAndComponents.Cell;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import CellsAndComponents.Cell;
 
 /**
  * This the abstract graph class that every type of graph we create will extend
@@ -25,7 +24,6 @@ public abstract class BaseGraph {
 
 	private Map<Cell, Collection<Cell>> myEdges = new HashMap<>();
 	private CellPointMap myCellPointMap = new CellPointMap();
-	private int MIN_POINTS_IN_COMMON;
 	private int horizontalOffset;
 	private int verticalOffset;
 	private int numCellsAcross;
@@ -47,7 +45,6 @@ public abstract class BaseGraph {
 		myScreenHeight = screenHeight;
 		horizontalOffset = xOffset;
 		verticalOffset = yOffset;
-		MIN_POINTS_IN_COMMON = points;
 		myModel = model;
 		isWrapped = false;
 		initializeConstants();
@@ -152,33 +149,6 @@ public abstract class BaseGraph {
 
 	public abstract void manageEdgeConditions();
 
-	// {
-	// for (Cell first : this.getAllCells())
-	// for (Cell second : this.getAllCells())
-	// if (isNeighbors(first, second))
-	// connect(first, second);
-	// }
-	//
-	// public int numPointsInCommon(Cell first, Cell second) {
-	// Set<Point2D> temp = new HashSet(first.getVerticies());
-	// Set<Point2D> newtemp = new HashSet(second.getVerticies());
-	// temp.retainAll(new HashSet(second.getVerticies()));
-	// return temp.size();
-	// }
-	//
-	// public int getMinPointsInCommon() {
-	// return MIN_POINTS_IN_COMMON;
-	// }
-	//
-	// public boolean isNeighbors(Cell first, Cell second) {
-	// return numPointsInCommon(first, second) >= getMinPointsInCommon()
-	// && !first.equals(second) || additionalNeighborCondition(first,second);
-	// }
-
-	// public boolean additionalNeighborCondition(Cell first, Cell second) {
-	// return false;
-	// }
-
 	public Cell getTranslatedCell(Cell current, Point2D change) {
 		if (!isWrapped()) {
 			Point2D dest = myCellPointMap.get(current).add(change);
@@ -195,11 +165,11 @@ public abstract class BaseGraph {
 			y += numCellsUpDown;
 		else if (y > numCellsUpDown)
 			y = y % numCellsUpDown;
-		dest = new Point2D(x,y);
+		dest = new Point2D(x, y);
 		return myCellPointMap.get(dest);
 	}
-	
-	public Point2D getPointFromCell (Cell current) {
+
+	public Point2D getPointFromCell(Cell current) {
 		return myCellPointMap.get(current);
 	}
 

@@ -1,9 +1,10 @@
 package Graphs;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import CellsAndComponents.Cell;
 import javafx.geometry.Point2D;
+import CellsAndComponents.Cell;
 
 /**
  * This class handles the mappings between Cells and their Point2D in the grid.

@@ -1,16 +1,14 @@
 package Graphs;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-import CellsAndComponents.Cell;
-import Factories.CellFactory;
-import Factories.EdgeManagerFactory;
-import Factories.InhabitantFactory;
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import CellsAndComponents.Cell;
+import Factories.CellFactory;
+import Factories.InhabitantFactory;
 
 public class SquareGraph extends BaseGraph {
 	private int cellWidth;
@@ -134,28 +132,28 @@ public class SquareGraph extends BaseGraph {
 			connect(myCell, neighbor);
 	}
 
-//	 public static void main(String[] args) {
-//	 SquareGraph myGraph = new
-//	 SquareGraph(3,5,100,100,0,0,1,0,Color.BEIGE,"");
-//	 for (Cell current: myGraph.getAllCells()) {
-//	 printNeighbors(current, myGraph);
-//	 }
-//	 }
-//	 public static void printNeighbors(Cell myCell, BaseGraph myGraph) {
-//	 System.out.println();
-//	 System.out.println(myCell.getID());
-//	 for (Cell current:myGraph.getNeighbors(myCell)) {
-//	 System.out.println(current.getID());
-//	 }
-//	 }
+	// public static void main(String[] args) {
+	// SquareGraph myGraph = new
+	// SquareGraph(3,5,100,100,0,0,1,0,Color.BEIGE,"");
+	// for (Cell current: myGraph.getAllCells()) {
+	// printNeighbors(current, myGraph);
+	// }
+	// }
+	// public static void printNeighbors(Cell myCell, BaseGraph myGraph) {
+	// System.out.println();
+	// System.out.println(myCell.getID());
+	// for (Cell current:myGraph.getNeighbors(myCell)) {
+	// System.out.println(current.getID());
+	// }
+	// }
 
 	@Override
 	public void manageEdgeConditions() {
 		// TODO Auto-generated method stub
-//		EdgeManager myManager = new EightNeighborToroid(this);
-//		EdgeManagerFactory myManagerFactory = new EdgeManagerFactory();
-//		EdgeManager myEdgeManager = myManagerFactory.createSpecifiedManager(
-//				getType() + getEdgeType(), this);
+		// EdgeManager myManager = new EightNeighborToroid(this);
+		// EdgeManagerFactory myManagerFactory = new EdgeManagerFactory();
+		// EdgeManager myEdgeManager = myManagerFactory.createSpecifiedManager(
+		// getType() + getEdgeType(), this);
 
 	}
 }
