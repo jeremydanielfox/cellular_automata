@@ -1,62 +1,58 @@
 package Graphs;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import CellsAndComponents.Cell;
 import javafx.geometry.Point2D;
 
+//this class was changed during discussion
 public class FourNeighborToroid extends EdgeManager {
-	private final Point2D RIGHT = new Point2D(1, 0);
-	private final Point2D LEFT = new Point2D(-1, 0);
-	private final Point2D UP = new Point2D(0, -1);
-	private final Point2D DOWN = new Point2D(0, 1);
+	private final boolean VERTICAL = false;
+	private final boolean HORIZONTAL = true;
 
 	public FourNeighborToroid(BaseGraph graph) {
 		super(graph);
-		// TODO Auto-generated constructor stub
 	}
 
 	protected void linkEdges() {
-		connectWithRight();
-		connectWithBottom();
-		// connectWithOther(getTopRow(), getGraph().getNumCellsUpDown());
-		// connectWithOther(getLeftCol(), getGraph().getNumCellsAcross());
+		connectWithOpposite(getLeftCol(), HORIZONTAL);
+		connectWithOpposite(getTopRow(), VERTICAL);
 	}
 
-	// private void connectWithOther(List<Cell> currentList, int length) {
-	// for (Cell current : currentList) {
-	// Point2D currentPoint = getGraph().getCellPointMap().get(current);
-	// Point2D temp = new Point2D(currentPoint.getX(), length);
-	// Cell tempCell = getGraph().getCellPointMap().get(temp);
-	// getGraph().connect(tempCell, current);
-	// }
-	// }
-	//
-	private void connectWithRight() {
-		for (Cell current : getLeftCol()) {
-			Point2D currentPoint = getGraph().getCellPointMap().get(current);
-			Point2D temp = getRight(currentPoint);
-			Cell tempCell = getGraph().getCellPointMap().get(temp);
-			getGraph().connect(tempCell, current);
+	private void connectWithOpposite(List<Cell> currentList, boolean sideways) {
+		for (Cell currentCell : currentList) {
+			Point2D currentPoint = getGraph().getCellPointMap()
+					.get(currentCell);
+			List<Point2D> pointList = new ArrayList<>();
+			if (sideways)
+				sidewaysCondition(pointList, currentPoint);
+			else
+				verticalCondition(pointList, currentPoint);
+			for (Point2D currentNewPoint : pointList) {
+				Cell tempCell = getGraph().getCellPointMap().get(
+						currentNewPoint);
+				getGraph().connect(tempCell, currentCell);
+			}
 		}
 	}
 
-	private void connectWithBottom() {
-		for (Cell current : getTopRow()) {
-			Point2D currentPoint = getGraph().getCellPointMap().get(current);
-			Point2D temp = getBottom(currentPoint);
-			Cell tempCell = getGraph().getCellPointMap().get(temp);
-			getGraph().connect(tempCell, current);
-		}
+	protected void sidewaysCondition(List<Point2D> pointList,
+			Point2D currentPoint) {
+		pointList.add(getRight(currentPoint));
 	}
-	
-	protected Point2D getRight(Point2D current)	 {
-		return new Point2D(getGraph().getNumCellsAcross(),
-				current.getY());
+
+	protected void verticalCondition(List<Point2D> pointList,
+			Point2D currentPoint) {
+		pointList.add(getBottom(currentPoint));
 	}
-	
+
+	protected Point2D getRight(Point2D current) {
+		return new Point2D(getGraph().getNumCellsAcross(), current.getY());
+	}
+
 	protected Point2D getBottom(Point2D current) {
-		return new Point2D(current.getX(), getGraph()
-				.getNumCellsUpDown());
+		return new Point2D(current.getX(), getGraph().getNumCellsUpDown());
 	}
 
 }

@@ -134,28 +134,28 @@ public class SquareGraph extends BaseGraph {
 			connect(myCell, neighbor);
 	}
 
-	// public static void main(String[] args) {
-	// SquareGraph myGraph = new
-	// SquareGraph(3,3,100,100,0,0,1,0,Color.BEIGE,"");
-	// for (Cell current: myGraph.getAllCells()) {
-	// printNeighbors(current, myGraph);
-	// }
-	// }
-	// public static void printNeighbors(Cell myCell, BaseGraph myGraph) {
-	// System.out.println();
-	// System.out.println(myCell.getID());
-	// for (Cell current:myGraph.getNeighbors(myCell)) {
-	// System.out.println(current.getID());
-	// }
-	// }
+	 public static void main(String[] args) {
+	 SquareGraph myGraph = new
+	 SquareGraph(3,5,100,100,0,0,1,0,Color.BEIGE,"");
+	 for (Cell current: myGraph.getAllCells()) {
+	 printNeighbors(current, myGraph);
+	 }
+	 }
+	 public static void printNeighbors(Cell myCell, BaseGraph myGraph) {
+	 System.out.println();
+	 System.out.println(myCell.getID());
+	 for (Cell current:myGraph.getNeighbors(myCell)) {
+	 System.out.println(current.getID());
+	 }
+	 }
 
 	@Override
 	public void manageEdgeConditions() {
 		// TODO Auto-generated method stub
-//		EdgeManager myManager = new FourNeighborToroid(this);
-		EdgeManagerFactory myManagerFactory = new EdgeManagerFactory();
-		EdgeManager myEdgeManager = myManagerFactory.createSpecifiedManager(
-				getType() + getEdgeType(), this);
+//		EdgeManager myManager = new EightNeighborToroid(this);
+//		EdgeManagerFactory myManagerFactory = new EdgeManagerFactory();
+//		EdgeManager myEdgeManager = myManagerFactory.createSpecifiedManager(
+//				getType() + getEdgeType(), this);
 
 	}
 }
