@@ -1,5 +1,6 @@
 package Models;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -36,17 +37,11 @@ public class Segregation extends BaseModel {
 		// superclass so that we can
 		// set up that information using the constructor
 		super(parameters, NUM_POINTS_FOR_NEIGHBOR);
-		getStateToIntMap().put("empty", EMPTY);
-		getStateToIntMap().put("group_one", GROUP_ONE);
-		getStateToIntMap().put("group_two", GROUP_TWO);
-		getStateToColorMap().put("empty", EMPTY_COLOR);
-		getStateToColorMap().put("group_one", GROUP_ONE_COLOR);
-		getStateToColorMap().put("group_two", GROUP_TWO_COLOR);
-//		getParameterValuesMap().put("minRatioNeighbors", MIN_RATIO_NEIGHBORS);
-//		getParameterValuesMap().put("maxRatioNeighbors", MAX_RATIO_NEIGHBORS);
-		
+		List<String> myStates = new ArrayList<String>(Arrays.asList("empty", "group_one", "group_two"));
+		List<Color> myColors = new ArrayList<>(Arrays.asList(GROUP_ONE_COLOR, GROUP_TWO_COLOR));
+		List<Integer> myInts = new ArrayList<>(Arrays.asList(GROUP_ONE, GROUP_TWO));
+		initializeMaps(myStates, myInts, myColors);
 		try {
-//			happinessRatio = parameters.get("RatioNeighbors");
 			getParameterValuesMap().put("happinessRatio", parameters.get("HappinessRatio"));
 		} catch (NullPointerException e) {
 			getParameterValuesMap().put("happinessRatio", (MIN_RATIO_NEIGHBORS + MAX_RATIO_NEIGHBORS) / 2);

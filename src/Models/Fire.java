@@ -1,7 +1,9 @@
 package Models;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -30,15 +32,10 @@ public class Fire extends BaseModel {
 
 	public Fire(Map<String, Double> parameters) {
 		super(parameters, 2);
-		getStateToIntMap().put("empty", EMPTY);
-		getStateToIntMap().put("tree", TREE);
-		getStateToIntMap().put("burning", BURNING);
-		getStateToColorMap().put("empty", EMPTY_COLOR);
-		getStateToColorMap().put("tree", TREE_COLOR);
-		getStateToColorMap().put("burning", BURNING_COLOR);
-//		getParameterValuesMap().put("minProbCatch", MIN_PROB_CATCH);
-//		getParameterValuesMap().put("maxProbCatch", MAX_PROB_CATCH);
-		
+		List<String> myStates = new ArrayList<String>(Arrays.asList("empty", "tree", "burning"));
+		List<Color> myColors = new ArrayList<>(Arrays.asList(EMPTY_COLOR, TREE_COLOR, BURNING_COLOR));
+		List<Integer> myInts = new ArrayList<>(Arrays.asList(EMPTY, TREE, BURNING));
+		initializeMaps(myStates, myInts, myColors);
 		try {
 //			probCatch = parameters.get("probCatch");
 			getParameterValuesMap().put("probCatch", parameters.get("probCatch"));

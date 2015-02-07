@@ -1,5 +1,6 @@
 package Models;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -39,17 +40,10 @@ public class WaTorWorld extends BaseModel {
 
 	public WaTorWorld(Map<String, Double> parameters) {
 		super(parameters, 2);
-		getStateToIntMap().put("water", WATER);
-		getStateToIntMap().put("fish", FISH);
-		getStateToIntMap().put("shark", SHARK);
-		getStateToColorMap().put("water", WATER_COLOR);
-		getStateToColorMap().put("fish", FISH_COLOR);
-		getStateToColorMap().put("shark", SHARK_COLOR);
-//		getParameterValuesMap().put("minSharkEnergy", MIN_SHARK_ENERGY);
-//		getParameterValuesMap().put("maxSharkEnergy", MAX_SHARK_ENERGY);
-//		getParameterValuesMap().put("minTimeTillReproduce", MIN_TIME_TILL_REPRODUCE);
-//		getParameterValuesMap().put("maxTimeTillReproduce", MAX_TIME_TILL_REPRODUCE);
-
+		List<String> myStates = new ArrayList<String>(Arrays.asList("water", "fish", "shark"));
+		List<Color> myColors = new ArrayList<>(Arrays.asList(WATER_COLOR, FISH_COLOR, SHARK_COLOR));
+		List<Integer> myInts = new ArrayList<>(Arrays.asList(WATER, FISH, SHARK));
+		initializeMaps(myStates, myInts, myColors);
 		try {
 //			sharkEnergy = parameters.get("energyLevel").intValue();
 //			timeTillReproduce = parameters.get("timeTillReproduce").intValue();
