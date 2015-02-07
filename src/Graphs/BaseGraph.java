@@ -198,6 +198,10 @@ public abstract class BaseGraph {
 		dest = new Point2D(x,y);
 		return myCellPointMap.get(dest);
 	}
+	
+	public Point2D getPointFromCell (Cell current) {
+		return myCellPointMap.get(current);
+	}
 
 	public String getModelName() {
 		return myModel;
