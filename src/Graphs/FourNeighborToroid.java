@@ -3,10 +3,9 @@ package Graphs;
 import java.util.ArrayList;
 import java.util.List;
 
-import CellsAndComponents.Cell;
 import javafx.geometry.Point2D;
+import CellsAndComponents.Cell;
 
-//this class was changed during discussion
 public class FourNeighborToroid extends EdgeManager {
 	private final boolean VERTICAL = false;
 	private final boolean HORIZONTAL = true;

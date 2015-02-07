@@ -8,9 +8,8 @@ public class EightNeighborToroid extends FourNeighborToroid {
 
 	public EightNeighborToroid(BaseGraph graph) {
 		super(graph);
-		// TODO Auto-generated constructor stub
 	}
-	
+
 	protected void sidewaysCondition(List<Point2D> pointList,
 			Point2D currentPoint) {
 		pointList.add(getUpRight(currentPoint));
@@ -42,22 +41,22 @@ public class EightNeighborToroid extends FourNeighborToroid {
 			ycoord = current.getY() + 1;
 		return new Point2D(getGraph().getNumCellsAcross(), ycoord);
 	}
-	
+
 	protected Point2D getBottomLeft(Point2D current) {
 		double xcoord;
-		if (current.getX()==1)
+		if (current.getX() == 1)
 			xcoord = getGraph().getNumCellsAcross();
 		else
-			xcoord = current.getX() -1;
+			xcoord = current.getX() - 1;
 		return new Point2D(xcoord, getGraph().getNumCellsUpDown());
 	}
-	
+
 	protected Point2D getBottomRight(Point2D current) {
 		double xcoord;
-		if (current.getX()==getGraph().getNumCellsAcross())
+		if (current.getX() == getGraph().getNumCellsAcross())
 			xcoord = 1;
 		else
-			xcoord = current.getX()+1;
+			xcoord = current.getX() + 1;
 		return new Point2D(xcoord, getGraph().getNumCellsUpDown());
 	}
 }
