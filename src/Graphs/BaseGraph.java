@@ -166,6 +166,11 @@ public abstract class BaseGraph {
 //	public boolean additionalNeighborCondition(Cell first, Cell second) {
 //		return false;
 //	}
+	
+	public Cell getCell(Cell current, Point2D change) {
+		Point2D dest = myCellPointMap.get(current).add(change);
+		return myCellPointMap.get(dest);
+	}
 
 	public String getModelName() {
 		return myModel;
