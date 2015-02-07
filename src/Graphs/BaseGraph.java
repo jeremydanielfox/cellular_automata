@@ -114,11 +114,8 @@ public abstract class BaseGraph {
 		return Collections.unmodifiableSet(myEdges.keySet());
 	}
 
-	public Cell getCell(int ID) {
-		for (Cell current : getAllCells())
-			if (current.getID() == ID)
-				return current;
-		return null;
+	public Cell getCell(Point2D myPoint) {
+		return myCellPointMap.get(myPoint);
 
 	}
 
@@ -169,6 +166,6 @@ public abstract class BaseGraph {
 
 	public abstract int calculateID(int row, int col);
 
-	public abstract void updateStateOfCell(ConfigCellInfo myBabyCell,
-			Color color);
+//	public abstract void updateStateOfCell(ConfigCellInfo myBabyCell,
+//			Color color);
 }
