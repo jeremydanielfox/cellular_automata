@@ -50,10 +50,13 @@ public class SimWindow {
 		}
 	}
 	
-	public void addControlPanel(HBox toAdd){
+	public void clearControlPanel(){
 		if(myParamControls != null){
 			myControlPanels.getChildren().remove(myParamControls);
 		}
+	}
+	
+	public void addControlPanel(HBox toAdd){
 		myParamControls = toAdd;
 		myControlPanels.getChildren().add(myParamControls);
 	}
