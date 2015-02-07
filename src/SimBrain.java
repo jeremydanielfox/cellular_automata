@@ -22,6 +22,7 @@ import org.xml.sax.SAXException;
 
 import visuals.CellRegionDivider;
 import Exceptions.CellSocietyException;
+import Exceptions.PopUpWindow;
 import Factories.CellRegionDividerFactory;
 
 /**
@@ -217,7 +218,9 @@ public class SimBrain extends Application {
 						myXMLContents.getCellsToConfig(), CELL_REGION_WIDTH,
 						CELL_REGION_HEIGHT);
 			} catch (CellSocietyException error) {
-				error.displayError();
+				PopUpWindow myErrorWindow = new PopUpWindow();
+				myErrorWindow.setDisplayMessage(error.getErrorMessage());
+				myErrorWindow.displayError();
 				return;
 			}
 			myWindow.setStageTitle(myXMLContents.getTitle() + " by "
@@ -230,9 +233,8 @@ public class SimBrain extends Application {
 			myIncSpeedButton.setDisable(false);
 			myDecSpeedButton.setDisable(false);
 			enableCorrectButtons(false);
-
 			Map<String, ArrayList<Double>> paramMap = myEngine.getParamMap();
-
+			myWindow.clearControlPanel();
 			if (paramMap.keySet().size() > 0) {
 				ParameterControlBox myParamControls = new ParameterControlBox(
 						this, paramMap);
