@@ -13,13 +13,11 @@ public class Sugar extends Patch {
 
 	@Override
 	public int getStateForCell() {
-		// TODO Auto-generated method stub
 		return currentAmount;
 	}
 
 	@Override
 	public Color getColor() {
-		// TODO Auto-generated method stub
 		return Color.ORANGE;
 	}
 	

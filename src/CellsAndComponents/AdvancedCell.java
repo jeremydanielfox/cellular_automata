@@ -16,11 +16,11 @@ import javafx.scene.shape.Polygon;
  *
  */
 
-public class CellWithInhabitantsAndPatch extends Cell {
+public class AdvancedCell extends Cell {
 	private Collection<Inhabitant> myInhabitants;
 	private Patch myPatch;
 
-	public CellWithInhabitantsAndPatch(int id, Polygon shape,
+	public AdvancedCell(int id, Polygon shape,
 			List<Point2D> verticies, int defaultState, Color defaultColor) {
 		super(id, shape, verticies, defaultState, defaultColor);
 		// TODO Auto-generated constructor stub
@@ -31,8 +31,8 @@ public class CellWithInhabitantsAndPatch extends Cell {
 		myInhabitants.add(inhabitant);
 	}
 
-	public Collection<Inhabitant> getInhabitants() {
-		return myInhabitants;
+	public List<Inhabitant> getInhabitants() {
+		return (List<Inhabitant>) myInhabitants;
 	}
 	
 	public int getNumInhabitants() {
