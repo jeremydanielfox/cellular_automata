@@ -37,8 +37,8 @@ public class Segregation extends BaseModel {
 		// set up that information using the constructor
 		super(parameters, NUM_POINTS_FOR_NEIGHBOR);
 		List<String> myStates = new ArrayList<String>(Arrays.asList("empty", "group_one", "group_two"));
-		List<Color> myColors = new ArrayList<>(Arrays.asList(GROUP_ONE_COLOR, GROUP_TWO_COLOR));
-		List<Integer> myInts = new ArrayList<>(Arrays.asList(GROUP_ONE, GROUP_TWO));
+		List<Color> myColors = new ArrayList<>(Arrays.asList(EMPTY_COLOR, GROUP_ONE_COLOR, GROUP_TWO_COLOR));
+		List<Integer> myInts = new ArrayList<>(Arrays.asList(EMPTY, GROUP_ONE, GROUP_TWO));
 		initializeMaps(myStates, myInts, myColors);
 		try {
 			getParameterValuesMap().put("happinessRatio", parameters.get("HappinessRatio"));

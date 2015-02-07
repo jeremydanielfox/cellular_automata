@@ -84,6 +84,9 @@ public abstract class BaseModel {
 	public int getSharePointsForNeighbor() {
 		return numPointsForNeighbor;
 	}
+	
+	public void assignAdditionalCellInfo(BaseGraph graph) {
+	}
 
 	public int countNeighbors(int state, Collection<Cell> neighbors) {
 		int neighborsWithState = 0;

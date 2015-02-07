@@ -12,7 +12,12 @@ public class ConfigCellInfo {
 		myRow = row;
 		myCol = col;
 		myState = state;
-		myIntState = DEFAULT_STATE;
+		try{
+			myIntState = Integer.parseInt(state);
+		}catch(NumberFormatException e){
+			myIntState = DEFAULT_STATE;
+		}
+		
 	}
 
 	public int getRow() {

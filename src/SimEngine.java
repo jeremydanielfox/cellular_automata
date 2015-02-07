@@ -33,8 +33,8 @@ public class SimEngine {
 		myParameters = parameters;
 		myCellsToConfig = cellsToConfig;
 		ModelFactory myModFactory = new ModelFactory();
-		myModel = myModFactory.createSpecifiedModel(model, parameters);
 		GraphFactory myGraphFactory = new GraphFactory();
+
 		myGraph = myGraphFactory.createSpecifiedGraph(myPolygons, myParameters
 				.get("columns").intValue(),
 				myParameters.get("rows").intValue(),  myModel.getDefaultState(), myModel
@@ -44,6 +44,7 @@ public class SimEngine {
 		// cellRegionHeight, cellRegionXOffset, cellRegionYOffset,
 		// myModel.getSharePointsForNeighbor(), myModel.getDefaultState(),
 		// myModel.getDefaultColor(), myModelName);
+
 		// myGraph.initializeCells(myModel.getDefaultState(),
 		// myModel.getDefaultColor());
 		setUpInitCells();
@@ -71,6 +72,7 @@ public class SimEngine {
 	}
 
 	private void setUpInitCells() {
+		myModel.assignAdditionalCellInfo(myGraph);
 		for (ConfigCellInfo c : myCellsToConfig) {
 			c.setIntState(myModel.getIntForState(c.getStringState()));
 			myGraph.updateStateOfCell(c,

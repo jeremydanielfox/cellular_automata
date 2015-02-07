@@ -63,6 +63,7 @@ public class XMLContents {
 		readAuthor();
 		readTitle();
 		readGraphType();
+		readEdgeType();
 		extractConfig();
 		extractParams();
 	}
@@ -178,7 +179,9 @@ public class XMLContents {
 	
 	private String extractSpecifiedTag(String tag) {
 		NodeList myList = myDoc.getElementsByTagName(tag);
-		return myList.item(0).getChildNodes().item(0).getNodeValue();
+		String result = myList.item(0).getChildNodes().item(0).getNodeValue();
+		System.out.println(result);
+		return result;
 	}
 
 	public String getModel() {

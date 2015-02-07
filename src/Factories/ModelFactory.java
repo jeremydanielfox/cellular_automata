@@ -3,10 +3,12 @@ package Factories;
 import java.util.Map;
 
 import Exceptions.CellSocietyException;
+import Graphs.BaseGraph;
 import Models.BaseModel;
 import Models.Fire;
 import Models.GameOfLife;
 import Models.Segregation;
+import Models.Sugarscape;
 import Models.WaTorWorld;
 
 public class ModelFactory {
@@ -23,6 +25,8 @@ public class ModelFactory {
 			return new Segregation(parameters);
 		case "WaTorWorld":
 			return new WaTorWorld(parameters);
+		case "Sugarscape":
+			return new Sugarscape(parameters);
 		default:
 			throw new CellSocietyException(CellSocietyException.INCORRECT_MODEL_MESSAGE);
 		}
