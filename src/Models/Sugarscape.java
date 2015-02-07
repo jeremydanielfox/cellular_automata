@@ -184,5 +184,14 @@ public class Sugarscape extends BaseModel {
 	public int getDefaultState() {
 		return 0;
 	}
+	
+	@Override
+	//error check?
+	public int getIntForState(String state) {
+		if (state == "agent") {
+			return getStateToIntMap().get(state);
+		}
+		return Integer.parseInt(state);
+	}
 
 }
