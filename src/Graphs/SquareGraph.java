@@ -67,8 +67,8 @@ public class SquareGraph extends BaseGraph {
 	public void initializeCells(int defaultState, Color defaultColor) {
 		int count = 1;
 		CellFactory myFactory = new CellFactory();
-		for (int i = 1; i <= getNumCellsAcross(); i++)
-			for (int j = 1; j <= getNumCellsUpDown(); j++) {
+		for (int i = 1; i <= getNumCellsUpDown(); i++)
+			for (int j = 1; j <= getNumCellsAcross(); j++) {
 				Polygon tempShape = new Polygon();
 				List<Point2D> tempList = new ArrayList<>();
 				tempList.add(new Point2D(getXOffset() + (i - 1) * cellWidth,
@@ -134,20 +134,20 @@ public class SquareGraph extends BaseGraph {
 			connect(myCell, neighbor);
 	}
 
-	 public static void main(String[] args) {
-	 SquareGraph myGraph = new
-	 SquareGraph(3,5,100,100,0,0,1,0,Color.BEIGE,"");
-	 for (Cell current: myGraph.getAllCells()) {
-	 printNeighbors(current, myGraph);
-	 }
-	 }
-	 public static void printNeighbors(Cell myCell, BaseGraph myGraph) {
-	 System.out.println();
-	 System.out.println(myCell.getID());
-	 for (Cell current:myGraph.getNeighbors(myCell)) {
-	 System.out.println(current.getID());
-	 }
-	 }
+//	 public static void main(String[] args) {
+//	 SquareGraph myGraph = new
+//	 SquareGraph(3,5,100,100,0,0,1,0,Color.BEIGE,"");
+//	 for (Cell current: myGraph.getAllCells()) {
+//	 printNeighbors(current, myGraph);
+//	 }
+//	 }
+//	 public static void printNeighbors(Cell myCell, BaseGraph myGraph) {
+//	 System.out.println();
+//	 System.out.println(myCell.getID());
+//	 for (Cell current:myGraph.getNeighbors(myCell)) {
+//	 System.out.println(current.getID());
+//	 }
+//	 }
 
 	@Override
 	public void manageEdgeConditions() {

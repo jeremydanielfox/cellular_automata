@@ -13,6 +13,7 @@ public class FourNeighborToroid extends EdgeManager {
 
 	public FourNeighborToroid(BaseGraph graph) {
 		super(graph);
+		graph.setWrap();
 	}
 
 	protected void linkEdges() {

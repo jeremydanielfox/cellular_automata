@@ -1,14 +1,10 @@
-import CellsAndComponents.Patch;
+package CellsAndComponents;
 import javafx.scene.paint.Color;
 
 
-public class Ground extends Patch {
+public class Water extends Patch {
 	
-	private int foodPheremones;
-	private int homePheremones;
-	
-	public Ground() {
-		
+	public Water() {
 	}
 
 	@Override
@@ -20,7 +16,7 @@ public class Ground extends Patch {
 	@Override
 	public Color getColor() {
 		// TODO Auto-generated method stub
-		return null;
+		return Color.AQUAMARINE;
 	}
 
 }
