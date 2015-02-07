@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Information>
-	<GraphType>EightNeighborTriangleGraph</GraphType>
+	<GraphType>EightNeighborSquareGraph</GraphType>
 	<Model>GameOfLife</Model>
 	<Author>Sierra</Author>
 	<Title>Brown Fire</Title>

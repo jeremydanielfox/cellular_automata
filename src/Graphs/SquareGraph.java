@@ -149,7 +149,7 @@ public class SquareGraph extends BaseGraph {
 	@Override
 	public void manageEdgeConditions() {
 		// TODO Auto-generated method stub
-		// EdgeManager myManager = new EightNeighborToroid(this);
+		 EdgeManager myManager = new EightNeighborToroid(this);
 		// EdgeManagerFactory myManagerFactory = new EdgeManagerFactory();
 		// EdgeManager myEdgeManager = myManagerFactory.createSpecifiedManager(
 		// getType() + getEdgeType(), this);

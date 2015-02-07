@@ -33,6 +33,7 @@ public class SimEngine {
 		myParameters = parameters;
 		myCellsToConfig = cellsToConfig;
 		ModelFactory myModFactory = new ModelFactory();
+		myModel = myModFactory.createSpecifiedModel(myModelName, myParameters);
 		GraphFactory myGraphFactory = new GraphFactory();
 
 		myGraph = myGraphFactory.createSpecifiedGraph(myPolygons, myParameters

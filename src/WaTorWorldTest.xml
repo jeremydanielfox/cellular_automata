@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Information>
+	<GraphType>FourNeighborSquareGraph</GraphType>
 	<Model>WaTorWorld</Model>
 	<Author> Sierra and Megan</Author>
 	<Title>Sharks and Fish</Title>
