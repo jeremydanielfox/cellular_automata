@@ -30,7 +30,6 @@ public class Segregation extends BaseModel {
 	public static final Color DEFAULT_COLOR = EMPTY_COLOR;
 	private static final double MIN_RATIO_NEIGHBORS = 0;
 	private static final double MAX_RATIO_NEIGHBORS = 1.0;
-//	public static double happinessRatio;
 
 	public Segregation(Map<String, Double> parameters) {
 		// possibly we should create a setNumPointsForNeighbor method in the
@@ -50,7 +49,6 @@ public class Segregation extends BaseModel {
 
 	@Override
 	public Cell updateFutureState(Cell cellToUpdate, Collection<Cell> neighbors) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
