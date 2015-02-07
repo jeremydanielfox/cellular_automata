@@ -1,5 +1,6 @@
 package visuals;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 /**
@@ -21,6 +22,7 @@ public abstract class CellRegionDivider {
 	private int myCellWidth;
 	private int myCellHeight;
 	private int numPoints;
+	private static final Color GRID_LINES_COLOR = Color.BLACK;
 
 	public CellRegionDivider(int cellsAcross, int cellsUpDown, int height,
 			int width, int xspace, int yspace) {
@@ -34,19 +36,21 @@ public abstract class CellRegionDivider {
 
 	}
 
-	public Polygon[][] divideSpace() {
+	public Polygon[][] divideSpace(boolean setStroke) {
 		Polygon[][] myShapeArray = new Polygon[getNumCellsHeight()][getNumCellsWidth()];
 		int count = 0;
 		for (int i = 0; i < getNumCellsHeight(); i++) {
 			for (int j = 0; j < getNumCellsWidth(); j++) {
 				Polygon tempShape = new Polygon();
+				if (setStroke)
+					tempShape.setStroke(GRID_LINES_COLOR);
 				assignPoints(tempShape, i, j, count);
 				myShapeArray[i][j] = tempShape;
 				count++;
 			}
 			count++;
 		}
-		
+
 		return myShapeArray;
 	}
 
@@ -62,11 +66,11 @@ public abstract class CellRegionDivider {
 	protected int getCellHeight() {
 		return myCellHeight;
 	}
-	
+
 	protected void setCellWidth(int width) {
 		myCellWidth = width;
 	}
-	
+
 	protected void setCellHeight(int height) {
 		myCellHeight = height;
 	}

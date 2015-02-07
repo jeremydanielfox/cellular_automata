@@ -22,7 +22,7 @@ public class GameOfLife extends BaseModel {
 	private static final int NUM_LIVE_NEIGHBORS_TO_LIVE = 2;
 	private static final int NUM_LIVE_NEIGHBORS_TO_REVIVE = 3;
 	private static final int NUM_POINTS_FOR_NEIGHBOR = 1;
-	private static final Color DEAD_COLOR = Color.BLACK;
+	private static final Color DEAD_COLOR = Color.BLUE;
 	private static final Color ALIVE_COLOR = Color.FUCHSIA;
 	private static final Color DEFAULT_COLOR = DEAD_COLOR;
 	

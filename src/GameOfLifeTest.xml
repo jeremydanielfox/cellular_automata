@@ -4,13 +4,13 @@
 	<Model>GameOfLife</Model>
 	<Author>Sierra</Author>
 	<Title>Brown Fire</Title>
-	<GridRows>20</GridRows>
-	<GridColumns>20</GridColumns>
+	<GridRows>100</GridRows>
+	<GridColumns>100</GridColumns>
 	<Configuration>
-		<Cell x="3" y="3" state="alive"> </Cell>
-		<Cell x="4" y="4" state="alive"> </Cell>
-		<Cell x="5" y="4" state="alive"> </Cell>
-		<Cell x="5" y="3" state="alive"> </Cell>
-		<Cell x="4" y="5" state="alive"> </Cell>
+		<Cell x="51" y="50" state="alive"> </Cell>
+		<Cell x="50" y="51" state="alive"> </Cell>
+		<Cell x="52" y="50" state="alive"> </Cell>
+		<Cell x="51" y="51" state="alive"> </Cell>
+		<Cell x="51" y="52" state="alive"> </Cell>
 	</Configuration>
 </Information>
