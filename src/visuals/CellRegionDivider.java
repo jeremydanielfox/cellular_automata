@@ -23,6 +23,7 @@ public abstract class CellRegionDivider {
 	private int myCellHeight;
 	private int numPoints;
 	private static final Color GRID_LINES_COLOR = Color.BLACK;
+	private static final String SET_GRID_LINES = "GridLines";
 
 	public CellRegionDivider(int cellsAcross, int cellsUpDown, int height,
 			int width, int xspace, int yspace) {
@@ -36,13 +37,13 @@ public abstract class CellRegionDivider {
 
 	}
 
-	public Polygon[][] divideSpace(boolean setStroke) {
+	public Polygon[][] divideSpace(String setStroke) {
 		Polygon[][] myShapeArray = new Polygon[getNumCellsHeight()][getNumCellsWidth()];
 		int count = 0;
 		for (int i = 0; i < getNumCellsHeight(); i++) {
 			for (int j = 0; j < getNumCellsWidth(); j++) {
 				Polygon tempShape = new Polygon();
-				if (setStroke)
+				if (setStroke.equals(setStroke.equals(SET_GRID_LINES)))
 					tempShape.setStroke(GRID_LINES_COLOR);
 				assignPoints(tempShape, i, j, count);
 				myShapeArray[i][j] = tempShape;
