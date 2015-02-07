@@ -46,7 +46,6 @@ public class Segregation extends BaseModel {
 //		getParameterValuesMap().put("maxRatioNeighbors", MAX_RATIO_NEIGHBORS);
 		
 		try {
-//			happinessRatio = parameters.get("RatioNeighbors");
 			getParameterValuesMap().put("happinessRatio", parameters.get("HappinessRatio"));
 		} catch (NullPointerException e) {
 			getParameterValuesMap().put("happinessRatio", (MIN_RATIO_NEIGHBORS + MAX_RATIO_NEIGHBORS) / 2);
