@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Information>
-	<GraphType>FourNeighborTriangleGraph</GraphType>
+	<GraphType>FourNeighborSquareGraph</GraphType>
 	<Model>Fire</Model>
     <GraphType>Square</GraphType>
 	<Author> Sierra and Megan</Author>
