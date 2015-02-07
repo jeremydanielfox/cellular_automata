@@ -1,10 +1,12 @@
 package Models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
 import CellsAndComponents.Inhabitant;
 import CellsAndComponents.Sugar;
 import CellsAndComponents.Agent;
@@ -24,10 +26,16 @@ import Graphs.BaseGraph;
 public class Sugarscape extends BaseModel {
 	private static final int SUGAR_GROW_BACK_RATE = 1;
 	private static final int SUGAR_GROW_BACK_INTERVAL = 1;
+	private static final int WITH_AGENT = -1;
+	private static final Color WITH_AGENT_COLOR = Color.RED;
 	private int sugarGrowCounter;
 
-	public Sugarscape(Map<String, Double> parameters, int points) {
+	public Sugarscape(Map<String, Double> parameters) {
 		super(parameters, 2);
+		List<String> myStates = new ArrayList<String>(Arrays.asList("agent"));
+		List<Color> myColors = new ArrayList<>(Arrays.asList(WITH_AGENT_COLOR));
+		List<Integer> myInts = new ArrayList<>(Arrays.asList(WITH_AGENT));
+		initializeMaps(myStates, myInts, myColors);
 		sugarGrowCounter = 0;
 	}
 
@@ -38,7 +46,8 @@ public class Sugarscape extends BaseModel {
 
 	public Collection<Cell> updateFutureStates(Iterable<Cell> cellsToUpdate,
 			BaseGraph graph) {
-		ArrayList<Cell> shuffledCells = new ArrayList<Cell>((Collection) cellsToUpdate);
+		ArrayList<Cell> shuffledCells = new ArrayList<Cell>(
+				(Collection) cellsToUpdate);
 		Collections.shuffle(shuffledCells);
 		for (Cell c : shuffledCells) {
 			AdvancedCell curCell = (AdvancedCell) c;
@@ -46,8 +55,8 @@ public class Sugarscape extends BaseModel {
 				ArrayList<AdvancedCell> possibleCells = (ArrayList<AdvancedCell>) getVacantPatchesInSight(
 						curCell, graph);
 				ArrayList<AdvancedCell> possibleMaxSugar = (ArrayList<AdvancedCell>) findMaxSugarCells(possibleCells);
-				AdvancedCell toMoveTo = getClosest(
-						possibleMaxSugar, curCell, graph);
+				AdvancedCell toMoveTo = getClosest(possibleMaxSugar, curCell,
+						graph);
 				moveAgent(toMoveTo, curCell);
 				((Agent) toMoveTo.getInhabitants().get(0))
 						.addSugar(((Sugar) toMoveTo.getPatch())
@@ -55,15 +64,23 @@ public class Sugarscape extends BaseModel {
 				((Sugar) toMoveTo.getPatch()).takeAllSugar();
 				if (((Agent) toMoveTo.getInhabitants().get(0)).checkDead()) {
 					toMoveTo.getInhabitants().remove(0);
+				} else {
+					changeFutureState(toMoveTo, WITH_AGENT, WITH_AGENT_COLOR);
 				}
 			}
 		}
 		sugarGrowCounter += 1;
-		if (sugarGrowCounter == SUGAR_GROW_BACK_INTERVAL) {
-			sugarGrowCounter = 0;
-			for (Cell c : shuffledCells) {
-				AdvancedCell curCell = (AdvancedCell) c;
-				((Sugar)curCell.getPatch()).sugarGrowBack(SUGAR_GROW_BACK_RATE);
+		for (Cell c : shuffledCells) {
+			AdvancedCell curCell = (AdvancedCell) c;
+			if (sugarGrowCounter >= SUGAR_GROW_BACK_INTERVAL) {
+				((Sugar) curCell.getPatch())
+						.sugarGrowBack(SUGAR_GROW_BACK_RATE);
+			}
+			if (curCell.getNumInhabitants() == 0) {
+				// change Orange later to be based off of amount
+				changeFutureState(curCell,
+						((Sugar) curCell.getPatch()).getSugarAmount(),
+						Color.ORANGE);
 			}
 		}
 		return shuffledCells;
@@ -90,11 +107,11 @@ public class Sugarscape extends BaseModel {
 		return possibleCells;
 	}
 
-	private AdvancedCell checkIfVacant(
-			AdvancedCell curCell, BaseGraph graph, int x, int y) {
+	private AdvancedCell checkIfVacant(AdvancedCell curCell, BaseGraph graph,
+			int x, int y) {
 		Point2D change = new Point2D(x, y);
-		AdvancedCell possible = (AdvancedCell) graph
-				.getTranslatedCell(curCell, change);
+		AdvancedCell possible = (AdvancedCell) graph.getTranslatedCell(curCell,
+				change);
 		if (possible != null && possible.getNumInhabitants() == 0) {
 			return possible;
 		}
@@ -118,8 +135,7 @@ public class Sugarscape extends BaseModel {
 		return possibleMaxSugar;
 	}
 
-	private AdvancedCell getClosest(
-			List<AdvancedCell> possibleCells,
+	private AdvancedCell getClosest(List<AdvancedCell> possibleCells,
 			AdvancedCell curCell, BaseGraph graph) {
 		Point2D curPoint = graph.getPointFromCell(curCell);
 		double maxDistance = Double.MAX_VALUE;
@@ -134,8 +150,7 @@ public class Sugarscape extends BaseModel {
 		return toReturn;
 	}
 
-	private void moveAgent(AdvancedCell newCell,
-			AdvancedCell oldCell) {
+	private void moveAgent(AdvancedCell newCell, AdvancedCell oldCell) {
 		Inhabitant toMove = oldCell.getInhabitants().get(0);
 		newCell.addInhabitant(toMove);
 		oldCell.getInhabitants().remove(0);
