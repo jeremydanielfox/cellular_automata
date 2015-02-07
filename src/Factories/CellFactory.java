@@ -2,12 +2,12 @@ package Factories;
 
 import java.util.List;
 
-import CellsAndComponents.Cell;
-import CellsAndComponents.CellWithInhabitant;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Shape;
+import CellsAndComponents.AdvancedCell;
+import CellsAndComponents.Cell;
+import CellsAndComponents.CellWithInhabitant;
 
 /**
  * This is the factory that makes Cell objects depending on the model type
@@ -23,6 +23,9 @@ public class CellFactory {
 		switch (model) {
 		case "WaTorWorld":
 			return new CellWithInhabitant(id, shape, verticies, defaultState,
+					defaultColor);
+		case "Sugarscape":
+			return new AdvancedCell(id, shape, verticies, defaultState,
 					defaultColor);
 		default:
 			return new Cell(id, shape, verticies, defaultState, defaultColor);
