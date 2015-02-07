@@ -10,8 +10,17 @@ public class CellRegionDividerFactory {
 			String shape) {
 
 		switch (shape) {
-		case "Square":
+		case "FourNeighborSquareGraph":
 			return new SquareRegionDivider(cellsAcross, cellsUpDown, height,
+					width, xspace, yspace);
+		case "EightNeighborSquareGraph":
+			return new SquareRegionDivider(cellsAcross, cellsUpDown, height,
+					width, xspace, yspace);
+		case "FourNeighborTriangleGraph":
+			return new TriangleRegionDivider(cellsAcross, cellsUpDown, height,
+					width, xspace, yspace);
+		case "EightNeighborTriangleGraph":
+			return new TriangleRegionDivider(cellsAcross, cellsUpDown, height,
 					width, xspace, yspace);
 		case "Triangle":
 			return new TriangleRegionDivider(cellsAcross, cellsUpDown, height,

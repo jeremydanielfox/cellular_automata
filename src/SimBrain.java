@@ -212,11 +212,10 @@ public class SimBrain extends Application {
 								SCREEN_BORDER_BUFFER, SCREEN_BORDER_BUFFER,
 								myXMLContents.getGraphType());
 				Polygon[][] myPolygons = myDivider.divideSpace();
-				myEngine = new SimEngine(myXMLContents.getModel(),
+				myEngine = new SimEngine(myPolygons, myXMLContents.getModel(),
 						myXMLContents.getParams(),
 						myXMLContents.getCellsToConfig(), CELL_REGION_WIDTH,
-						CELL_REGION_HEIGHT, SCREEN_BORDER_BUFFER,
-						SCREEN_BORDER_BUFFER);
+						CELL_REGION_HEIGHT);
 			} catch (CellSocietyException error) {
 				error.displayError();
 				return;

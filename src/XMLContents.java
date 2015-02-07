@@ -62,6 +62,7 @@ public class XMLContents {
 		}
 		readAuthor();
 		readTitle();
+		readGraphType();
 		extractConfig();
 		extractParams();
 	}

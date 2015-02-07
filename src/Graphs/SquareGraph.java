@@ -31,11 +31,9 @@ public class SquareGraph extends BaseGraph {
 	 * @param screenWidth
 	 * @param screenHeight
 	 */
-	public SquareGraph(int numCellsWidth, int numCellsHeight, int screenWidth,
-			int screenHeight, int xOffset, int yOffset, int points,
+	public SquareGraph(Polygon[][] myShapes, int numCellsWidth, int numCellsHeight,
 			int defaultState, Color defaultColor, String model) {
-		super(numCellsWidth, numCellsHeight, screenWidth, screenHeight,
-				xOffset, yOffset, points, defaultState, defaultColor, model);
+		super(myShapes, numCellsWidth, numCellsHeight, defaultState, defaultColor, model);
 		// Point2D RIGHT = new Point2D(1, 0);
 		// Point2D LEFT = new Point2D(-1, 0);
 		// Point2D UP = new Point2D(0, -1);
@@ -62,25 +60,26 @@ public class SquareGraph extends BaseGraph {
 	 * a Polygon for each Cell. Assign correct matrix of points for each
 	 * Polygon. Add each Polygon to each Cell. Add each Cell to the Graph.
 	 */
-	public void initializeCells(int defaultState, Color defaultColor) {
+	public void initializeCells(Polygon[][] myShapes, int defaultState, Color defaultColor) {
 		int count = 1;
 		CellFactory myFactory = new CellFactory();
-		for (int i = 1; i <= getNumCellsUpDown(); i++)
-			for (int j = 1; j <= getNumCellsAcross(); j++) {
-				Polygon tempShape = new Polygon();
+		for (int i = 0; i < getNumCellsUpDown(); i++)
+			for (int j = 0; j < getNumCellsAcross(); j++) {
+//				Polygon tempShape = new Polygon();
 				List<Point2D> tempList = new ArrayList<>();
-				tempList.add(new Point2D(getXOffset() + (i - 1) * cellWidth,
-						getYOffset() + (j - 1) * cellHeight));
-				tempList.add(new Point2D(getXOffset() + (i - 1) * cellWidth,
-						getYOffset() + j * cellHeight));
-				tempList.add(new Point2D(getXOffset() + i * cellWidth,
-						getYOffset() + j * cellHeight));
-				tempList.add(new Point2D(getXOffset() + i * cellWidth,
-						getYOffset() + (j - 1) * cellHeight));
+//				tempList.add(new Point2D(getXOffset() + (i - 1) * cellWidth,
+//						getYOffset() + (j - 1) * cellHeight));
+//				tempList.add(new Point2D(getXOffset() + (i - 1) * cellWidth,
+//						getYOffset() + j * cellHeight));
+//				tempList.add(new Point2D(getXOffset() + i * cellWidth,
+//						getYOffset() + j * cellHeight));
+//				tempList.add(new Point2D(getXOffset() + i * cellWidth,
+//						getYOffset() + (j - 1) * cellHeight));
 				Cell temp = myFactory.createSpecifiedCell(getModelName(),
-						count, tempShape, tempList, defaultState, defaultColor);
+						count, myShapes[i][j], tempList, defaultState, defaultColor);
 				temp.setFutureState(defaultState);
-				getCellPointMap().put(temp, new Point2D(i, j));
+				//do plus one in order to have a grid that starts at (1,1)
+				getCellPointMap().put(temp, new Point2D(i+1, j+1));
 				addVertex(temp);
 				temp.setShapeVerticies();
 				count++;

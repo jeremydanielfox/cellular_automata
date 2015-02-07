@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 import CellsAndComponents.Cell;
 
 /**
@@ -35,21 +36,21 @@ public abstract class BaseGraph {
 	private String myType;
 	private boolean isWrapped;
 
-	public BaseGraph(int numCellsWidth, int numCellsHeight, int screenWidth,
-			int screenHeight, int xOffset, int yOffset, int points,
-			int defaultState, Color defaultColor, String model) {
+	public BaseGraph(Polygon[][] myShapes, int numCellsWidth,
+			int numCellsHeight, int defaultState, Color defaultColor,
+			String model) {
 
-		numCellsAcross = numCellsWidth;
-		numCellsUpDown = numCellsHeight;
-		myScreenWidth = screenWidth;
-		myScreenHeight = screenHeight;
-		horizontalOffset = xOffset;
-		verticalOffset = yOffset;
+		numCellsAcross = myShapes.length;
+		numCellsUpDown = myShapes[0].length;
+		// myScreenWidth = screenWidth;
+		// myScreenHeight = screenHeight;
+		// horizontalOffset = xOffset;
+		// verticalOffset = yOffset;
 		myModel = model;
 		isWrapped = false;
 		initializeConstants();
 		calculateValues();
-		initializeCells(defaultState, defaultColor);
+		initializeCells(myShapes, defaultState, defaultColor);
 		connectCells();
 		manageEdgeConditions();
 
@@ -187,7 +188,8 @@ public abstract class BaseGraph {
 
 	public abstract void initializeConstants();
 
-	public abstract void initializeCells(int defaultState, Color defaultColor);
+	public abstract void initializeCells(Polygon[][] myShapes,
+			int defaultState, Color defaultColor);
 
 	public abstract void calculateValues();
 

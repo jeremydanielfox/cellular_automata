@@ -3,6 +3,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import javafx.scene.shape.Polygon;
 import CellsAndComponents.Cell;
 import Factories.GraphFactory;
 import Factories.ModelFactory;
@@ -25,27 +26,24 @@ public class SimEngine {
 	private BaseGraph myGraph;
 	private BaseModel myModel;
 
-	public SimEngine(String model, Map<String, Double> parameters,
-			List<ConfigCellInfo> cellsToConfig, int cellRegionWidth,
-			int cellRegionHeight, int cellRegionXOffset, int cellRegionYOffset) {
+	public SimEngine(Polygon[][] myPolygons, String model,
+			Map<String, Double> parameters, List<ConfigCellInfo> cellsToConfig,
+			int cellRegionWidth, int cellRegionHeight) {
 		myModelName = model;
 		myParameters = parameters;
 		myCellsToConfig = cellsToConfig;
 		ModelFactory myModFactory = new ModelFactory();
 		myModel = myModFactory.createSpecifiedModel(model, parameters);
 		GraphFactory myGraphFactory = new GraphFactory();
-		myGraph = myGraphFactory.createSpecifiedGraph(
-				myParameters.get("columns").intValue(), myParameters
-						.get("rows").intValue(), cellRegionWidth,
-				cellRegionHeight, cellRegionXOffset, cellRegionYOffset, myModel
-						.getSharePointsForNeighbor(),
-				myModel.getDefaultState(), myModel.getDefaultColor(),
-				myModelName);
-//		myGraph = new SquareGraph(myParameters.get("columns").intValue(),
-//				myParameters.get("rows").intValue(), cellRegionWidth,
-//				cellRegionHeight, cellRegionXOffset, cellRegionYOffset,
-//				myModel.getSharePointsForNeighbor(), myModel.getDefaultState(),
-//				myModel.getDefaultColor(), myModelName);
+		myGraph = myGraphFactory.createSpecifiedGraph(myPolygons, myParameters
+				.get("columns").intValue(),
+				myParameters.get("rows").intValue(),  myModel.getDefaultState(), myModel
+						.getDefaultColor(), myModelName);
+		// myGraph = new SquareGraph(myParameters.get("columns").intValue(),
+		// myParameters.get("rows").intValue(), cellRegionWidth,
+		// cellRegionHeight, cellRegionXOffset, cellRegionYOffset,
+		// myModel.getSharePointsForNeighbor(), myModel.getDefaultState(),
+		// myModel.getDefaultColor(), myModelName);
 		// myGraph.initializeCells(myModel.getDefaultState(),
 		// myModel.getDefaultColor());
 		setUpInitCells();
@@ -83,8 +81,8 @@ public class SimEngine {
 	public void changeParam(String paramName, Double paramValue) {
 		myModel.changeParam(paramName, paramValue);
 	}
-	
-	public Map<String, ArrayList<Double>> getParamMap(){
+
+	public Map<String, ArrayList<Double>> getParamMap() {
 		return myModel.getParamNameMinMaxCur();
 	}
 }

@@ -8,7 +8,7 @@ public class SquareRegionDivider extends CellRegionDivider {
 		super(cellsAcross, cellsUpDown, height, width, xspace, yspace);
 	}
 
-	public void assignPoints(Polygon myShape, int i, int j) {
+	public void assignPoints(Polygon myShape, int i, int j, int count) {
 		myShape.getPoints().addAll(
 				new Double[] {
 						(double) getXOffset() + (i - 1) * getCellWidth(),
@@ -21,6 +21,11 @@ public class SquareRegionDivider extends CellRegionDivider {
 						(double) getYOffset() + (j - 1) * getCellHeight()
 
 				});
+	}
+	
+	public void calculateValues() {
+		setCellWidth(getScreenWidth() / getNumCellsWidth());
+		setCellHeight(getScreenHeight() / getNumCellsHeight());
 	}
 
 }

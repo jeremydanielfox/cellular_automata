@@ -1,4 +1,5 @@
 package visuals;
+
 import javafx.scene.shape.Polygon;
 
 /**
@@ -32,37 +33,48 @@ public abstract class CellRegionDivider {
 		calculateValues();
 
 	}
-	
+
 	public Polygon[][] divideSpace() {
 		Polygon[][] myShapeArray = new Polygon[getNumCellsHeight()][getNumCellsWidth()];
-		for (int i=0;i<getNumCellsHeight();i++)
-			for (int j=0;j<getNumCellsWidth();j++) {
+		int count = 0;
+		for (int i = 0; i < getNumCellsHeight(); i++) {
+			for (int j = 0; j < getNumCellsWidth(); j++) {
 				Polygon tempShape = new Polygon();
-				assignPoints(tempShape, i, j);
+				assignPoints(tempShape, i, j, count);
 				myShapeArray[i][j] = tempShape;
+				count++;
 			}
+			count++;
+		}
+		
 		return myShapeArray;
 	}
-	
-	public void calculateValues() {
-		myCellWidth = getScreenWidth() / getNumCellsWidth();
-		myCellHeight = getScreenHeight() / getNumCellsHeight();
-	}
-	
-	protected abstract void assignPoints(Polygon myShape,int i, int j);
-	
+
+	public abstract void calculateValues();
+
+	protected abstract void assignPoints(Polygon myShape, int i, int j,
+			int count);
+
 	protected int getCellWidth() {
 		return myCellWidth;
 	}
-	
+
 	protected int getCellHeight() {
 		return myCellHeight;
 	}
 	
+	protected void setCellWidth(int width) {
+		myCellWidth = width;
+	}
+	
+	protected void setCellHeight(int height) {
+		myCellHeight = height;
+	}
+
 	protected void setNumPoints(int points) {
 		numPoints = points;
 	}
-	
+
 	protected int getNumPoints() {
 		return numPoints;
 	}

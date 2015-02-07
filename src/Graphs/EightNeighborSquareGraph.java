@@ -2,6 +2,7 @@ package Graphs;
 
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 import CellsAndComponents.Cell;
 
 public class EightNeighborSquareGraph extends SquareGraph {
@@ -14,11 +15,9 @@ public class EightNeighborSquareGraph extends SquareGraph {
 	private Point2D DOWN_LEFT;
 	private Point2D DOWN_RIGHT;
 
-	public EightNeighborSquareGraph(int numCellsWidth, int numCellsHeight,
-			int screenWidth, int screenHeight, int xOffset, int yOffset,
-			int points, int defaultState, Color defaultColor, String model) {
-		super(numCellsWidth, numCellsHeight, screenWidth, screenHeight,
-				xOffset, yOffset, points, defaultState, defaultColor, model);
+	public EightNeighborSquareGraph(Polygon[][] myShapes, int numCellsWidth, int numCellsHeight,
+		 int defaultState, Color defaultColor, String model) {
+		super(myShapes, numCellsWidth, numCellsHeight, defaultState, defaultColor, model);
 		// TODO Auto-generated constructor stub
 	}
 
