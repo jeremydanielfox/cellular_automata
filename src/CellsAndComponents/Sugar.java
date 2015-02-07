@@ -34,9 +34,14 @@ public class Sugar extends Patch {
 	}
 	
 	public void sugarGrowBack(int sugarGrowBackRate) {
-		currentAmount += sugarGrowBackRate;
+		if (currentAmount + sugarGrowBackRate >= maxAmount){
+			currentAmount = maxAmount;
+		}
+		else {
+			currentAmount += sugarGrowBackRate;
+		}
 	}
 	
-
+	
 
 }
