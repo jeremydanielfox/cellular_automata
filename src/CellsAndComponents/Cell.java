@@ -86,7 +86,4 @@ public class Cell {
 	public void setColor(Color current) {
 		myShape.setFill(current);
 	}
-
-	public void setInhabitant(Inhabitant inhabitant) {
-	}
 }

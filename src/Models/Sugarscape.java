@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import CellsAndComponents.Cell;
 import CellsAndComponents.AdvancedCell;
 import Graphs.BaseGraph;
+import Graphs.ConfigCellInfo;
 
 /**
  * This class implements the SugarScape model and extends BaseModel.
@@ -95,13 +96,22 @@ public class Sugarscape extends BaseModel {
 		return shuffledCells;
 	}
 
-	public void assignAdditionalCellInfo(BaseGraph graph) {
+	@Override
+	public void setUpCellContents(BaseGraph graph,
+			Iterable<ConfigCellInfo> cellsToConfig) {
+		
+		for (ConfigCellInfo c : cellsToConfig) {
+			
+			//c.setIntState(getIntForState(c.getStringState()));
+		}
+		
 		ArrayList<Cell> shuffledCells = new ArrayList<Cell>(
 				(ArrayList<Cell>) graph.getAllCells());
 		Collections.shuffle(shuffledCells);
 		for (int i = 0; i < getParameterValuesMap().get("numAgents"); i++) {
 			AdvancedCell toAddto = (AdvancedCell) shuffledCells.get(i);
 			toAddto.addInhabitant(new Agent(WITH_AGENT));
+			toAddto.setCurrentState(getIntForState("agent"));
 		}
 	}
 
@@ -184,9 +194,9 @@ public class Sugarscape extends BaseModel {
 	public int getDefaultState() {
 		return 0;
 	}
-	
+
 	@Override
-	//error check?
+	// error check?
 	public int getIntForState(String state) {
 		if (state.equals("agent")) {
 			return getStateToIntMap().get(state);
