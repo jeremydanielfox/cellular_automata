@@ -134,7 +134,7 @@ public class BasicGraph extends BaseGraph {
 //		EdgeManager myManager = new EightNeighborToroid(this);
 		 EdgeManagerFactory myManagerFactory = new EdgeManagerFactory();
 		 EdgeManager myEdgeManager = myManagerFactory.createSpecifiedManager(
-		 getModelName() + getEdgeType(), this);
+		 getType() + getEdgeType(), this);
 
 	}
 }
