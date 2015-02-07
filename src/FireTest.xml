@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Information>
 	<Model>Fire</Model>
+    <GraphType>Square</GraphType>
 	<Author> Sierra and Megan</Author>
 	<Title>Forest Fire</Title>
 	<GridRows>60</GridRows>
