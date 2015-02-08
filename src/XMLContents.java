@@ -37,6 +37,7 @@ public class XMLContents {
 	private String myRandomConfig;
 	private Map<String, Double> myParameters;
 	private List<ConfigCellInfo> cellsToConfigure;
+	private Map<String, Double> myInitialProportions;
 	private Document myDoc;
 
 	public XMLContents(File file) throws ParserConfigurationException,
@@ -69,12 +70,20 @@ public class XMLContents {
 		readGridLines();
 		extractConfig();
 		extractParams();
+		extractInitialProportions();
 		readRandomTag();
 		readGridLines();
 	}
 
 	//private void setSpecifiedVariable(String variable, )
-	
+
+	private void extractInitialProportions() {
+		myInitialProportions = new HashMap<String, Double>();
+		
+		//do this just like extracting params
+
+	}
+
 	private void readGridLines(){
 		try{
 			myGridLines = extractSpecifiedTag("GridLines");
@@ -82,7 +91,7 @@ public class XMLContents {
 			myGridLines = "Off";
 		}
 	}
-	
+
 	private void readRandomTag(){
 		try{
 			myRandomConfig = extractSpecifiedTag("Random");
@@ -90,7 +99,7 @@ public class XMLContents {
 			myRandomConfig = "NO";
 		}
 	}
-	
+
 	private void readGraphType(){
 		try{
 			myGraphType = extractSpecifiedTag("GraphType");
@@ -106,7 +115,7 @@ public class XMLContents {
 			myEdgeType = "Finite";
 		}
 	}
-	
+
 	private void readAuthor(){
 		try{
 			myAuthor = extractSpecifiedTag("Author");
@@ -114,7 +123,7 @@ public class XMLContents {
 			myAuthor = "User";
 		}
 	}
-	
+
 	private void readTitle(){
 		try{
 			myTitle = extractSpecifiedTag("Title");
@@ -122,7 +131,7 @@ public class XMLContents {
 			myTitle = myModel;
 		}
 	}
-	
+
 	private void extractParams() {
 		NodeList paramList = myDoc.getElementsByTagName("Parameters");
 		if (paramList.getLength() != 0) {
@@ -191,7 +200,7 @@ public class XMLContents {
 	public String getAuthor() {
 		return myAuthor;
 	}
-	
+
 	public String getEdgeType(){
 		return myEdgeType;
 	}
@@ -199,11 +208,11 @@ public class XMLContents {
 	public String getGraphType(){
 		return myGraphType;
 	}
-	
+
 	public String getGridLines(){
 		return myGridLines;
 	}
-	
+
 	private String extractSpecifiedTag(String tag) {
 		NodeList myList = myDoc.getElementsByTagName(tag);
 		String result = myList.item(0).getChildNodes().item(0).getNodeValue();
@@ -214,8 +223,12 @@ public class XMLContents {
 	public String getModel() {
 		return myModel;
 	}
-	
+
 	public String getRandomConfig(){
 		return myRandomConfig;
+	}
+	
+	public Map<String, Double> getInitialProportions(){
+		return myInitialProportions;
 	}
 }
