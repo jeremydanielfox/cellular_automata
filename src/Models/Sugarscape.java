@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
@@ -60,23 +62,14 @@ public class Sugarscape extends BaseModel {
 
 	public Collection<Cell> updateFutureStates(Iterable<Cell> cellsToUpdate,
 			BaseGraph graph) {
-		ArrayList<Cell> shuffledCells = new ArrayList<Cell>();
-		for (Cell c : cellsToUpdate) {
-			shuffledCells.add(c);
-		}
-		// (ArrayList<Cell>) cellsToUpdate);
+		ArrayList<Cell> shuffledCells = createArrayListFromIterable(cellsToUpdate);
 		Collections.shuffle(shuffledCells);
 		for (Cell c : shuffledCells) {
 			AdvancedCell curCell = (AdvancedCell) c;
 			if (curCell.getNumInhabitants() > 0
 					&& curCell.getFutureState() != WITH_AGENT) {
-				ArrayList<AdvancedCell> possibleCells = (ArrayList<AdvancedCell>) getVacantPatchesInSight(
-						curCell, graph);
-				ArrayList<AdvancedCell> possibleMaxSugar = (ArrayList<AdvancedCell>) findMaxSugarCells(possibleCells);
-				// System.out.println(((Agent)curCell.getInhabitants().get(0)).getVision());
-				// for (AdvancedCell a : possibleCells) {
-				// System.out.println(graph.getPointFromCell(a));
-				// }
+				HashMap<AdvancedCell, Integer> possibleCells = (HashMap<AdvancedCell, Integer>) getVacantPatchesInSight(curCell, graph);
+				HashMap<AdvancedCell, Integer> possibleMaxSugar =  (HashMap<AdvancedCell, Integer>) findMaxSugarCells(possibleCells);
 				AdvancedCell toMoveTo = getClosest(possibleMaxSugar, curCell,
 						graph);
 				if (toMoveTo != null) {
@@ -91,10 +84,8 @@ public class Sugarscape extends BaseModel {
 						changeFutureState(toMoveTo, WITH_AGENT,
 								WITH_AGENT_COLOR);
 					}
-				}
-				else {
-					changeFutureState(curCell, WITH_AGENT,
-							WITH_AGENT_COLOR);
+				} else {
+					changeFutureState(curCell, WITH_AGENT, WITH_AGENT_COLOR);
 				}
 			}
 		}
@@ -106,9 +97,7 @@ public class Sugarscape extends BaseModel {
 						.sugarGrowBack(SUGAR_GROW_BACK_RATE);
 			}
 			if (curCell.getNumInhabitants() == 0) {
-				// change Orange later to be based off of amount
-				changeFutureState(
-						curCell,
+				changeFutureState(curCell,
 						((Sugar) curCell.getPatch()).getSugarAmount(),
 						calculateColorForSugarLevel(((Sugar) curCell.getPatch())
 								.getSugarAmount()));
@@ -117,17 +106,24 @@ public class Sugarscape extends BaseModel {
 		return shuffledCells;
 	}
 
+	private ArrayList<Cell> createArrayListFromIterable(
+			Iterable<Cell> cellsToUpdate) {
+		ArrayList<Cell> shuffledCells = new ArrayList<Cell>();
+		for (Cell c : cellsToUpdate) {
+			shuffledCells.add(c);
+		}
+		return shuffledCells;
+	}
+
 	@Override
 	public void setUpCellContents(BaseGraph graph,
 			Iterable<ConfigCellInfo> cellsToConfig) {
-
 		for (Cell c : graph.getAllCells()) {
 			AdvancedCell cell = (AdvancedCell) c;
 			cell.setPatch(new Sugar(DEFAULT_MAX_SUGAR));
 			cell.setCurrentState(DEFAULT_MAX_SUGAR);
 			cell.setColor(calculateColorForSugarLevel(DEFAULT_MAX_SUGAR));
 		}
-
 		for (ConfigCellInfo c : cellsToConfig) {
 			try {
 				c.setIntState(Integer.parseInt(c.getStringState()));
@@ -140,11 +136,8 @@ public class Sugarscape extends BaseModel {
 				maxSugarLevel = c.getIntState();
 			}
 		}
-
-		ArrayList<Cell> shuffledCells = new ArrayList<Cell>();
-		for (Cell c : graph.getAllCells()) {
-			shuffledCells.add(c);
-		}
+		ArrayList<Cell> shuffledCells = createArrayListFromIterable(graph
+				.getAllCells());
 		Collections.shuffle(shuffledCells);
 		for (int i = 0; i < getParameterValuesMap().get("numAgents"); i++) {
 			AdvancedCell toAddto = (AdvancedCell) shuffledCells.get(i);
@@ -168,25 +161,25 @@ public class Sugarscape extends BaseModel {
 		return orange;
 	}
 
-	private List<AdvancedCell> getVacantPatchesInSight(AdvancedCell curCell,
+	private Map<AdvancedCell, Integer> getVacantPatchesInSight(AdvancedCell curCell,
 			BaseGraph graph) {
 		int vision = ((Agent) curCell.getInhabitants().get(0)).getVision();
-		List<AdvancedCell> possibleCells = new ArrayList<AdvancedCell>();
+		Map<AdvancedCell, Integer> possibleCellMap = new HashMap<AdvancedCell, Integer>();
 		for (int i = 1; i <= vision; i++) {
 			if (checkIfVacant(curCell, graph, i, 0) != null) {
-				possibleCells.add(checkIfVacant(curCell, graph, i, 0));
+				possibleCellMap.put(checkIfVacant(curCell, graph, i, 0), i);
 			}
 			if (checkIfVacant(curCell, graph, -i, 0) != null) {
-				possibleCells.add(checkIfVacant(curCell, graph, -i, 0));
+				possibleCellMap.put(checkIfVacant(curCell, graph, -i, 0), i);
 			}
 			if (checkIfVacant(curCell, graph, 0, i) != null) {
-				possibleCells.add(checkIfVacant(curCell, graph, 0, i));
+				possibleCellMap.put(checkIfVacant(curCell, graph, 0, i), i);
 			}
 			if (checkIfVacant(curCell, graph, 0, -i) != null) {
-				possibleCells.add(checkIfVacant(curCell, graph, 0, -i));
+				possibleCellMap.put(checkIfVacant(curCell, graph, 0, -i), i);
 			}
 		}
-		return possibleCells;
+		return possibleCellMap;
 	}
 
 	private AdvancedCell checkIfVacant(AdvancedCell curCell, BaseGraph graph,
@@ -200,35 +193,42 @@ public class Sugarscape extends BaseModel {
 		return null;
 	}
 
-	private List<AdvancedCell> findMaxSugarCells(
-			ArrayList<AdvancedCell> possibleCells) {
+	private Map<AdvancedCell, Integer> findMaxSugarCells(
+			HashMap<AdvancedCell, Integer> possibleCells) {
 		int maxSugar = 0;
-		for (AdvancedCell curCell : possibleCells) {
+		for (AdvancedCell curCell : possibleCells.keySet()) {
 			if (((Sugar) curCell.getPatch()).getSugarAmount() > maxSugar) {
 				maxSugar = ((Sugar) curCell.getPatch()).getSugarAmount();
 			}
 		}
-		ArrayList<AdvancedCell> possibleMaxSugar = new ArrayList<AdvancedCell>();
-		for (AdvancedCell curCell : possibleCells) {
+		Map<AdvancedCell, Integer> possibleMaxSugarMap = new HashMap<AdvancedCell, Integer>();
+		for (AdvancedCell curCell : possibleCells.keySet()) {
 			if (((Sugar) curCell.getPatch()).getSugarAmount() == maxSugar) {
-				possibleMaxSugar.add(curCell);
+				possibleMaxSugarMap.put(curCell, possibleCells.get(curCell));
 			}
 		}
-		return possibleMaxSugar;
+		return possibleMaxSugarMap;
 	}
 
-	private AdvancedCell getClosest(List<AdvancedCell> possibleCells,
+	private AdvancedCell getClosest(HashMap<AdvancedCell, Integer> possibleCells,
 			AdvancedCell curCell, BaseGraph graph) {
-		Point2D curPoint = graph.getPointFromCell(curCell);
-		double maxDistance = Double.MAX_VALUE;
+		int minDistance = Integer.MAX_VALUE;
 		AdvancedCell toReturn = null;
-		for (AdvancedCell c : possibleCells) {
-			double cellDistance = curPoint.distance(graph.getPointFromCell(c));
-			if (cellDistance < maxDistance) {
-				toReturn = c;
-				maxDistance = cellDistance;
+		for (AdvancedCell c : possibleCells.keySet()) {
+			int cellDistance = possibleCells.get(c);
+			if (cellDistance < minDistance) {
+				minDistance = cellDistance;
 			}
 		}
+		ArrayList<AdvancedCell> minDistList = new ArrayList<AdvancedCell>();
+		for (AdvancedCell c : possibleCells.keySet()) {
+			int cellDistance = possibleCells.get(c);
+			if (cellDistance == minDistance) {
+				minDistList.add(c);
+			}
+		}
+		Random generator = new Random();
+		toReturn = minDistList.get(generator.nextInt(minDistList.size()));
 		return toReturn;
 	}
 
