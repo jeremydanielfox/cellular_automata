@@ -256,5 +256,10 @@ public class Sugarscape extends BaseModel {
 		}
 		return Integer.parseInt(state);
 	}
+	
+	@Override
+	public int getNumStates() {
+		return DEFAULT_MAX_SUGAR;
+	}
 
 }
