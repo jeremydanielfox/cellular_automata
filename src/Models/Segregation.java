@@ -42,7 +42,7 @@ public class Segregation extends BaseModel {
 		List<Integer> myInts = new ArrayList<>(Arrays.asList(EMPTY, GROUP_ONE, GROUP_TWO));
 		initializeMaps(myStates, myInts, myColors);
 		try {
-			getParameterValuesMap().put("happinessRatio", parameters.get("HappinessRatio"));
+			getParameterValuesMap().put("happinessRatio", (double)parameters.get("HappinessRatio"));
 		} catch (NullPointerException e) {
 			getParameterValuesMap().put("happinessRatio", (MIN_RATIO_NEIGHBORS + MAX_RATIO_NEIGHBORS) / 2);
 		}

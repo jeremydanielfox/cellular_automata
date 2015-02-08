@@ -37,7 +37,7 @@ public class Fire extends BaseModel {
 		List<Integer> myInts = new ArrayList<>(Arrays.asList(EMPTY, TREE, BURNING));
 		initializeMaps(myStates, myInts, myColors);
 		try {
-			getParameterValuesMap().put("probCatch", parameters.get("probCatch"));
+			getParameterValuesMap().put("probCatch", (double) parameters.get("probCatch"));
 		} catch (NullPointerException e) {
 			getParameterValuesMap().put("probCatch", (MIN_PROB_CATCH + MAX_PROB_CATCH) / 2);
 		}

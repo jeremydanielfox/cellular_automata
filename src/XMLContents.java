@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javafx.scene.paint.Color;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -38,6 +40,7 @@ public class XMLContents {
 	private Map<String, Double> myParameters;
 	private List<ConfigCellInfo> cellsToConfigure;
 	private Map<String, Double> myInitialProportions;
+	private boolean randomWithParams;
 	private Document myDoc;
 
 	public XMLContents(File file) throws ParserConfigurationException,
@@ -64,7 +67,9 @@ public class XMLContents {
 			throw new CellSocietyException(CellSocietyException.MISSING_INFO_MESSAGE);
 		}
 		
-		myInitialProportions = extractChildNodes("InitialProportions");
+		randomWithParams = false;
+		myInitialProportions = extractChildNodes("RandomWithProportions", randomWithParams);
+		System.out.println(randomWithParams);
 		readAuthor();
 		readTitle();
 		readGraphType();
@@ -154,10 +159,11 @@ public class XMLContents {
 		}
 	}
 
-	private Map<String, Double> extractChildNodes(String parent) {
+	private Map<String, Double> extractChildNodes(String parent, boolean tagPresent) {
 		Map<String, Double> toReturn = new HashMap<String, Double>();
 		NodeList paramList = myDoc.getElementsByTagName(parent);
 		if (paramList.getLength() != 0) {
+			tagPresent = true;
 			Element firstParam = (Element) paramList.item(0);
 			for (int k = 0; k < paramList.getLength(); k++) {
 				Node node = paramList.item(k);
@@ -184,6 +190,31 @@ public class XMLContents {
 		
 		return toReturn;
 	}
+	
+//	private Map<String, Color> extractChildNodes(String parent) {
+//		Map<String, Color> toReturn = new HashMap<>();
+//		NodeList colorList = myDoc.getElementsByTagName(parent);
+//		if (colorList.getLength() != 0) {
+//			Element firstParam = (Element) colorList.item(0);
+//			for (int k = 0; k < colorList.getLength(); k++) {
+//				Node node = colorList.item(k);
+//				if (node.getNodeType() == Node.ELEMENT_NODE) {
+//					Element elem = (Element) node;
+//					NodeList specificColors = elem.getChildNodes();
+//					for (int q = 0; q < specificColors.getLength(); q++) {
+//						Node colorNode = specificColors.item(q);
+//						if (colorNode.getNodeType() == Node.ELEMENT_NODE) {
+//							Element paramElem = (Element) colorNode;
+//							String tag = paramElem.getTagName();
+//							double param = Double.parseDouble(paramElem
+//									.getChildNodes().item(0).getNodeValue());
+//							toReturn.put(tag, param);
+//						}
+//					}
+//				}
+//			}
+//		}
+//	}
 	
 	public Map<String, Double> getParams() {
 		return myParameters;

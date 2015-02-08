@@ -2,15 +2,11 @@
 <Information>
 	<GraphType>FourNeighborSquareGraph</GraphType>
 	<Model>Fire</Model>
-    <InitialProportions>
-        <fire>0.3</fire>
-        <empty>0.2</empty>
-    </InitialProportions>
     <GraphType>Square</GraphType>
 	<Author>Sierra and Megan</Author>
     <RandomWithProportions>
-        <burning>0.3</burning>
-        <empty>0.5</empty>
+        <fire>0.3</fire>
+        <empty>0.2</empty>
     </RandomWithProportions>
 	<Title>Forest Fire</Title>
 	<GridRows>60</GridRows>

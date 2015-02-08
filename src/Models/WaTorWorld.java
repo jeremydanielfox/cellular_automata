@@ -48,8 +48,8 @@ public class WaTorWorld extends BaseModel {
 		List<Integer> myInts = new ArrayList<>(Arrays.asList(WATER, FISH, SHARK));
 		initializeMaps(myStates, myInts, myColors);
 		try {
-			getParameterValuesMap().put("sharkEnergy", parameters.get("energyLevel"));
-			getParameterValuesMap().put("timeTillReproduce", parameters.get("timeTillReproduce"));
+			getParameterValuesMap().put("sharkEnergy", (double)parameters.get("energyLevel"));
+			getParameterValuesMap().put("timeTillReproduce", (double)parameters.get("timeTillReproduce"));
 		} catch (NullPointerException e) {
 			getParameterValuesMap().put("sharkEnergy", MIN_SHARK_ENERGY);
 			getParameterValuesMap().put("timeTillReproduce", MAX_TIME_TILL_REPRODUCE);

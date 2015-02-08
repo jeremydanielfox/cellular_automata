@@ -49,7 +49,7 @@ public class Sugarscape extends BaseModel {
 		maxSugarLevel = DEFAULT_MAX_SUGAR;
 		try {
 			getParameterValuesMap().put("numAgents",
-					parameters.get("numAgents"));
+					(double)parameters.get("numAgents"));
 		} catch (NullPointerException e) {
 			getParameterValuesMap().put("numAgents",
 					(MIN_NUM_AGENTS + MAX_NUM_AGENTS) / 2);
