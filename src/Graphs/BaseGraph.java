@@ -34,12 +34,14 @@ public abstract class BaseGraph {
 
 	public BaseGraph(Polygon[][] myShapes, int numCellsWidth,
 			int numCellsHeight, int defaultState, Color defaultColor,
-			String model) {
+			String model,String graphType, String edgeType) {
 
 		numCellsAcross = myShapes.length;
 		numCellsUpDown = myShapes[0].length;
 		myModel = model;
 		isWrapped = false;
+		myEdgeType = edgeType;
+		myType = graphType;
 		initializeConstants();
 		initializeCells(myShapes, defaultState, defaultColor);
 		connectCells();
@@ -166,6 +168,5 @@ public abstract class BaseGraph {
 
 	public abstract int calculateID(int row, int col);
 
-//	public abstract void updateStateOfCell(ConfigCellInfo myBabyCell,
-//			Color color);
+
 }

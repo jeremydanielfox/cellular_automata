@@ -25,28 +25,31 @@ public class GraphFactory {
 
 	public BaseGraph createSpecifiedGraph(Polygon[][] myShapes,
 			int numCellsWidth, int numCellsHeight, int defaultState,
-			Color defaultColor, String model) {
+			Color defaultColor, String model, String graphType, String edgeType) {
 
 		switch (model) {
 		case "FourNeighborSquareGraph":
-			return new BasicGraph(myShapes, numCellsWidth,
-					numCellsHeight, defaultState, defaultColor, model);
+			return new BasicGraph(myShapes, numCellsWidth, numCellsHeight,
+					defaultState, defaultColor, model, graphType, edgeType);
 		case "FourNeighborTriangleGraph":
-			return new BasicGraph(myShapes, numCellsWidth,
-					numCellsHeight, defaultState, defaultColor, model);
+			return new BasicGraph(myShapes, numCellsWidth, numCellsHeight,
+					defaultState, defaultColor, model, graphType, edgeType);
 		case "EightNeighborTriangleGraph":
 			return new EightNeighorBasicGraph(myShapes, numCellsWidth,
-					numCellsHeight, defaultState, defaultColor, model);
+					numCellsHeight, defaultState, defaultColor, model,
+					graphType, edgeType);
 		case "EightNeighor":
 			return new EightNeighorBasicGraph(myShapes, numCellsWidth,
-					numCellsHeight, defaultState, defaultColor, model);
+					numCellsHeight, defaultState, defaultColor, model,
+					graphType, edgeType);
 
 		case "GameOfLife":
 			return new EightNeighorBasicGraph(myShapes, numCellsWidth,
-					numCellsHeight, defaultState, defaultColor, model);
+					numCellsHeight, defaultState, defaultColor, model,
+					graphType, edgeType);
 		default:
 			return new BasicGraph(myShapes, numCellsWidth, numCellsHeight,
-					defaultState, defaultColor, model);
+					defaultState, defaultColor, model, graphType, edgeType);
 		}
 
 	}

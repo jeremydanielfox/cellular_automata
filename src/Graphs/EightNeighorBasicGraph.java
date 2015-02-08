@@ -15,9 +15,11 @@ public class EightNeighorBasicGraph extends BasicGraph {
 	private Point2D DOWN_LEFT;
 	private Point2D DOWN_RIGHT;
 
-	public EightNeighorBasicGraph(Polygon[][] myShapes, int numCellsWidth, int numCellsHeight,
-		 int defaultState, Color defaultColor, String model) {
-		super(myShapes, numCellsWidth, numCellsHeight, defaultState, defaultColor, model);
+	public EightNeighorBasicGraph(Polygon[][] myShapes, int numCellsWidth,
+			int numCellsHeight, int defaultState, Color defaultColor,
+			String model, String graphType, String edgeType) {
+		super(myShapes, numCellsWidth, numCellsHeight, defaultState,
+				defaultColor, model, graphType, edgeType);
 		// TODO Auto-generated constructor stub
 	}
 

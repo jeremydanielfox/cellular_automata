@@ -7,9 +7,13 @@ import Graphs.FourNeighborToroid;
 public class EdgeManagerFactory {
 	public EdgeManager createSpecifiedManager(String type, BaseGraph graph) {
 		switch (type) {
-		case "FourNeighor":
+		case "FourNeighborSquareGraphToroidal":
 			return new FourNeighborToroid(graph);
-		case "EightNeighbor":
+		case "EightNeighborSquareGraphToroidal":
+			return new EightNeighborToroid(graph);
+		case "FourNeighborTriangleGraphToroidal":
+			return new FourNeighborToroid(graph);
+		case "EightNeighborTriangleGraphToroidal":
 			return new EightNeighborToroid(graph);
 		default:
 			return new EdgeManager(graph);

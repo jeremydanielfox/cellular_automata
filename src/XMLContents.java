@@ -68,6 +68,7 @@ public class XMLContents {
 		readGridLines();
 		extractConfig();
 		extractParams();
+		readGridLines();
 	}
 
 	//private void setSpecifiedVariable(String variable, )
@@ -87,7 +88,7 @@ public class XMLContents {
 			myGraphType = "FourNeighborSquareGraph";
 		}
 	}
-	
+
 	private void readEdgeType(){
 		try{
 			myEdgeType = extractSpecifiedTag("EdgeType");

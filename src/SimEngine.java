@@ -26,9 +26,10 @@ public class SimEngine {
 	private BaseGraph myGraph;
 	private BaseModel myModel;
 
-	public SimEngine(Polygon[][] myPolygons, String model,
-			Map<String, Double> parameters, List<ConfigCellInfo> cellsToConfig,
-			int cellRegionWidth, int cellRegionHeight) {
+	public SimEngine(Polygon[][] myPolygons, String model, String graphType,
+			String edgeType, Map<String, Double> parameters,
+			List<ConfigCellInfo> cellsToConfig, int cellRegionWidth,
+			int cellRegionHeight) {
 		myModelName = model;
 		myParameters = parameters;
 		myCellsToConfig = cellsToConfig;
@@ -38,8 +39,8 @@ public class SimEngine {
 
 		myGraph = myGraphFactory.createSpecifiedGraph(myPolygons, myParameters
 				.get("columns").intValue(),
-				myParameters.get("rows").intValue(),  myModel.getDefaultState(), myModel
-						.getDefaultColor(), myModelName);
+				myParameters.get("rows").intValue(), myModel.getDefaultState(),
+				myModel.getDefaultColor(), myModelName, graphType, edgeType);
 		// myGraph = new SquareGraph(myParameters.get("columns").intValue(),
 		// myParameters.get("rows").intValue(), cellRegionWidth,
 		// cellRegionHeight, cellRegionXOffset, cellRegionYOffset,
@@ -74,11 +75,11 @@ public class SimEngine {
 
 	private void setUpInitCells() {
 		myModel.setUpCellContents(myGraph, myCellsToConfig);
-//		for (ConfigCellInfo c : myCellsToConfig) {
-//			c.setIntState(myModel.getIntForState(c.getStringState()));
-//			myGraph.updateStateOfCell(c,
-//					myModel.getColorForStringState(c.getStringState()));
-//		}
+		// for (ConfigCellInfo c : myCellsToConfig) {
+		// c.setIntState(myModel.getIntForState(c.getStringState()));
+		// myGraph.updateStateOfCell(c,
+		// myModel.getColorForStringState(c.getStringState()));
+		// }
 	}
 
 	public void changeParam(String paramName, Double paramValue) {
