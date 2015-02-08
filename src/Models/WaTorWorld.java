@@ -30,10 +30,10 @@ public class WaTorWorld extends BaseModel {
 	private static final int SHARK = 2;
 	private static final int DEFAULT_INT_STATE = WATER;
 	private static final String DEFAULT_STRING_STATE = "water";
-	private static final Color WATER_COLOR = Color.AQUAMARINE;
-	private static final Color FISH_COLOR = Color.YELLOW;
-	private static final Color SHARK_COLOR = Color.PURPLE;
-	private static final Color DEFAULT_COLOR = WATER_COLOR;
+	private Color WATER_COLOR = Color.AQUAMARINE;
+	private Color FISH_COLOR = Color.YELLOW;
+	private Color SHARK_COLOR = Color.PURPLE;
+	private Color DEFAULT_COLOR = WATER_COLOR;
 	private static final double MIN_SHARK_ENERGY = 1;
 	private static final double MAX_SHARK_ENERGY = 100;
 	private static final double MIN_TIME_TILL_REPRODUCE = 1;
@@ -41,8 +41,17 @@ public class WaTorWorld extends BaseModel {
 //	private int sharkEnergy;
 //	private int timeTillReproduce;
 
-	public WaTorWorld(Map<String, Double> parameters) {
-		super(parameters, 2);
+	public WaTorWorld(Map<String, Double> parameters, Map<String, Color> stateToColorMap) {
+		super(parameters);
+		try {
+			WATER_COLOR = (Color) stateToColorMap.get("water");
+			FISH_COLOR =  (Color) stateToColorMap.get("fish");
+			SHARK_COLOR = (Color) stateToColorMap.get("shark");
+		} catch(NullPointerException e) {
+			WATER_COLOR = Color.AQUAMARINE;
+			FISH_COLOR = Color.YELLOW;
+			SHARK_COLOR = Color.PURPLE;
+		}
 		List<String> myStates = new ArrayList<String>(Arrays.asList("water", "fish", "shark"));
 		List<Color> myColors = new ArrayList<>(Arrays.asList(WATER_COLOR, FISH_COLOR, SHARK_COLOR));
 		List<Integer> myInts = new ArrayList<>(Arrays.asList(WATER, FISH, SHARK));

@@ -1,6 +1,5 @@
 package Models;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +8,6 @@ import java.util.Map;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import CellsAndComponents.Cell;
-import Factories.InhabitantFactory;
 import Graphs.BaseGraph;
 import Graphs.ConfigCellInfo;
 
@@ -21,13 +19,13 @@ import Graphs.ConfigCellInfo;
  */
 
 public abstract class BaseModel {
-	private int numPointsForNeighbor;
+	//private int numPointsForNeighbor;
 	private Map<String, Integer> stateToInt;
 	private Map<String, Color> stateToColor;
 	private Map<String, Double> parameterValues;
 
-	public BaseModel(Map<String, Double> parameters, int points) {
-		numPointsForNeighbor = points;
+	public BaseModel(Map<String, Double> parameters) {
+		//numPointsForNeighbor = points;
 		stateToInt = new HashMap<String, Integer>();
 		stateToColor = new HashMap<String, Color>();
 		parameterValues = new HashMap<String, Double>();
@@ -86,9 +84,9 @@ public abstract class BaseModel {
 		return stateToColor.get(state);
 	}
 
-	public int getSharePointsForNeighbor() {
-		return numPointsForNeighbor;
-	}
+//	public int getSharePointsForNeighbor() {
+//		return numPointsForNeighbor;
+//	}
 
 	public int countNeighbors(int state, Collection<Cell> neighbors) {
 		int neighborsWithState = 0;

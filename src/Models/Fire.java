@@ -23,22 +23,31 @@ public class Fire extends BaseModel {
 	private static final int BURNING = 2;
 	private static final int DEFAULT_INT_STATE = TREE;
 	private static final String DEFAULT_STRING_STATE = "tree";
-	private static final Color EMPTY_COLOR = Color.YELLOW;
-	private static final Color TREE_COLOR = Color.FORESTGREEN;
-	private static final Color BURNING_COLOR = Color.RED;
-	private static final Color DEFAULT_COLOR = TREE_COLOR;
+	private Color EMPTY_COLOR;
+	private Color TREE_COLOR;
+	private Color BURNING_COLOR;
+	private Color DEFAULT_COLOR = TREE_COLOR;
 	private static final double MIN_PROB_CATCH = 0;
 	private static final double MAX_PROB_CATCH = 1.0;
 
-	public Fire(Map<String, Double> parameters) {
-		super(parameters, 2);
+	public Fire(Map<String, Double> parameters, Map<String, Color> stateToColorMap) {
+		super(parameters);
+		try {
+			EMPTY_COLOR = (Color) stateToColorMap.get("empty");
+			TREE_COLOR = (Color) stateToColorMap.get("tree");
+			BURNING_COLOR = (Color) stateToColorMap.get("burning");
+		} catch (NullPointerException e) {
+			EMPTY_COLOR = Color.YELLOW;
+			TREE_COLOR = Color.FORESTGREEN;
+			BURNING_COLOR = Color.RED;
+		}
 		List<String> myStates = new ArrayList<String>(Arrays.asList("empty", "tree", "burning"));
 		List<Color> myColors = new ArrayList<>(Arrays.asList(EMPTY_COLOR, TREE_COLOR, BURNING_COLOR));
 		List<Integer> myInts = new ArrayList<>(Arrays.asList(EMPTY, TREE, BURNING));
 		initializeMaps(myStates, myInts, myColors);
 		try {
 			getParameterValuesMap().put("probCatch", parameters.get("probCatch"));
-		} catch (NullPointerException e) {
+		} catch(NullPointerException e) {
 			getParameterValuesMap().put("probCatch", (MIN_PROB_CATCH + MAX_PROB_CATCH) / 2);
 		}
 	}

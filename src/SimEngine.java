@@ -2,8 +2,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import CellsAndComponents.Cell;
 import Factories.GraphFactory;
@@ -30,11 +30,11 @@ public class SimEngine {
 	public SimEngine(Polygon[][] myPolygons, String random, String model,
 			String graphType, String edgeType, Map<String, Double> parameters,
 			List<ConfigCellInfo> cellsToConfig, int cellRegionWidth,
-			int cellRegionHeight) {
+			int cellRegionHeight, Map<String, Color> stateToColorMap) {
 		myModelName = model;
 		myParameters = parameters;
 		ModelFactory myModFactory = new ModelFactory();
-		myModel = myModFactory.createSpecifiedModel(myModelName, myParameters);
+		myModel = myModFactory.createSpecifiedModel(myModelName, myParameters, stateToColorMap);
 		if (random.equals("YES")) {
 			//eliminate this and give it the hash map from the parser
 			Map<String, Double> paramProp = new HashMap<>();
