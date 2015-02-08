@@ -22,14 +22,25 @@ public class GameOfLife extends BaseModel {
 	private static final String DEFAULT_STRING_STATE = "dead";
 	private static final int NUM_LIVE_NEIGHBORS_TO_LIVE = 2;
 	private static final int NUM_LIVE_NEIGHBORS_TO_REVIVE = 3;
-	private static final int NUM_POINTS_FOR_NEIGHBOR = 1;
-	private static final Color DEAD_COLOR = Color.BLUE;
-	private static final Color ALIVE_COLOR = Color.FUCHSIA;
-	private static final Color DEFAULT_COLOR = DEAD_COLOR;
+	//private static final int NUM_POINTS_FOR_NEIGHBOR = 1;
+	private Color DEAD_COLOR;
+	private Color ALIVE_COLOR;
+	private Color DEFAULT_COLOR = DEAD_COLOR;
+	private Map<String, Color> colorMap;
 	
 
-	public GameOfLife(Map<String, Double> parameters) {
-		super(parameters, NUM_POINTS_FOR_NEIGHBOR);
+	public GameOfLife(Map<String, Double> parameters, Map<String, Color> stateToColorMap) {
+		super(parameters);
+		colorMap = stateToColorMap;
+		setColor(DEAD_COLOR, Color.BLUE, "dead");
+		setColor(ALIVE_COLOR, Color.FUCHSIA, "alive");
+//		try {
+//			DEAD_COLOR = stateToColorMap.get("dead");
+//			ALIVE_COLOR = stateToColorMap.get("alive");
+//		} catch(NullPointerException e) {
+//			DEAD_COLOR = Color.BLUE;
+//			ALIVE_COLOR = Color.FUCHSIA;
+//		}
 		List<String> myStates = new ArrayList<String>(Arrays.asList("dead", "alive"));
 		List<Color> myColors = new ArrayList<>(Arrays.asList(DEAD_COLOR, ALIVE_COLOR));
 		List<Integer> myInts = new ArrayList<>(Arrays.asList(DEAD, ALIVE));
@@ -46,6 +57,14 @@ public class GameOfLife extends BaseModel {
 			changeFutureState(cellToUpdate, DEAD, DEAD_COLOR);
 		}
 		return cellToUpdate;
+	}
+	
+	public void setColor(Color toSet, Color defaultColor, String state) {
+		try {
+			toSet = (Color) colorMap.get(state);
+		} catch(NullPointerException e) {
+			toSet = defaultColor;
+		}
 	}
 	
 	
