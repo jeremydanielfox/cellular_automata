@@ -1,7 +1,8 @@
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javafx.scene.shape.Polygon;
 import CellsAndComponents.Cell;
@@ -35,9 +36,11 @@ public class SimEngine {
 		ModelFactory myModFactory = new ModelFactory();
 		myModel = myModFactory.createSpecifiedModel(myModelName, myParameters);
 		if (random.equals("YES")) {
+			//eliminate this and give it the hash map from the parser
+			Map<String, Double> paramProp = new HashMap<>();
 			RandomConfiguration randConfigGenerator = new RandomConfiguration(
 					myModel, myParameters.get("rows").intValue(), myParameters
-							.get("columns").intValue());
+							.get("columns").intValue(), paramProp);
 			myCellsToConfig = randConfigGenerator.getRandConfigCells();
 		} else {
 			myCellsToConfig = cellsToConfig;
@@ -46,7 +49,7 @@ public class SimEngine {
 
 		myGraph = myGraphFactory.createSpecifiedGraph(myPolygons, myParameters
 				.get("columns").intValue(),
-				myParameters.get("rows").intValue(), myModel.getDefaultState(),
+				myParameters.get("rows").intValue(), myModel.getDefaultIntState(),
 				myModel.getDefaultColor(), myModelName, graphType, edgeType);
 		// myGraph = new SquareGraph(myParameters.get("columns").intValue(),
 		// myParameters.get("rows").intValue(), cellRegionWidth,
@@ -72,7 +75,7 @@ public class SimEngine {
 	private void setFutureToCurrentStates() {
 		for (Cell c : myGraph.getAllCells()) {
 			c.setCurrentState(c.getFutureState());
-			c.setFutureState(myModel.getDefaultState());
+			c.setFutureState(myModel.getDefaultIntState());
 		}
 	}
 

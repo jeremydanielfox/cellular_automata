@@ -21,7 +21,8 @@ public class Fire extends BaseModel {
 	private static final int EMPTY = 0;
 	private static final int TREE = 1;
 	private static final int BURNING = 2;
-	private static final int DEFAULT_STATE = TREE;
+	private static final int DEFAULT_INT_STATE = TREE;
+	private static final String DEFAULT_STRING_STATE = "tree";
 	private static final Color EMPTY_COLOR = Color.YELLOW;
 	private static final Color TREE_COLOR = Color.FORESTGREEN;
 	private static final Color BURNING_COLOR = Color.RED;
@@ -64,8 +65,8 @@ public class Fire extends BaseModel {
 	}
 
 	@Override
-	public int getDefaultState() {
-		return DEFAULT_STATE;
+	public int getDefaultIntState() {
+		return DEFAULT_INT_STATE;
 	}
 
 	@Override
@@ -77,6 +78,11 @@ public class Fire extends BaseModel {
 		minMaxCur.add(2, getParameterValuesMap().get("probCatch"));
 		toReturn.put("probCatch", minMaxCur);
 		return toReturn;
+	}
+
+	@Override
+	public String getDefaultStringState() {
+		return DEFAULT_STRING_STATE;
 	}
 
 }

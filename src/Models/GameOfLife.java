@@ -18,7 +18,8 @@ import javafx.scene.paint.Color;
 public class GameOfLife extends BaseModel {
 	private static final int DEAD = 0;
 	private static final int ALIVE = 1;
-	private static final int DEFAULT_STATE = DEAD;
+	private static final int DEFAULT_INT_STATE = DEAD;
+	private static final String DEFAULT_STRING_STATE = "dead";
 	private static final int NUM_LIVE_NEIGHBORS_TO_LIVE = 2;
 	private static final int NUM_LIVE_NEIGHBORS_TO_REVIVE = 3;
 	private static final int NUM_POINTS_FOR_NEIGHBOR = 1;
@@ -52,8 +53,13 @@ public class GameOfLife extends BaseModel {
 		return DEFAULT_COLOR;
 	}
 	
-	public int getDefaultState() {
-		return DEFAULT_STATE;
+	public int getDefaultIntState() {
+		return DEFAULT_INT_STATE;
+	}
+
+	@Override
+	public String getDefaultStringState() {
+		return DEFAULT_STRING_STATE;
 	}
 
 }

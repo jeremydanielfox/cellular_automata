@@ -35,6 +35,7 @@ public class Sugarscape extends BaseModel {
 	private static final double MIN_NUM_AGENTS = 0;
 	private static final double MAX_NUM_AGENTS = 100;
 	private static final int DEFAULT_MAX_SUGAR = 10;
+	private static final String DEFAULT_STRING_MAX_SUGAR = "10";
 	private int maxSugarLevel;
 	private int sugarGrowCounter;
 
@@ -244,8 +245,8 @@ public class Sugarscape extends BaseModel {
 	}
 
 	@Override
-	public int getDefaultState() {
-		return 0;
+	public int getDefaultIntState() {
+		return DEFAULT_MAX_SUGAR;
 	}
 
 	@Override
@@ -260,6 +261,11 @@ public class Sugarscape extends BaseModel {
 	@Override
 	public int getNumStates() {
 		return DEFAULT_MAX_SUGAR;
+	}
+
+	@Override
+	public String getDefaultStringState() {
+		return DEFAULT_STRING_MAX_SUGAR;
 	}
 
 }

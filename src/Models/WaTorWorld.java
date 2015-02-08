@@ -28,7 +28,8 @@ public class WaTorWorld extends BaseModel {
 	private static final int WATER = 0;
 	private static final int FISH = 1;
 	private static final int SHARK = 2;
-	private static final int DEFAULT_STATE = WATER;
+	private static final int DEFAULT_INT_STATE = WATER;
+	private static final String DEFAULT_STRING_STATE = "water";
 	private static final Color WATER_COLOR = Color.AQUAMARINE;
 	private static final Color FISH_COLOR = Color.YELLOW;
 	private static final Color SHARK_COLOR = Color.PURPLE;
@@ -114,7 +115,7 @@ public class WaTorWorld extends BaseModel {
 		Cell cellToMoveTo = getCellToMoveTo(graph, c, stateToCheckAgainst);
 		if (cellToMoveTo != null) {
 			changeSharkCounters(currentShark, stateToCheckAgainst);
-			cellToMoveTo.setCurrentState(DEFAULT_STATE);
+			cellToMoveTo.setCurrentState(DEFAULT_INT_STATE);
 			changeStateAndInhabitant(cellToMoveTo, currentShark, SHARK,
 					SHARK_COLOR);
 			if (currentShark.getReproductionCounter() >= getParameterValuesMap().get("timeTillReproduce").intValue()) {
@@ -165,8 +166,8 @@ public class WaTorWorld extends BaseModel {
 	}
 
 	@Override
-	public int getDefaultState() {
-		return DEFAULT_STATE;
+	public int getDefaultIntState() {
+		return DEFAULT_INT_STATE;
 	}
 
 	@Override
@@ -192,6 +193,11 @@ public class WaTorWorld extends BaseModel {
 		curCell.setInhabitant(
 				myInhabitantFactory.createSpecifiedInhabitant(
 						myBabyCell.getStringState(), myBabyCell.getIntState()));
+	}
+
+	@Override
+	public String getDefaultStringState() {
+		return DEFAULT_STRING_STATE;
 	}
 
 }

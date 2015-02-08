@@ -78,7 +78,9 @@ public abstract class BaseModel {
 
 	public abstract Color getDefaultColor();
 
-	public abstract int getDefaultState();
+	public abstract int getDefaultIntState();
+	
+	public abstract String getDefaultStringState();
 
 	public Color getColorForStringState(String state) {
 		return stateToColor.get(state);

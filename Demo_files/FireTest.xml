@@ -3,7 +3,7 @@
 	<GraphType>FourNeighborSquareGraph</GraphType>
 	<Model>Fire</Model>
     <GraphType>Square</GraphType>
-	<Author> Sierra and Megan</Author>
+	<Author>Sierra and Megan</Author>
     <RandomWithProportions>
         <burning>0.3</burning>
         <empty>0.5</empty>
