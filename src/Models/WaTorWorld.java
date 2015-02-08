@@ -170,8 +170,8 @@ public class WaTorWorld extends BaseModel {
 	}
 
 	@Override
-	public Map<String, ArrayList<Double>> getParamNameMinMaxCur() {
-		Map<String, ArrayList<Double>> toReturn = new HashMap<>();
+	public Map<String, List<Double>> getParamNameMinMaxCur() {
+		Map<String, List<Double>> toReturn = new HashMap<>();
 		ArrayList<Double> minMaxCurReproduce = new ArrayList<>();
 		minMaxCurReproduce.add(0, MIN_TIME_TILL_REPRODUCE);
 		minMaxCurReproduce.add(1, MAX_TIME_TILL_REPRODUCE);

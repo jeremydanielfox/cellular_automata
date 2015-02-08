@@ -53,8 +53,8 @@ public abstract class BaseModel {
 		return parameterValues;
 	}
 
-	public Map<String, ArrayList<Double>> getParamNameMinMaxCur() {
-		return new HashMap<String, ArrayList<Double>>();
+	public Map<String, List<Double>> getParamNameMinMaxCur() {
+		return new HashMap<String, List<Double>>();
 	}
 
 	public void changeParam(String param, Double value) {

@@ -69,8 +69,8 @@ public class Fire extends BaseModel {
 	}
 
 	@Override
-	public Map<String, ArrayList<Double>> getParamNameMinMaxCur() {
-		Map<String, ArrayList<Double>> toReturn = new HashMap<>();
+	public Map<String, List<Double>> getParamNameMinMaxCur() {
+		Map<String, List<Double>> toReturn = new HashMap<>();
 		ArrayList<Double> minMaxCur = new ArrayList<>();
 		minMaxCur.add(0, MIN_PROB_CATCH);
 		minMaxCur.add(1, MAX_PROB_CATCH);
