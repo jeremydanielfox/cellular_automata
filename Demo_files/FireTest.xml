@@ -2,6 +2,10 @@
 <Information>
 	<GraphType>FourNeighborSquareGraph</GraphType>
 	<Model>Fire</Model>
+    <InitialProportions>
+        <fire>0.3</fire>
+        <empty>0.2</empty>
+    </InitialProportions>
     <GraphType>Square</GraphType>
 	<Author>Sierra and Megan</Author>
     <RandomWithProportions>

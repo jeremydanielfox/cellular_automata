@@ -37,6 +37,7 @@ public class XMLContents {
 	private String myRandomConfig;
 	private Map<String, Double> myParameters;
 	private List<ConfigCellInfo> cellsToConfigure;
+	private Map<String, Double> myInitialProportions;
 	private Document myDoc;
 
 	public XMLContents(File file) throws ParserConfigurationException,
@@ -62,6 +63,8 @@ public class XMLContents {
 		}catch(NullPointerException e){
 			throw new CellSocietyException(CellSocietyException.MISSING_INFO_MESSAGE);
 		}
+		
+		myInitialProportions = extractChildNodes("InitialProportions");
 		readAuthor();
 		readTitle();
 		readGraphType();
@@ -74,6 +77,10 @@ public class XMLContents {
 	}
 
 	//private void setSpecifiedVariable(String variable, )
+	
+	public Map<String, Double> getInitialProportions(){
+		return myInitialProportions;
+	}
 	
 	private void readGridLines(){
 		try{
@@ -147,6 +154,37 @@ public class XMLContents {
 		}
 	}
 
+	private Map<String, Double> extractChildNodes(String parent) {
+		Map<String, Double> toReturn = new HashMap<String, Double>();
+		NodeList paramList = myDoc.getElementsByTagName(parent);
+		if (paramList.getLength() != 0) {
+			Element firstParam = (Element) paramList.item(0);
+			for (int k = 0; k < paramList.getLength(); k++) {
+				Node node = paramList.item(k);
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					Element elem = (Element) node;
+					NodeList specificParams = elem.getChildNodes();
+					for (int q = 0; q < specificParams.getLength(); q++) {
+						Node paramNode = specificParams.item(q);
+						if (paramNode.getNodeType() == Node.ELEMENT_NODE) {
+							Element paramElem = (Element) paramNode;
+							String tag = paramElem.getTagName();
+							double param = Double.parseDouble(paramElem
+									.getChildNodes().item(0).getNodeValue());
+							toReturn.put(tag, param);
+						}
+					}
+				}
+			}
+		}
+		
+		for(String s: toReturn.keySet()){
+			System.out.println(s);
+		}
+		
+		return toReturn;
+	}
+	
 	public Map<String, Double> getParams() {
 		return myParameters;
 	}
