@@ -33,6 +33,7 @@ public class Sugarscape extends BaseModel {
 	private static final double MIN_NUM_AGENTS = 0;
 	private static final double MAX_NUM_AGENTS = 100;
 	private static final int DEFAULT_MAX_SUGAR = 10;
+	private int maxSugarLevel;
 	private int sugarGrowCounter;
 
 	public Sugarscape(Map<String, Double> parameters) {
@@ -42,6 +43,7 @@ public class Sugarscape extends BaseModel {
 		List<Integer> myInts = new ArrayList<>(Arrays.asList(WITH_AGENT));
 		initializeMaps(myStates, myInts, myColors);
 		sugarGrowCounter = 0;
+		maxSugarLevel = DEFAULT_MAX_SUGAR;
 		try {
 			getParameterValuesMap().put("numAgents",
 					parameters.get("numAgents"));
@@ -66,10 +68,15 @@ public class Sugarscape extends BaseModel {
 		Collections.shuffle(shuffledCells);
 		for (Cell c : shuffledCells) {
 			AdvancedCell curCell = (AdvancedCell) c;
-			if (curCell.getNumInhabitants() > 0) {
+			if (curCell.getNumInhabitants() > 0
+					&& curCell.getFutureState() != WITH_AGENT) {
 				ArrayList<AdvancedCell> possibleCells = (ArrayList<AdvancedCell>) getVacantPatchesInSight(
 						curCell, graph);
 				ArrayList<AdvancedCell> possibleMaxSugar = (ArrayList<AdvancedCell>) findMaxSugarCells(possibleCells);
+				// System.out.println(((Agent)curCell.getInhabitants().get(0)).getVision());
+				// for (AdvancedCell a : possibleCells) {
+				// System.out.println(graph.getPointFromCell(a));
+				// }
 				AdvancedCell toMoveTo = getClosest(possibleMaxSugar, curCell,
 						graph);
 				if (toMoveTo != null) {
@@ -96,9 +103,11 @@ public class Sugarscape extends BaseModel {
 			}
 			if (curCell.getNumInhabitants() == 0) {
 				// change Orange later to be based off of amount
-				changeFutureState(curCell,
+				changeFutureState(
+						curCell,
 						((Sugar) curCell.getPatch()).getSugarAmount(),
-						Color.ORANGE);
+						calculateColorForSugarLevel(((Sugar) curCell.getPatch())
+								.getSugarAmount()));
 			}
 		}
 		return shuffledCells;
@@ -111,6 +120,8 @@ public class Sugarscape extends BaseModel {
 		for (Cell c : graph.getAllCells()) {
 			AdvancedCell cell = (AdvancedCell) c;
 			cell.setPatch(new Sugar(DEFAULT_MAX_SUGAR));
+			cell.setCurrentState(DEFAULT_MAX_SUGAR);
+			cell.setColor(calculateColorForSugarLevel(DEFAULT_MAX_SUGAR));
 		}
 
 		for (ConfigCellInfo c : cellsToConfig) {
@@ -121,6 +132,9 @@ public class Sugarscape extends BaseModel {
 			}
 			updateStateOfCell(graph, c,
 					calculateColorForSugarLevel(c.getIntState()));
+			if (c.getIntState() > maxSugarLevel) {
+				maxSugarLevel = c.getIntState();
+			}
 		}
 
 		ArrayList<Cell> shuffledCells = new ArrayList<Cell>();
@@ -132,6 +146,7 @@ public class Sugarscape extends BaseModel {
 			AdvancedCell toAddto = (AdvancedCell) shuffledCells.get(i);
 			toAddto.addInhabitant(new Agent(WITH_AGENT));
 			toAddto.setCurrentState(getIntForState("agent"));
+			toAddto.setColor(WITH_AGENT_COLOR);
 		}
 	}
 
@@ -143,7 +158,10 @@ public class Sugarscape extends BaseModel {
 	}
 
 	private Color calculateColorForSugarLevel(int sugarLevel) {
-		return Color.ORANGE;
+		double opacity = 1.0 / maxSugarLevel * sugarLevel;
+		Color orange = new Color(Color.ORANGE.getRed(),
+				Color.ORANGE.getGreen(), Color.ORANGE.getBlue(), opacity);
+		return orange;
 	}
 
 	private List<AdvancedCell> getVacantPatchesInSight(AdvancedCell curCell,
