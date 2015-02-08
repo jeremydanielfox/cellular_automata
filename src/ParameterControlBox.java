@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javafx.beans.value.ChangeListener;
@@ -15,17 +16,17 @@ public class ParameterControlBox {
 	private ArrayList<Slider> mySliders;
 	private SimBrain myBrain;
 
-	public ParameterControlBox(SimBrain brain, Map<String, ArrayList<Double>> paramsToAdd){
+	public ParameterControlBox(SimBrain brain, Map<String, List<Double>> paramMap){
 		myBrain = brain;
 		myParameterControls = new HBox(SimBrain.CONTROL_PANEL_BUTTON_SPACING);
 		myParameterControls.setMaxHeight(SimBrain.CONTROL_PANEL_MAX_HEIGHT);
 		myParameterControls.setPrefWidth(SimWindow.WINDOW_WIDTH);
 		myParameterControls.setAlignment(Pos.BOTTOM_CENTER);
-		myParams = new ArrayList<String>(paramsToAdd.keySet());
-		generateHBox(paramsToAdd);
+		myParams = new ArrayList<String>(paramMap.keySet());
+		generateHBox(paramMap);
 	}
 
-	private void generateHBox(Map<String, ArrayList<Double>> paramMap){
+	private void generateHBox(Map<String, List<Double>> paramMap){
 		mySliders = new ArrayList<>();
 		for(int i = 0; i < myParams.size(); i++){
 			myParameterControls.getChildren().add(new Label(myParams.get(i) + ": "));

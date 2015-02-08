@@ -34,6 +34,7 @@ public class XMLContents {
 	private String myGraphType;
 	private String myEdgeType;
 	private String myGridLines;
+	private String myRandomConfig;
 	private Map<String, Double> myParameters;
 	private List<ConfigCellInfo> cellsToConfigure;
 	private Document myDoc;
@@ -68,6 +69,7 @@ public class XMLContents {
 		readGridLines();
 		extractConfig();
 		extractParams();
+		readRandomTag();
 		readGridLines();
 	}
 
@@ -78,6 +80,14 @@ public class XMLContents {
 			myGridLines = extractSpecifiedTag("GridLines");
 		}catch(NullPointerException e){
 			myGridLines = "Off";
+		}
+	}
+	
+	private void readRandomTag(){
+		try{
+			myRandomConfig = extractSpecifiedTag("Random");
+		}catch(NullPointerException e){
+			myRandomConfig = "NO";
 		}
 	}
 	
@@ -203,5 +213,9 @@ public class XMLContents {
 
 	public String getModel() {
 		return myModel;
+	}
+	
+	public String getRandomConfig(){
+		return myRandomConfig;
 	}
 }

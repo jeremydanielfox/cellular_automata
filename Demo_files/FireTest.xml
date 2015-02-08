@@ -4,6 +4,10 @@
 	<Model>Fire</Model>
     <GraphType>Square</GraphType>
 	<Author> Sierra and Megan</Author>
+    <RandomWithProportions>
+        <burning>0.3</burning>
+        <empty>0.5</empty>
+    </RandomWithProportions>
 	<Title>Forest Fire</Title>
 	<GridRows>60</GridRows>
 	<GridColumns>60</GridColumns>

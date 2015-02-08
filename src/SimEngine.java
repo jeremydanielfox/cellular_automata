@@ -26,15 +26,22 @@ public class SimEngine {
 	private BaseGraph myGraph;
 	private BaseModel myModel;
 
-	public SimEngine(Polygon[][] myPolygons, String model, String graphType,
-			String edgeType, Map<String, Double> parameters,
+	public SimEngine(Polygon[][] myPolygons, String random, String model,
+			String graphType, String edgeType, Map<String, Double> parameters,
 			List<ConfigCellInfo> cellsToConfig, int cellRegionWidth,
 			int cellRegionHeight) {
 		myModelName = model;
 		myParameters = parameters;
-		myCellsToConfig = cellsToConfig;
 		ModelFactory myModFactory = new ModelFactory();
 		myModel = myModFactory.createSpecifiedModel(myModelName, myParameters);
+		if (random.equals("YES")) {
+			RandomConfiguration randConfigGenerator = new RandomConfiguration(
+					myModel, myParameters.get("rows").intValue(), myParameters
+							.get("columns").intValue());
+			myCellsToConfig = randConfigGenerator.getRandConfigCells();
+		} else {
+			myCellsToConfig = cellsToConfig;
+		}
 		GraphFactory myGraphFactory = new GraphFactory();
 
 		myGraph = myGraphFactory.createSpecifiedGraph(myPolygons, myParameters
@@ -75,18 +82,13 @@ public class SimEngine {
 
 	private void setUpInitCells() {
 		myModel.setUpCellContents(myGraph, myCellsToConfig);
-		// for (ConfigCellInfo c : myCellsToConfig) {
-		// c.setIntState(myModel.getIntForState(c.getStringState()));
-		// myGraph.updateStateOfCell(c,
-		// myModel.getColorForStringState(c.getStringState()));
-		// }
 	}
 
 	public void changeParam(String paramName, Double paramValue) {
 		myModel.changeParam(paramName, paramValue);
 	}
 
-	public Map<String, ArrayList<Double>> getParamMap() {
+	public Map<String, List<Double>> getParamMap() {
 		return myModel.getParamNameMinMaxCur();
 	}
 }
