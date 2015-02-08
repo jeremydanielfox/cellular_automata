@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Information>
 	<GraphType>FourNeighborSquareGraph</GraphType>
+	<EdgeType>Toroidal</EdgeType>
 	<Model>Sugarscape</Model>
     <GraphType>Square</GraphType>
 	<Author>Megan</Author>
 	<Title>Sugarscape</Title>
-	<GridRows>10</GridRows>
-	<GridColumns>10</GridColumns>
+	<GridRows>100</GridRows>
+	<GridColumns>100</GridColumns>
 	<Parameters>
 		<numAgents>10</numAgents>
 	</Parameters>

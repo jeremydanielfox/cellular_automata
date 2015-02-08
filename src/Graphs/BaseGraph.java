@@ -132,7 +132,7 @@ public abstract class BaseGraph {
 		}
 		Point2D dest = myCellPointMap.get(current).add(change);
 		double x = dest.getX();
-		double y = dest.getX();
+		double y = dest.getY();
 		if (x < 1)
 			x += numCellsAcross;
 		else if (x > numCellsAcross)
