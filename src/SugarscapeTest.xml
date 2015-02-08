@@ -5,10 +5,10 @@
     <GraphType>Square</GraphType>
 	<Author>Megan and Sierra</Author>
 	<Title>Sugarscape</Title>
-	<GridRows>5</GridRows>
-	<GridColumns>5</GridColumns>
+	<GridRows>10</GridRows>
+	<GridColumns>10</GridColumns>
 	<Parameters>
-		<numAgents>5</numAgents>
+		<numAgents>10</numAgents>
 	</Parameters>
 	<Configuration>
 		<Cell x="1" y="2" state="5"> </Cell>
