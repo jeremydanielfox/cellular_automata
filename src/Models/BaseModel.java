@@ -133,6 +133,8 @@ public abstract class BaseModel {
 	public void addAdditionalCellInfo(Cell c, ConfigCellInfo myBabyCell){
 	}
 	
-	
+	public int getNumStates() {
+		return stateToInt.size();
+	}
 
 }
