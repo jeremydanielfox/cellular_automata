@@ -30,6 +30,7 @@ public class ChartMaster {
 			temp.setName(seriesNames[i]);
 			mySeries.add(temp);
 		}
+		MY_CHART.setTranslateY(50);
 		MY_CHART.setData(FXCollections.observableArrayList(mySeries));
 	}
 	

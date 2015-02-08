@@ -21,6 +21,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import visuals.CellRegionDivider;
+import visuals.ChartMaster;
 import Exceptions.CellSocietyException;
 import Exceptions.PopUpWindow;
 import Factories.CellRegionDividerFactory;
@@ -47,6 +48,7 @@ public class SimBrain extends Application {
 	private Button myStepButton;
 	private int framesPerSecond = 2500;
 	private ResourceBundle myResources;
+	private ChartMaster myChart;
 
 	private static final int NUM_FRAMES_PER_SECOND = 10;
 	private static final int FRAME_SPEED_CHANGE_VALUE = 300;
@@ -195,6 +197,7 @@ public class SimBrain extends Application {
 
 	private void updateSim() {
 		myEngine.updateCells();
+		updateChart();
 	}
 
 	private void startNewSim() {
@@ -243,6 +246,7 @@ public class SimBrain extends Application {
 						this, paramMap);
 				myWindow.addControlPanel(myParamControls.getParameterControls());
 			}
+			initializeChart();
 		}
 	}
 
@@ -259,5 +263,15 @@ public class SimBrain extends Application {
 		myAnimation.pause();
 		myEngine.changeParam(paramName, paramValue);
 		restoreLastAnimationStatus(previousStatus);
+	}
+	
+	public void initializeChart() {
+		myChart= new ChartMaster();
+		myChart.initializeChart("Population Levels", "Time", "Population", myEngine.getStateNames());
+		myWindow.addChart(myChart);
+	}
+	
+	public void updateChart() {
+		myChart.addData(myEngine.getStateCounts());
 	}
 }

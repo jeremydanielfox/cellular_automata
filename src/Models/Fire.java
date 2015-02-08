@@ -79,4 +79,9 @@ public class Fire extends BaseModel {
 		return toReturn;
 	}
 
+	@Override
+	public String[] getMainStateNames() {
+		return new String[]{"tree","burning"};
+	}
+
 }

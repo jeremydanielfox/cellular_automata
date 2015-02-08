@@ -4,6 +4,7 @@
 	<Model>Fire</Model>
     <GraphType>Square</GraphType>
 	<Author> Sierra and Megan</Author>
+	<Random>NO</Random>
     <RandomWithProportions>
         <burning>0.3</burning>
         <empty>0.5</empty>

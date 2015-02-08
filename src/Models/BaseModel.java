@@ -105,36 +105,60 @@ public abstract class BaseModel {
 
 	public void setUpCellContents(BaseGraph graph,
 			Iterable<ConfigCellInfo> cellsToConfig) {
-		
+
 		for (ConfigCellInfo c : cellsToConfig) {
 			c.setIntState(getIntForState(c.getStringState()));
-			updateStateOfCell(graph, c, getColorForStringState(c.getStringState()));
+			updateStateOfCell(graph, c,
+					getColorForStringState(c.getStringState()));
 		}
 
 	}
-	
-	public void updateStateOfCell(BaseGraph graph, ConfigCellInfo myBabyCell, Color color) {
+
+	public void updateStateOfCell(BaseGraph graph, ConfigCellInfo myBabyCell,
+			Color color) {
 		if (myBabyCell == null) {
 			System.out
 					.println("Can't update state of cell because ConfigCellInfo is null");
 			return;
 		}
-		Cell current = graph.getCell(new Point2D(myBabyCell.getRow(), myBabyCell.getCol()));
+		Cell current = graph.getCell(new Point2D(myBabyCell.getRow(),
+				myBabyCell.getCol()));
 		current.setCurrentState(myBabyCell.getIntState());
 		current.getShape().setFill(color);
 		addAdditionalCellInfo(current, myBabyCell);
-//		needs to be overriden, deleted from sugarscape, and added only in water world
-//		InhabitantFactory myInhabitantFactory = new InhabitantFactory();
-//		current.setInhabitant(
-//				myInhabitantFactory.createSpecifiedInhabitant(
-//						myBabyCell.getStringState(), myBabyCell.getIntState()));
+		// needs to be overriden, deleted from sugarscape, and added only in
+		// water world
+		// InhabitantFactory myInhabitantFactory = new InhabitantFactory();
+		// current.setInhabitant(
+		// myInhabitantFactory.createSpecifiedInhabitant(
+		// myBabyCell.getStringState(), myBabyCell.getIntState()));
 	}
-	
-	public void addAdditionalCellInfo(Cell c, ConfigCellInfo myBabyCell){
+
+	public void addAdditionalCellInfo(Cell c, ConfigCellInfo myBabyCell) {
 	}
-	
+
 	public int getNumStates() {
 		return stateToInt.size();
+	}
+
+	public abstract String[] getMainStateNames();
+
+	public int[] getCountMainStates(BaseGraph myGraph) {
+		String[] myStrings = getMainStateNames();
+		int[] returnValue = new int[myStrings.length];
+		for (int i = 0; i < returnValue.length; i++)
+			returnValue[i] = 0;
+		for (Cell currentCell : myGraph.getAllCells()) {
+			for (String currentString : stateToInt.keySet()) {
+				if (currentCell.getCurrentState() == stateToInt
+						.get(currentString))
+					for (int i = 0; i < myStrings.length; i++)
+						if (myStrings[i].equals(currentString))
+							returnValue[i]++;
+
+			}
+		}
+		return returnValue;
 	}
 
 }

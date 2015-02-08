@@ -1,5 +1,6 @@
 import java.util.Collection;
 
+import visuals.ChartMaster;
 import CellsAndComponents.Cell;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -67,5 +68,9 @@ public class SimWindow {
 
 	public void wipeCells() {
 		myCellRegion.getChildren().clear();
+	}
+	
+	public void addChart(ChartMaster myChart) {
+		myRoot.getChildren().add(myChart.getChart());
 	}
 }

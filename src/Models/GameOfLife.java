@@ -56,4 +56,9 @@ public class GameOfLife extends BaseModel {
 		return DEFAULT_STATE;
 	}
 
+	@Override
+	public String[] getMainStateNames() {
+		return new String[]{"dead"};
+	}
+
 }
