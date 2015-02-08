@@ -3,7 +3,7 @@
 	<GraphType>FourNeighborSquareGraph</GraphType>
 	<Model>Sugarscape</Model>
     <GraphType>Square</GraphType>
-	<Author>Megan and Sierra</Author>
+	<Author>Megan</Author>
 	<Title>Sugarscape</Title>
 	<GridRows>10</GridRows>
 	<GridColumns>10</GridColumns>

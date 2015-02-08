@@ -92,6 +92,10 @@ public class Sugarscape extends BaseModel {
 								WITH_AGENT_COLOR);
 					}
 				}
+				else {
+					changeFutureState(curCell, WITH_AGENT,
+							WITH_AGENT_COLOR);
+				}
 			}
 		}
 		sugarGrowCounter += 1;
