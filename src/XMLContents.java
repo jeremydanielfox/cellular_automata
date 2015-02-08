@@ -31,9 +31,9 @@ public class XMLContents {
 	private String myModel;
 	private String myAuthor;
 	private String myTitle;
-	private String myGridLines;
 	private String myGraphType;
 	private String myEdgeType;
+	private String myGridLines;
 	private Map<String, Double> myParameters;
 	private List<ConfigCellInfo> cellsToConfigure;
 	private Document myDoc;
@@ -65,12 +65,21 @@ public class XMLContents {
 		readTitle();
 		readGraphType();
 		readEdgeType();
+		readGridLines();
 		extractConfig();
 		extractParams();
 		readGridLines();
 	}
 
 	//private void setSpecifiedVariable(String variable, )
+	
+	private void readGridLines(){
+		try{
+			myGridLines = extractSpecifiedTag("GridLines");
+		}catch(NullPointerException e){
+			myGridLines = "Off";
+		}
+	}
 	
 	private void readGraphType(){
 		try{
@@ -85,14 +94,6 @@ public class XMLContents {
 			myEdgeType = extractSpecifiedTag("EdgeType");
 		}catch(NullPointerException e){
 			myEdgeType = "Finite";
-		}
-	}
-	
-	private void readGridLines(){
-		try{
-			myGridLines = extractSpecifiedTag("GridLines");
-		}catch(NullPointerException e){
-			myGridLines = "Off";
 		}
 	}
 	
@@ -189,7 +190,7 @@ public class XMLContents {
 		return myGraphType;
 	}
 	
-	public String getGridLines() {
+	public String getGridLines(){
 		return myGridLines;
 	}
 	

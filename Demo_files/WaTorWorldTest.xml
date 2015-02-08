@@ -2,6 +2,7 @@
 <Information>
 	<GraphType>FourNeighborSquareGraph</GraphType>
     <EdgeType>Toroidal</EdgeType>
+    <GridLines>On</GridLines>
 	<Model>WaTorWorld</Model>
 	<Author> Sierra and Megan</Author>
 	<Title>Sharks and Fish</Title>
