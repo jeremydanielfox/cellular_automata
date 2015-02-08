@@ -33,6 +33,7 @@ public class XMLContents {
 	private String myTitle;
 	private String myGraphType;
 	private String myEdgeType;
+	private String myGridLines;
 	private Map<String, Double> myParameters;
 	private List<ConfigCellInfo> cellsToConfigure;
 	private Document myDoc;
@@ -64,11 +65,20 @@ public class XMLContents {
 		readTitle();
 		readGraphType();
 		readEdgeType();
+		readGridLines();
 		extractConfig();
 		extractParams();
 	}
 
 	//private void setSpecifiedVariable(String variable, )
+	
+	private void readGridLines(){
+		try{
+			myGridLines = extractSpecifiedTag("GridLines");
+		}catch(NullPointerException e){
+			myGridLines = "Off";
+		}
+	}
 	
 	private void readGraphType(){
 		try{
@@ -177,6 +187,10 @@ public class XMLContents {
 
 	public String getGraphType(){
 		return myGraphType;
+	}
+	
+	public String getGridLines(){
+		return myGridLines;
 	}
 	
 	private String extractSpecifiedTag(String tag) {
