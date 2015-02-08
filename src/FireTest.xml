@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Information>
 	<GraphType>FourNeighborSquareGraph</GraphType>
-<EdgeType>Toroidal</EdgeType>
+	<EdgeType>Toroidal</EdgeType>
+	<GridLines>On</GridLines>
 	<Model>Fire</Model>
     <GraphType>Square</GraphType>
 	<Author> Sierra and Megan</Author>

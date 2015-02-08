@@ -212,7 +212,7 @@ public class SimBrain extends Application {
 								CELL_REGION_HEIGHT, CELL_REGION_WIDTH,
 								SCREEN_BORDER_BUFFER, SCREEN_BORDER_BUFFER,
 								myXMLContents.getGraphType());
-				Polygon[][] myPolygons = myDivider.divideSpace("");
+				Polygon[][] myPolygons = myDivider.divideSpace(myXMLContents.getGridLines());
 				myEngine = new SimEngine(myPolygons, myXMLContents.getModel(), myXMLContents.getGraphType(),
 						myXMLContents.getEdgeType(), myXMLContents.getParams(),
 						myXMLContents.getCellsToConfig(), CELL_REGION_WIDTH,

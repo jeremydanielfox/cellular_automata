@@ -31,6 +31,7 @@ public class XMLContents {
 	private String myModel;
 	private String myAuthor;
 	private String myTitle;
+	private String myGridLines;
 	private String myGraphType;
 	private String myEdgeType;
 	private Map<String, Double> myParameters;
@@ -66,6 +67,7 @@ public class XMLContents {
 		readEdgeType();
 		extractConfig();
 		extractParams();
+		readGridLines();
 	}
 
 	//private void setSpecifiedVariable(String variable, )
@@ -77,12 +79,20 @@ public class XMLContents {
 			myGraphType = "FourNeighborSquareGraph";
 		}
 	}
-	
+
 	private void readEdgeType(){
 		try{
 			myEdgeType = extractSpecifiedTag("EdgeType");
 		}catch(NullPointerException e){
 			myEdgeType = "Finite";
+		}
+	}
+	
+	private void readGridLines(){
+		try{
+			myGridLines = extractSpecifiedTag("GridLines");
+		}catch(NullPointerException e){
+			myGridLines = "Off";
 		}
 	}
 	
@@ -177,6 +187,10 @@ public class XMLContents {
 
 	public String getGraphType(){
 		return myGraphType;
+	}
+	
+	public String getGridLines() {
+		return myGridLines;
 	}
 	
 	private String extractSpecifiedTag(String tag) {
