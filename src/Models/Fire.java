@@ -24,27 +24,27 @@ public class Fire extends BaseModel {
 	private static final int BURNING = 2;
 	private static final int DEFAULT_INT_STATE = TREE;
 	private static final String DEFAULT_STRING_STATE = "tree";
-	private Color EMPTY_COLOR;
-	private Color TREE_COLOR;
-	private Color BURNING_COLOR;
-	private Color DEFAULT_COLOR;
+	private Color emptyColor;
+	private Color treeColor;
+	private Color burningColor;
+	private Color defaultColor;
 	private static final double MIN_PROB_CATCH = 0;
 	private static final double MAX_PROB_CATCH = 1.0;
 
 	public Fire(Map<String, Double> parameters,
 			Map<String, Color> stateToColorMap) {
 		super(parameters);
-		EMPTY_COLOR = selectNonNullColor(stateToColorMap.get("empty"),
+		emptyColor = selectNonNullColor(stateToColorMap.get("empty"),
 				Color.YELLOW);
-		TREE_COLOR = selectNonNullColor(stateToColorMap.get("tree"),
+		treeColor = selectNonNullColor(stateToColorMap.get("tree"),
 				Color.FORESTGREEN);
-		BURNING_COLOR = selectNonNullColor(stateToColorMap.get("burning"),
+		burningColor = selectNonNullColor(stateToColorMap.get("burning"),
 				Color.RED);
-		DEFAULT_COLOR = TREE_COLOR;
+		defaultColor = treeColor;
 		List<String> myStates = new ArrayList<String>(Arrays.asList("empty",
 				"tree", "burning"));
-		List<Color> myColors = new ArrayList<>(Arrays.asList(EMPTY_COLOR,
-				TREE_COLOR, BURNING_COLOR));
+		List<Color> myColors = new ArrayList<>(Arrays.asList(emptyColor,
+				treeColor, burningColor));
 		List<Integer> myInts = new ArrayList<>(Arrays.asList(EMPTY, TREE,
 				BURNING));
 		initializeMaps(myStates, myInts, myColors);
@@ -64,19 +64,19 @@ public class Fire extends BaseModel {
 		if (cellToUpdate.getCurrentState() == TREE
 				&& countNeighbors(2, neighbors) > 0
 				&& random < getParameterValuesMap().get("probCatch")) {
-			changeFutureState(cellToUpdate, BURNING, BURNING_COLOR);
+			changeFutureState(cellToUpdate, BURNING, burningColor);
 		} else if (cellToUpdate.getCurrentState() == BURNING
 				|| cellToUpdate.getCurrentState() == EMPTY) {
-			changeFutureState(cellToUpdate, EMPTY, EMPTY_COLOR);
+			changeFutureState(cellToUpdate, EMPTY, emptyColor);
 		} else {
-			changeFutureState(cellToUpdate, TREE, TREE_COLOR);
+			changeFutureState(cellToUpdate, TREE, treeColor);
 		}
 		return cellToUpdate;
 	}
 
 	@Override
 	public Color getDefaultColor() {
-		return DEFAULT_COLOR;
+		return defaultColor;
 	}
 
 	@Override

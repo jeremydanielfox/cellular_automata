@@ -25,28 +25,28 @@ public class Segregation extends BaseModel {
 	public static final int GROUP_TWO = 2;
 	public static final int DEFAULT_INT_STATE = EMPTY;
 	public static final String DEFAULT_STRING_STATE = "empty";
-	public Color EMPTY_COLOR;
-	public Color GROUP_ONE_COLOR;
-	public Color GROUP_TWO_COLOR;
-	public Color DEFAULT_COLOR;
+	public Color emptyColor;
+	public Color groupOneColor;
+	public Color groupTwoColor;
+	public Color defaultColor;
 	private static final double MIN_RATIO_NEIGHBORS = 0;
 	private static final double MAX_RATIO_NEIGHBORS = 1.0;
 
 	public Segregation(Map<String, Double> parameters,
 			Map<String, Color> stateToColorMap) {
 		super(parameters);
-		EMPTY_COLOR = selectNonNullColor(stateToColorMap.get("empty"),
+		emptyColor = selectNonNullColor(stateToColorMap.get("empty"),
 				Color.WHITE);
-		GROUP_ONE_COLOR = selectNonNullColor(stateToColorMap.get("group_one"),
+		groupOneColor = selectNonNullColor(stateToColorMap.get("group_one"),
 				Color.RED);
-		GROUP_TWO_COLOR = selectNonNullColor(stateToColorMap.get("group_two"),
+		groupTwoColor = selectNonNullColor(stateToColorMap.get("group_two"),
 				Color.GREEN);
-		DEFAULT_COLOR = EMPTY_COLOR;
+		defaultColor = emptyColor;
 
 		List<String> myStates = new ArrayList<String>(Arrays.asList("empty",
 				"group_one", "group_two"));
-		List<Color> myColors = new ArrayList<>(Arrays.asList(EMPTY_COLOR,
-				GROUP_ONE_COLOR, GROUP_TWO_COLOR));
+		List<Color> myColors = new ArrayList<>(Arrays.asList(emptyColor,
+				groupOneColor, groupTwoColor));
 		List<Integer> myInts = new ArrayList<>(Arrays.asList(EMPTY, GROUP_ONE,
 				GROUP_TWO));
 		initializeMaps(myStates, myInts, myColors);
@@ -84,13 +84,13 @@ public class Segregation extends BaseModel {
 		}
 		if (isReadyToSwitch(myUnhappyCell, myEmptyCell, myGraph)) {
 			myUnhappyCell.setFutureState(myEmptyCell.getCurrentState());
-			myUnhappyCell.setColor(EMPTY_COLOR);
+			myUnhappyCell.setColor(emptyColor);
 			myEmptyCell.setFutureState(myUnhappyCell.getCurrentState());
 			if (myUnhappyCell.getCurrentState() == GROUP_ONE)
-				myEmptyCell.setColor(GROUP_ONE_COLOR);
+				myEmptyCell.setColor(groupOneColor);
 
 			else
-				myEmptyCell.setColor(GROUP_TWO_COLOR);
+				myEmptyCell.setColor(groupTwoColor);
 
 		}
 		return (Collection<Cell>) myGraph.getAllCells();
@@ -108,7 +108,7 @@ public class Segregation extends BaseModel {
 
 	@Override
 	public Color getDefaultColor() {
-		return DEFAULT_COLOR;
+		return defaultColor;
 	}
 
 	@Override

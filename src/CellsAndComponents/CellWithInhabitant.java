@@ -1,11 +1,10 @@
 package CellsAndComponents;
+
 import java.util.List;
-import java.util.Set;
 
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Shape;
 
 /**
  * This is an extension of the Cell class to create more complex Cells with

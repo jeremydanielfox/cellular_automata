@@ -69,7 +69,6 @@ public class BasicGraph extends BaseGraph {
 				// add one to both i and j so that the grid starts at (1,1)
 				getCellPointMap().put(temp, new Point2D(i + 1, j + 1));
 				addVertex(temp);
-				temp.setShapeVerticies();
 				count++;
 			}
 	}

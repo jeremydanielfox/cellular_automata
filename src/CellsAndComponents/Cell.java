@@ -16,25 +16,16 @@ public class Cell {
 	private int myID;
 	private int myCurrentState;
 	private int myFutureState;
-	private List<Point2D> myVerticies;
 	private Polygon myShape;
 
 	public Cell(int id, Polygon shape, List<Point2D> verticies,
 			int defaultState, Color defaultColor) {
 		setID(id);
 		setShape(shape);
-		myVerticies = verticies;
 		setCurrentState(defaultState);
 		setFutureState(1);
 		myShape.setFill(defaultColor);
 	}
-
-	// public Cell(int id, int currentState, int futureState, Shape shape) {
-	// setID(id);
-	// setCurrentState(currentState);
-	// setFutureState(futureState) ;
-	// setShape(shape);
-	// }
 
 	public int getID() {
 		return myID;
@@ -66,21 +57,6 @@ public class Cell {
 
 	private void setShape(Polygon shape) {
 		myShape = shape;
-	}
-
-	public List<Point2D> getVerticies() {
-		return myVerticies;
-	}
-
-	public void setShapeVerticies() {
-		Double[] temp = new Double[2 * myVerticies.size()];
-		int count = 0;
-		for (Point2D current : myVerticies) {
-			temp[count] = current.getX();
-			temp[count + 1] = current.getY();
-			count += 2;
-		}
-		myShape.getPoints().addAll(temp);
 	}
 
 	public void setColor(Color current) {

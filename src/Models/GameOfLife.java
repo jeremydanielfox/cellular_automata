@@ -22,20 +22,20 @@ public class GameOfLife extends BaseModel {
 	private static final String DEFAULT_STRING_STATE = "dead";
 	private static final int NUM_LIVE_NEIGHBORS_TO_LIVE = 2;
 	private static final int NUM_LIVE_NEIGHBORS_TO_REVIVE = 3;
-	private Color DEAD_COLOR;
-	private Color ALIVE_COLOR;
-	private Color DEFAULT_COLOR;
+	private Color deadColor;
+	private Color aliveColor;
+	private Color defaultColor;
 	private Map<String, Color> colorMap;
 	
 
 	public GameOfLife(Map<String, Double> parameters, Map<String, Color> stateToColorMap) {
 		super(parameters);
 		colorMap = stateToColorMap;
-		DEAD_COLOR = selectNonNullColor(stateToColorMap.get("dead"), Color.BLUE);
-		ALIVE_COLOR = selectNonNullColor(stateToColorMap.get("alive"), Color.FUCHSIA);
-		DEFAULT_COLOR = DEAD_COLOR;
+		deadColor = selectNonNullColor(stateToColorMap.get("dead"), Color.BLUE);
+		aliveColor = selectNonNullColor(stateToColorMap.get("alive"), Color.FUCHSIA);
+		defaultColor = deadColor;
 		List<String> myStates = new ArrayList<String>(Arrays.asList("dead", "alive"));
-		List<Color> myColors = new ArrayList<>(Arrays.asList(DEAD_COLOR, ALIVE_COLOR));
+		List<Color> myColors = new ArrayList<>(Arrays.asList(deadColor, aliveColor));
 		List<Integer> myInts = new ArrayList<>(Arrays.asList(DEAD, ALIVE));
 		initializeMaps(myStates, myInts, myColors);
 	}
@@ -45,9 +45,9 @@ public class GameOfLife extends BaseModel {
 		int aliveNeighbors = countNeighbors(ALIVE, neighbors);
 		if ((cellToUpdate.getCurrentState() == DEAD && aliveNeighbors == NUM_LIVE_NEIGHBORS_TO_REVIVE)
 				|| (cellToUpdate.getCurrentState() == ALIVE && (aliveNeighbors == NUM_LIVE_NEIGHBORS_TO_LIVE || aliveNeighbors == NUM_LIVE_NEIGHBORS_TO_REVIVE))) {
-			changeFutureState(cellToUpdate, ALIVE, ALIVE_COLOR);
+			changeFutureState(cellToUpdate, ALIVE, aliveColor);
 		} else {
-			changeFutureState(cellToUpdate, DEAD, DEAD_COLOR);
+			changeFutureState(cellToUpdate, DEAD, deadColor);
 		}
 		return cellToUpdate;
 	}
@@ -62,7 +62,7 @@ public class GameOfLife extends BaseModel {
 	
 	
 	public Color getDefaultColor() {
-		return DEFAULT_COLOR;
+		return defaultColor;
 	}
 	
 	public int getDefaultIntState() {
