@@ -37,6 +37,15 @@ public abstract class CellRegionDivider {
 
 	}
 
+	/**
+	 * Divides the screen into polygon objects and returns a 2D array of these
+	 * polygons based on their row and column on the screen
+	 * 
+	 * @param setStroke
+	 *            , a string that represents whether or not grid lines should be
+	 *            displayed
+	 * @return
+	 */
 	public Polygon[][] divideSpace(String setStroke) {
 		Polygon[][] myShapeArray = new Polygon[getNumCellsHeight()][getNumCellsWidth()];
 		int count = 0;
@@ -55,8 +64,20 @@ public abstract class CellRegionDivider {
 		return myShapeArray;
 	}
 
+	/**
+	 * Calculates the height and width of each cell
+	 */
 	public abstract void calculateValues();
 
+	/**
+	 * Assigns points to the given polygon based on the row, column, and number
+	 * of polygon
+	 * 
+	 * @param myShape
+	 * @param i
+	 * @param j
+	 * @param count
+	 */
 	protected abstract void assignPoints(Polygon myShape, int i, int j,
 			int count);
 

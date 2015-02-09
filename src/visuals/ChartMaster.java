@@ -43,6 +43,14 @@ public class ChartMaster {
 		MY_CHART.setData(FXCollections.observableArrayList(mySeries));
 	}
 
+	/**
+	 * Given an int array, adds points to the graph with the y value being the
+	 * int value in the array, the x value being the iteration of the
+	 * simulation, and adds the point to the series number that matches the
+	 * index of the value in the array
+	 * 
+	 * @param myData
+	 */
 	public void addData(int[] myData) {
 		if (myData.length != numSeries) {
 			System.out.println("Amount of data doesn't equal number of series");
