@@ -58,7 +58,7 @@ public class GameOfLife extends BaseModel {
 
 	@Override
 	public String[] getMainStateNames() {
-		return new String[]{"dead"};
+		return new String[]{"alive"};
 	}
 
 }

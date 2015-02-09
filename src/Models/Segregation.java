@@ -32,9 +32,6 @@ public class Segregation extends BaseModel {
 	private static final double MAX_RATIO_NEIGHBORS = 1.0;
 
 	public Segregation(Map<String, Double> parameters) {
-		// possibly we should create a setNumPointsForNeighbor method in the
-		// superclass so that we can
-		// set up that information using the constructor
 		super(parameters, NUM_POINTS_FOR_NEIGHBOR);
 		List<String> myStates = new ArrayList<String>(Arrays.asList("empty", "group_one", "group_two"));
 		List<Color> myColors = new ArrayList<>(Arrays.asList(EMPTY_COLOR, GROUP_ONE_COLOR, GROUP_TWO_COLOR));
@@ -135,6 +132,11 @@ public class Segregation extends BaseModel {
 		minMaxCurReproduce.add(2, getParameterValuesMap().get("happinessRatio"));
 		toReturn.put("happinessRatio", minMaxCurReproduce);
 		return toReturn;
+	}
+
+	@Override
+	public String[] getMainStateNames() {
+		return new String[]{"group_one","group_two"};
 	}
 
 }

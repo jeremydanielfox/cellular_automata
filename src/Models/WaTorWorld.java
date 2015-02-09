@@ -194,4 +194,9 @@ public class WaTorWorld extends BaseModel {
 						myBabyCell.getStringState(), myBabyCell.getIntState()));
 	}
 
+	@Override
+	public String[] getMainStateNames() {
+		return new String[]{"fish","shark"};
+	}
+
 }

@@ -2,6 +2,13 @@ package visuals;
 
 import javafx.scene.shape.Polygon;
 
+/**
+ * This is the class that is responsible for dividing up the screen into square
+ * shapes.
+ * 
+ * @author Jeremy
+ *
+ */
 public class SquareRegionDivider extends CellRegionDivider {
 
 	public SquareRegionDivider(int cellsAcross, int cellsUpDown, int height,

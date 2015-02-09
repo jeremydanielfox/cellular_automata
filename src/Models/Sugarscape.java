@@ -262,4 +262,9 @@ public class Sugarscape extends BaseModel {
 		return DEFAULT_MAX_SUGAR;
 	}
 
+	@Override
+	public String[] getMainStateNames() {
+		return new String[]{"agent"};
+	}
+
 }
