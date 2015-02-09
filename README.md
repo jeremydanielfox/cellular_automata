@@ -51,20 +51,10 @@ To change the starting configuration of any model using the XML, change these ta
 
 Note, completely random overrides random with parameters which overrides any specific configuration of cells.
 
-Known bugs/problems with functionality: You have to literally slide the parameter sliders to make that parameter change, if you just click to a certain point on the slider it won't change.
+Known bugs/problems with functionality: You have to literally slide the parameter sliders to make that parameter change, if you just click to a certain point on the slider it won't change.  In addition, the cells in the triangle grid do not match up perfectly; the simulation still works as normal, but it may look a little funky because the triangles aren't quiet lined up.
 
 Extra Features: see closed issues on github
 
 Impressions: 
 
-names of all people who worked on the project
-date you started, date you finished, and an estimate of the number of hours worked on the project
-each person's role in developing the project
-any books, papers, online, or human resources that you used in developing the project
-files used to start the project (the class(es) containing main)
-files used to test the project (the class(es) containing TestSuite)
-any data or resource files required by the project (including format of non-standard files)
-any information about using the program (i.e., command-line/applet arguments, key inputs, interesting example data files, or easter eggs)
-any known bugs, crashes, or problems with the project's functionality
-any extra features included in the project
-your impressions of the assignment to help improve it in the future
+We really enjoyed working on this project and telling all of our friends about the cool simulations we were building.  One challenge we had was that not being able to access the web pages with the rules for the simulations at the beginning of the project.  Because of that, we weren't able to properly anticipate all features of a simulation, but it wasn't a major issue.  We also think it would be helpful to learn a few more design features in depth, such as use of hierarchies, earlier in the project so that we can implement a better design from the start rather than having so many design changes.
