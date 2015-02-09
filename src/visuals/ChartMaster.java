@@ -28,7 +28,7 @@ public class ChartMaster {
 	private String yAxisLabel;
 
 	public void initializeChart(String myTitle, String xlabel, String ylabel,
-			String[] seriesNames) {
+			String[] seriesNames, int xOffset, int yOffset) {
 		MY_CHART.setTitle(myTitle);
 		xAxisLabel = xlabel;
 		yAxisLabel = ylabel;
@@ -38,7 +38,8 @@ public class ChartMaster {
 			temp.setName(seriesNames[i]);
 			mySeries.add(temp);
 		}
-		MY_CHART.setTranslateY(50);
+		MY_CHART.setTranslateY(yOffset);
+		MY_CHART.setTranslateX(xOffset);
 		MY_CHART.setData(FXCollections.observableArrayList(mySeries));
 	}
 

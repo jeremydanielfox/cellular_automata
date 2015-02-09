@@ -55,8 +55,9 @@ public class SimBrain extends Application {
 	private static final int MIN_FRAME_PER_SECOND = 0;
 	private static final int MAX_FRAME_PER_SECOND = 5000;
 	private static final int SCREEN_BORDER_BUFFER = 50;
-	private static final int CELL_REGION_WIDTH = SimWindow.WINDOW_WIDTH - 2
-			* SCREEN_BORDER_BUFFER;
+	// private static final int CELL_REGION_WIDTH = SimWindow.WINDOW_WIDTH - 2
+	// * SCREEN_BORDER_BUFFER;
+	private static final int CELL_REGION_WIDTH = (SimWindow.WINDOW_WIDTH) / 2;
 	private static final int CELL_REGION_HEIGHT = SimWindow.WINDOW_HEIGHT - 2
 			* SCREEN_BORDER_BUFFER;
 	private static final int INITIAL_FRAME_RATE = 2500;
@@ -64,6 +65,9 @@ public class SimBrain extends Application {
 	public static final int CONTROL_PANEL_MAX_HEIGHT = 50;
 	private static final int DEC_FRAME_RATE_MULTIPLIER = 1;
 	private static final int INC_FRAME_RATE_MULTIPLIER = -1;
+	private static final int CHART_X_OFFSET = SCREEN_BORDER_BUFFER
+			+ CELL_REGION_WIDTH;
+	private static final int CHART_Y_OFFSET = SCREEN_BORDER_BUFFER;
 
 	@Override
 	public void start(Stage s) throws Exception {
@@ -107,6 +111,8 @@ public class SimBrain extends Application {
 		myStepButton = makeButton(myResources.getString("StepButtonText"), true);
 		myStepButton.setOnAction(e -> stepSimulation());
 		controlPanel.getChildren().add(myStepButton);
+		// controlPanel.getChildren().addAll(new
+		// Collection<Button>(){myStepButton};);
 		return controlPanel;
 	}
 
@@ -218,7 +224,8 @@ public class SimBrain extends Application {
 				Polygon[][] myPolygons = myDivider.divideSpace(myXMLContents
 						.getGridLines());
 				myEngine = new SimEngine(myPolygons,
-						myXMLContents.getRandomConfig(), myXMLContents.randomWithParams(), 
+						myXMLContents.getRandomConfig(),
+						myXMLContents.randomWithParams(),
 						myXMLContents.getInitialProportions(),
 						myXMLContents.getModel(), myXMLContents.getGraphType(),
 						myXMLContents.getEdgeType(), myXMLContents.getParams(),
@@ -265,13 +272,14 @@ public class SimBrain extends Application {
 		myEngine.changeParam(paramName, paramValue);
 		restoreLastAnimationStatus(previousStatus);
 	}
-	
+
 	public void initializeChart() {
-		myChart= new ChartMaster();
-		myChart.initializeChart("Population Levels", "Time", "Population", myEngine.getStateNames());
+		myChart = new ChartMaster();
+		myChart.initializeChart("Population Levels", "Time", "Population",
+				myEngine.getStateNames(), CHART_X_OFFSET, CHART_Y_OFFSET);
 		myWindow.addChart(myChart);
 	}
-	
+
 	public void updateChart() {
 		myChart.addData(myEngine.getStateCounts());
 	}

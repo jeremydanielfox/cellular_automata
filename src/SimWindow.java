@@ -22,23 +22,24 @@ public class SimWindow {
 	private Scene myScene;
 	private Group myRoot;
 	private Group myCellRegion;
+	private Group myChartRegion;
 	private VBox myControlPanels;
 	private HBox myParamControls;
 
 	public static final int WINDOW_HEIGHT = 600;
-	public static final int WINDOW_WIDTH = 600;
-	public static final int SIM_WINDOW_X_OFFSET = 25;
-	public static final int SIM_WINDOW_Y_OFFSET = 25;
+	public static final int WINDOW_WIDTH = 1100;
 
 	public SimWindow(Stage stage, HBox controls, String title) {
 		myStage = stage;
 		myStage.setTitle(title);
 		myRoot = new Group();
 		myCellRegion = new Group();
+		myChartRegion = new Group();
 		myControlPanels = new VBox();
 		myControlPanels.getChildren().add(controls);
 		myRoot.getChildren().add(myControlPanels);
 		myRoot.getChildren().add(myCellRegion);
+		myRoot.getChildren().add(myChartRegion);
 		myScene = new Scene(myRoot, WINDOW_WIDTH, WINDOW_HEIGHT, Color.WHITE);
 		myStage.setScene(myScene);
 		myStage.show();
@@ -71,6 +72,7 @@ public class SimWindow {
 	}
 	
 	public void addChart(ChartMaster myChart) {
-		myRoot.getChildren().add(myChart.getChart());
+		myChartRegion.getChildren().clear();
+		myChartRegion.getChildren().add(myChart.getChart());
 	}
 }
