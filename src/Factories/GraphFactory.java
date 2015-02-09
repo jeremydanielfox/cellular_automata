@@ -13,15 +13,6 @@ import Graphs.BasicGraph;
  *
  */
 public class GraphFactory {
-	private String myType;
-
-	public GraphFactory() {
-
-	}
-
-	public GraphFactory(String type) {
-		myType = type;
-	}
 
 	public BaseGraph createSpecifiedGraph(Polygon[][] myShapes,
 			int numCellsWidth, int numCellsHeight, int defaultState,

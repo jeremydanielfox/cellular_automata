@@ -9,8 +9,15 @@ import javafx.scene.shape.Polygon;
 import CellsAndComponents.Cell;
 import Factories.CellFactory;
 import Factories.EdgeManagerFactory;
-import Factories.InhabitantFactory;
 
+/**
+ * This is the graph class that will give all shapes four neighbors, one in each
+ * of the cardinal directions. This class will work for both squares and
+ * triangles
+ * 
+ * @author Jeremy
+ *
+ */
 public class BasicGraph extends BaseGraph {
 	private Point2D RIGHT;
 	private Point2D LEFT;
@@ -31,9 +38,9 @@ public class BasicGraph extends BaseGraph {
 	 */
 	public BasicGraph(Polygon[][] myShapes, int numCellsWidth,
 			int numCellsHeight, int defaultState, Color defaultColor,
-			String model,String graphType, String edgeType) {
+			String model, String graphType, String edgeType) {
 		super(myShapes, numCellsWidth, numCellsHeight, defaultState,
-				defaultColor, model,graphType, edgeType);
+				defaultColor, model, graphType, edgeType);
 	}
 
 	public void initializeConstants() {
@@ -59,7 +66,7 @@ public class BasicGraph extends BaseGraph {
 						count, myShapes[i][j], tempList, defaultState,
 						defaultColor);
 				temp.setFutureState(defaultState);
-				// do plus one in order to have a grid that starts at (1,1)
+				// add one to both i and j so that the grid starts at (1,1)
 				getCellPointMap().put(temp, new Point2D(i + 1, j + 1));
 				addVertex(temp);
 				temp.setShapeVerticies();
@@ -79,24 +86,6 @@ public class BasicGraph extends BaseGraph {
 		return (row - 1) * getNumCellsAcross() + col;
 	}
 
-	//
-	// public void updateStateOfCell(ConfigCellInfo myBabyCell, Color color) {
-	// if (myBabyCell == null) {
-	// System.out
-	// .println("Can't update state of cell because ConfigCellInfo is null");
-	// return;
-	// }
-	// int row = myBabyCell.getRow();
-	// int col = myBabyCell.getCol();
-	// int ID = calculateID(row, col);
-	// getCell(ID).setCurrentState(myBabyCell.getIntState());
-	// getCell(ID).getShape().setFill(color);
-	// InhabitantFactory myInhabitantFactory = new InhabitantFactory();
-	// getCell(ID).setInhabitant(
-	// myInhabitantFactory.createSpecifiedInhabitant(
-	// myBabyCell.getStringState(), myBabyCell.getIntState()));
-	// }
-
 	@Override
 	public void connectCells() {
 		for (Cell current : this.getAllCells()) {
@@ -113,28 +102,11 @@ public class BasicGraph extends BaseGraph {
 			connect(myCell, neighbor);
 	}
 
-	// public static void main(String[] args) {
-//	 SquareGraph myGraph = new
-//	 SquareGraph(3,5,100,100,0,0,1,0,Color.BEIGE,"");
-//	 for (Cell current: myGraph.getAllCells()) {
-//	 printNeighbors(current, myGraph);
-//	 }
-//	 }
-//	 public static void printNeighbors(Cell myCell, BaseGraph myGraph) {
-//	 System.out.println();
-//	 System.out.println(myCell.getID());
-//	 for (Cell current:myGraph.getNeighbors(myCell)) {
-//	 System.out.println(current.getID());
-//	 }
-	// }
-
 	@Override
 	public void manageEdgeConditions() {
-		// TODO Auto-generated method stub
-//		EdgeManager myManager = new EightNeighborToroid(this);
-		 EdgeManagerFactory myManagerFactory = new EdgeManagerFactory();
-		 EdgeManager myEdgeManager = myManagerFactory.createSpecifiedManager(
-		 getType() + getEdgeType(), this);
+		EdgeManagerFactory myManagerFactory = new EdgeManagerFactory();
+		EdgeManager myEdgeManager = myManagerFactory.createSpecifiedManager(
+				getType() + getEdgeType(), this);
 
 	}
 }
