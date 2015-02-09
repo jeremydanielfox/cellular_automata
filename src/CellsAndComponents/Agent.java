@@ -24,12 +24,8 @@ public class Agent extends Inhabitant {
 		return sugar;
 	}
 	
-	private void subtractMetabolism() {
-		sugar -= sugarMetabolism;
-	}
-	
 	public boolean checkDead() {
-		subtractMetabolism();
+		sugar -= sugarMetabolism;
 		return sugar < 0;
 	}
 	

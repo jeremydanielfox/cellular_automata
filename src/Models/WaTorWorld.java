@@ -31,10 +31,10 @@ public class WaTorWorld extends BaseModel {
 	private static final int SHARK = 2;
 	private static final int DEFAULT_INT_STATE = WATER;
 	private static final String DEFAULT_STRING_STATE = "water";
-	private Color WATER_COLOR = Color.AQUAMARINE;
-	private Color FISH_COLOR = Color.YELLOW;
-	private Color SHARK_COLOR = Color.PURPLE;
-	private Color DEFAULT_COLOR;
+	private Color waterColor = Color.AQUAMARINE;
+	private Color fishColor = Color.YELLOW;
+	private Color sharkColor = Color.PURPLE;
+	private Color defaultColor;
 	private static final double MIN_SHARK_ENERGY = 1;
 	private static final double MAX_SHARK_ENERGY = 100;
 	private static final double MIN_TIME_TILL_REPRODUCE = 1;
@@ -43,17 +43,17 @@ public class WaTorWorld extends BaseModel {
 	public WaTorWorld(Map<String, Double> parameters,
 			Map<String, Color> stateToColorMap) {
 		super(parameters);
-		WATER_COLOR = selectNonNullColor(stateToColorMap.get("water"),
+		waterColor = selectNonNullColor(stateToColorMap.get("water"),
 				Color.AQUAMARINE);
-		FISH_COLOR = selectNonNullColor(stateToColorMap.get("fish"),
+		fishColor = selectNonNullColor(stateToColorMap.get("fish"),
 				Color.YELLOW);
-		SHARK_COLOR = selectNonNullColor(stateToColorMap.get("shark"),
+		sharkColor = selectNonNullColor(stateToColorMap.get("shark"),
 				Color.PURPLE);
-		DEFAULT_COLOR = WATER_COLOR;
+		defaultColor = waterColor;
 		List<String> myStates = new ArrayList<String>(Arrays.asList("water",
 				"fish", "shark"));
-		List<Color> myColors = new ArrayList<>(Arrays.asList(WATER_COLOR,
-				FISH_COLOR, SHARK_COLOR));
+		List<Color> myColors = new ArrayList<>(Arrays.asList(waterColor,
+				fishColor, sharkColor));
 		List<Integer> myInts = new ArrayList<>(
 				Arrays.asList(WATER, FISH, SHARK));
 		initializeMaps(myStates, myInts, myColors);
@@ -88,7 +88,7 @@ public class WaTorWorld extends BaseModel {
 				} else if (currentShark.getEnergyLevel() >= getParameterValuesMap()
 						.get("sharkEnergy").intValue()) {
 					changeStateAndInhabitant(c, new Inhabitant(WATER), WATER,
-							WATER_COLOR);
+							waterColor);
 				} else {
 					moveShark(graph, c, currentShark, WATER);
 				}
@@ -105,20 +105,20 @@ public class WaTorWorld extends BaseModel {
 					Cell cellToMoveTo = getCellToMoveTo(graph, c, WATER);
 					if (cellToMoveTo != null) {
 						changeStateAndInhabitant(cellToMoveTo, currentFish,
-								FISH, FISH_COLOR);
+								FISH, fishColor);
 						changeStateAndInhabitant(c, new AquaticCreature(FISH),
-								FISH, FISH_COLOR);
+								FISH, fishColor);
 					}
 				} else {
 					Cell cellToMoveTo = getCellToMoveTo(graph, c, WATER);
 					if (cellToMoveTo != null) {
 						currentFish.increaseReproductionCounter();
 						changeStateAndInhabitant(cellToMoveTo, currentFish,
-								FISH, FISH_COLOR);
+								FISH, fishColor);
 						changeStateAndInhabitant(c, new Inhabitant(WATER),
-								WATER, WATER_COLOR);
+								WATER, waterColor);
 					} else {
-						changeFutureState(c, FISH, FISH_COLOR);
+						changeFutureState(c, FISH, fishColor);
 					}
 				}
 			}
@@ -133,18 +133,18 @@ public class WaTorWorld extends BaseModel {
 			changeSharkCounters(currentShark, stateToCheckAgainst);
 			cellToMoveTo.setCurrentState(DEFAULT_INT_STATE);
 			changeStateAndInhabitant(cellToMoveTo, currentShark, SHARK,
-					SHARK_COLOR);
+					sharkColor);
 			if (currentShark.getReproductionCounter() >= getParameterValuesMap()
 					.get("timeTillReproduce").intValue()) {
 				currentShark.resetReproductionCounter();
 				changeStateAndInhabitant(c, new Shark(SHARK), SHARK,
-						SHARK_COLOR);
+						sharkColor);
 			} else {
 				changeStateAndInhabitant(c, new Inhabitant(WATER), WATER,
-						WATER_COLOR);
+						waterColor);
 			}
 		} else {
-			changeFutureState(c, SHARK, SHARK_COLOR);
+			changeFutureState(c, SHARK, sharkColor);
 		}
 	}
 
@@ -179,7 +179,7 @@ public class WaTorWorld extends BaseModel {
 
 	@Override
 	public Color getDefaultColor() {
-		return DEFAULT_COLOR;
+		return defaultColor;
 	}
 
 	@Override
