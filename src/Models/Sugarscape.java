@@ -31,15 +31,24 @@ public class Sugarscape extends BaseModel {
 	private static final int SUGAR_GROW_BACK_RATE = 1;
 	private static final int SUGAR_GROW_BACK_INTERVAL = 1;
 	private static final int WITH_AGENT = -1;
-	private static final Color WITH_AGENT_COLOR = Color.RED;
+	private Color WITH_AGENT_COLOR;
+	private Color SUGAR_COLOR;
 	private static final double MIN_NUM_AGENTS = 0;
 	private static final double MAX_NUM_AGENTS = 100;
 	private static final int DEFAULT_MAX_SUGAR = 10;
+	private static final String DEFAULT_STRING_MAX_SUGAR = "10";
+	private Color DEFAULT_SUGAR_COLOR;
 	private int maxSugarLevel;
 	private int sugarGrowCounter;
 
-	public Sugarscape(Map<String, Double> parameters) {
-		super(parameters, 2);
+	public Sugarscape(Map<String, Double> parameters,
+			Map<String, Color> stateToColorMap) {
+		super(parameters);
+		SUGAR_COLOR = selectNonNullColor(stateToColorMap.get("sugar"),
+				Color.ORANGE);
+		WITH_AGENT_COLOR = selectNonNullColor(stateToColorMap.get("agent"),
+				Color.RED);
+		DEFAULT_SUGAR_COLOR = SUGAR_COLOR;
 		List<String> myStates = new ArrayList<String>(Arrays.asList("agent"));
 		List<Color> myColors = new ArrayList<>(Arrays.asList(WITH_AGENT_COLOR));
 		List<Integer> myInts = new ArrayList<>(Arrays.asList(WITH_AGENT));
@@ -48,7 +57,7 @@ public class Sugarscape extends BaseModel {
 		maxSugarLevel = DEFAULT_MAX_SUGAR;
 		try {
 			getParameterValuesMap().put("numAgents",
-					parameters.get("numAgents"));
+					(double) parameters.get("numAgents"));
 		} catch (NullPointerException e) {
 			getParameterValuesMap().put("numAgents",
 					(MIN_NUM_AGENTS + MAX_NUM_AGENTS) / 2);
@@ -68,8 +77,9 @@ public class Sugarscape extends BaseModel {
 			AdvancedCell curCell = (AdvancedCell) c;
 			if (curCell.getNumInhabitants() > 0
 					&& curCell.getFutureState() != WITH_AGENT) {
-				HashMap<AdvancedCell, Integer> possibleCells = (HashMap<AdvancedCell, Integer>) getVacantPatchesInSight(curCell, graph);
-				HashMap<AdvancedCell, Integer> possibleMaxSugar =  (HashMap<AdvancedCell, Integer>) findMaxSugarCells(possibleCells);
+				HashMap<AdvancedCell, Integer> possibleCells = (HashMap<AdvancedCell, Integer>) getVacantPatchesInSight(
+						curCell, graph);
+				HashMap<AdvancedCell, Integer> possibleMaxSugar = (HashMap<AdvancedCell, Integer>) findMaxSugarCells(possibleCells);
 				AdvancedCell toMoveTo = getClosest(possibleMaxSugar, curCell,
 						graph);
 				if (toMoveTo != null) {
@@ -97,7 +107,8 @@ public class Sugarscape extends BaseModel {
 						.sugarGrowBack(SUGAR_GROW_BACK_RATE);
 			}
 			if (curCell.getNumInhabitants() == 0) {
-				changeFutureState(curCell,
+				changeFutureState(
+						curCell,
 						((Sugar) curCell.getPatch()).getSugarAmount(),
 						calculateColorForSugarLevel(((Sugar) curCell.getPatch())
 								.getSugarAmount()));
@@ -156,13 +167,13 @@ public class Sugarscape extends BaseModel {
 
 	private Color calculateColorForSugarLevel(int sugarLevel) {
 		double opacity = 1.0 / maxSugarLevel * sugarLevel;
-		Color orange = new Color(Color.ORANGE.getRed(),
-				Color.ORANGE.getGreen(), Color.ORANGE.getBlue(), opacity);
+		Color orange = new Color(SUGAR_COLOR.getRed(), SUGAR_COLOR.getGreen(),
+				SUGAR_COLOR.getBlue(), opacity);
 		return orange;
 	}
 
-	private Map<AdvancedCell, Integer> getVacantPatchesInSight(AdvancedCell curCell,
-			BaseGraph graph) {
+	private Map<AdvancedCell, Integer> getVacantPatchesInSight(
+			AdvancedCell curCell, BaseGraph graph) {
 		int vision = ((Agent) curCell.getInhabitants().get(0)).getVision();
 		Map<AdvancedCell, Integer> possibleCellMap = new HashMap<AdvancedCell, Integer>();
 		for (int i = 1; i <= vision; i++) {
@@ -210,8 +221,9 @@ public class Sugarscape extends BaseModel {
 		return possibleMaxSugarMap;
 	}
 
-	private AdvancedCell getClosest(HashMap<AdvancedCell, Integer> possibleCells,
-			AdvancedCell curCell, BaseGraph graph) {
+	private AdvancedCell getClosest(
+			HashMap<AdvancedCell, Integer> possibleCells, AdvancedCell curCell,
+			BaseGraph graph) {
 		int minDistance = Integer.MAX_VALUE;
 		AdvancedCell toReturn = null;
 		for (AdvancedCell c : possibleCells.keySet()) {
@@ -240,12 +252,12 @@ public class Sugarscape extends BaseModel {
 
 	@Override
 	public Color getDefaultColor() {
-		return null;
+		return DEFAULT_SUGAR_COLOR;
 	}
 
 	@Override
-	public int getDefaultState() {
-		return 0;
+	public int getDefaultIntState() {
+		return DEFAULT_MAX_SUGAR;
 	}
 
 	@Override
@@ -256,7 +268,7 @@ public class Sugarscape extends BaseModel {
 		}
 		return Integer.parseInt(state);
 	}
-	
+
 	@Override
 	public int getNumStates() {
 		return DEFAULT_MAX_SUGAR;
@@ -264,7 +276,12 @@ public class Sugarscape extends BaseModel {
 
 	@Override
 	public String[] getMainStateNames() {
-		return new String[]{"agent"};
+		return new String[] { "agent" };
+	}
+
+	public String getDefaultStringState() {
+		return DEFAULT_STRING_MAX_SUGAR;
+
 	}
 
 }

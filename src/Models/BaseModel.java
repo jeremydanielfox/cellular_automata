@@ -1,6 +1,5 @@
 package Models;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +8,6 @@ import java.util.Map;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import CellsAndComponents.Cell;
-import Factories.InhabitantFactory;
 import Graphs.BaseGraph;
 import Graphs.ConfigCellInfo;
 
@@ -21,13 +19,11 @@ import Graphs.ConfigCellInfo;
  */
 
 public abstract class BaseModel {
-	private int numPointsForNeighbor;
 	private Map<String, Integer> stateToInt;
 	private Map<String, Color> stateToColor;
 	private Map<String, Double> parameterValues;
 
-	public BaseModel(Map<String, Double> parameters, int points) {
-		numPointsForNeighbor = points;
+	public BaseModel(Map<String, Double> parameters) {
 		stateToInt = new HashMap<String, Integer>();
 		stateToColor = new HashMap<String, Color>();
 		parameterValues = new HashMap<String, Double>();
@@ -38,6 +34,15 @@ public abstract class BaseModel {
 		for (int i = 0; i < states.size(); i++) {
 			stateToInt.put(states.get(i), stateInts.get(i));
 			stateToColor.put(states.get(i), stateColors.get(i));
+		}
+	}
+	
+	public Color selectNonNullColor(Color specifiedColor, Color defaultColor){
+		if(specifiedColor != null){
+			return specifiedColor;
+		}
+		else{
+			return defaultColor;
 		}
 	}
 
@@ -78,14 +83,12 @@ public abstract class BaseModel {
 
 	public abstract Color getDefaultColor();
 
-	public abstract int getDefaultState();
+	public abstract int getDefaultIntState();
+	
+	public abstract String getDefaultStringState();
 
 	public Color getColorForStringState(String state) {
 		return stateToColor.get(state);
-	}
-
-	public int getSharePointsForNeighbor() {
-		return numPointsForNeighbor;
 	}
 
 	public int countNeighbors(int state, Collection<Cell> neighbors) {
@@ -126,12 +129,7 @@ public abstract class BaseModel {
 		current.setCurrentState(myBabyCell.getIntState());
 		current.getShape().setFill(color);
 		addAdditionalCellInfo(current, myBabyCell);
-		// needs to be overriden, deleted from sugarscape, and added only in
-		// water world
-		// InhabitantFactory myInhabitantFactory = new InhabitantFactory();
-		// current.setInhabitant(
-		// myInhabitantFactory.createSpecifiedInhabitant(
-		// myBabyCell.getStringState(), myBabyCell.getIntState()));
+
 	}
 
 	public void addAdditionalCellInfo(Cell c, ConfigCellInfo myBabyCell) {

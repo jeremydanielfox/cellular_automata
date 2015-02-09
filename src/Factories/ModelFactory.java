@@ -2,8 +2,8 @@ package Factories;
 
 import java.util.Map;
 
+import javafx.scene.paint.Color;
 import Exceptions.CellSocietyException;
-import Graphs.BaseGraph;
 import Models.BaseModel;
 import Models.Fire;
 import Models.GameOfLife;
@@ -14,19 +14,19 @@ import Models.WaTorWorld;
 public class ModelFactory {
 
 	public BaseModel createSpecifiedModel(String model,
-			Map<String, Double> parameters) {
+			Map<String, Double> parameters, Map<String, Color> stateToColorMap) {
 
 		switch (model) {
 		case "GameOfLife":
-			return new GameOfLife(parameters);
+			return new GameOfLife(parameters, stateToColorMap);
 		case "Fire":
-			return new Fire(parameters);
+			return new Fire(parameters, stateToColorMap);
 		case "Segregation":
-			return new Segregation(parameters);
+			return new Segregation(parameters, stateToColorMap);
 		case "WaTorWorld":
-			return new WaTorWorld(parameters);
+			return new WaTorWorld(parameters, stateToColorMap);
 		case "Sugarscape":
-			return new Sugarscape(parameters);
+			return new Sugarscape(parameters, stateToColorMap);
 		default:
 			throw new CellSocietyException(CellSocietyException.INCORRECT_MODEL_MESSAGE);
 		}
