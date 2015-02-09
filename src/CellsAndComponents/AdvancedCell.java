@@ -20,8 +20,8 @@ public class AdvancedCell extends Cell {
 	private Collection<Inhabitant> myInhabitants;
 	private Patch myPatch;
 
-	public AdvancedCell(int id, Polygon shape,
-			List<Point2D> verticies, int defaultState, Color defaultColor) {
+	public AdvancedCell(int id, Polygon shape, List<Point2D> verticies,
+			int defaultState, Color defaultColor) {
 		super(id, shape, verticies, defaultState, defaultColor);
 		myInhabitants = new ArrayList<Inhabitant>();
 	}
@@ -33,15 +33,15 @@ public class AdvancedCell extends Cell {
 	public List<Inhabitant> getInhabitants() {
 		return (List<Inhabitant>) myInhabitants;
 	}
-	
+
 	public int getNumInhabitants() {
 		return myInhabitants.size();
 	}
-	
+
 	public void setPatch(Patch patch) {
 		myPatch = patch;
 	}
-	
+
 	public Patch getPatch() {
 		return myPatch;
 	}

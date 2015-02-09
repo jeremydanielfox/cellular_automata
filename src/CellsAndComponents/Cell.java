@@ -8,9 +8,11 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
 /**
- * This is the class in which the Cell object is defined.
+ * This is the class in which the Cell object is defined. The cell is the
+ * central data component to any cellular automata simulations. It keeps track
+ * of a current state, a future state, an ID value, and a polygon.
  * 
- * @author Jeremy, Team 12
+ * @author Jeremy, Sierra, Megan
  */
 public class Cell {
 	private int myID;

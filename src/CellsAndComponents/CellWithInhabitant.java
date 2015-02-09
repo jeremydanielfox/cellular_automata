@@ -7,9 +7,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 /**
- * This is an extension of the Cell class to create more complex Cells with
- * Inhabitants This will allow more much more complex phenomena, like simulating
- * creatures with health or more complex states
+ * This is an extension of the Cell class to create more complex Cells with a single
+ * Inhabitant. This will allow more much more complex phenomena, like simulating
+ * creatures with health or more complex states.
  * 
  * @author Jeremy
  *
