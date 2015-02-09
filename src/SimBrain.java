@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -32,7 +34,7 @@ import Factories.CellRegionDividerFactory;
  * the simulation animation, and updates the simulation and the view for each
  * frame update.
  * 
- * @author Sierra Smith
+ * @author Sierra, Jeremy
  *
  */
 public class SimBrain extends Application {
@@ -88,29 +90,25 @@ public class SimBrain extends Application {
 		Button uploadFileButton = makeButton(
 				myResources.getString("UploadButtonText"), false);
 		uploadFileButton.setOnAction(e -> startNewSim());
-		controlPanel.getChildren().add(uploadFileButton);
 		myPlayButton = makeButton(myResources.getString("PlayButtonText"), true);
 		myPlayButton.setOnAction(e -> playSimulation());
-		controlPanel.getChildren().add(myPlayButton);
 		myPauseButton = makeButton(myResources.getString("PauseButtonText"),
 				true);
 		myPauseButton.setOnAction(e -> pauseSimulation());
-		controlPanel.getChildren().add(myPauseButton);
 		myIncSpeedButton = makeButton(
 				myResources.getString("IncSpeedButtonText"), true);
 		myIncSpeedButton
 				.setOnAction(e -> changeFrameSpeed(INC_FRAME_RATE_MULTIPLIER));
-		controlPanel.getChildren().add(myIncSpeedButton);
 		myDecSpeedButton = makeButton(
 				myResources.getString("DecSpeedButtonText"), true);
 		myDecSpeedButton
 				.setOnAction(e -> changeFrameSpeed(DEC_FRAME_RATE_MULTIPLIER));
-		controlPanel.getChildren().add(myDecSpeedButton);
 		myStepButton = makeButton(myResources.getString("StepButtonText"), true);
 		myStepButton.setOnAction(e -> stepSimulation());
-		controlPanel.getChildren().add(myStepButton);
-		// controlPanel.getChildren().addAll(new
-		// Collection<Button>(){myStepButton};);
+		List<Button> myButtons = new ArrayList<>(Arrays.asList(
+				uploadFileButton, myPlayButton, myPauseButton,
+				myIncSpeedButton, myDecSpeedButton, myStepButton));
+		controlPanel.getChildren().addAll(myButtons);
 		return controlPanel;
 	}
 
@@ -208,26 +206,10 @@ public class SimBrain extends Application {
 		if (modelSetUp != null) {
 			try {
 				readFile(modelSetUp);
-				CellRegionDividerFactory myDividerFactory = new CellRegionDividerFactory();
-				int cellsAcross = (myXMLContents.getParams().get("columns"))
-						.intValue();
-				int cellsVertical = (myXMLContents.getParams().get("rows"))
-						.intValue();
-				CellRegionDivider myDivider = myDividerFactory
-						.createSpecifiedDivider(cellsAcross, cellsVertical,
-								CELL_REGION_HEIGHT, CELL_REGION_WIDTH,
-								SCREEN_BORDER_BUFFER, SCREEN_BORDER_BUFFER,
-								myXMLContents.getGraphType());
+				CellRegionDivider myDivider = createCellRegionDivider();
 				Polygon[][] myPolygons = myDivider.divideSpace(myXMLContents
 						.getGridLines());
-				myEngine = new SimEngine(myPolygons,
-						myXMLContents.getRandomConfig(),
-						myXMLContents.randomWithParams(),
-						myXMLContents.getInitialProportions(),
-						myXMLContents.getModel(), myXMLContents.getGraphType(),
-						myXMLContents.getEdgeType(), myXMLContents.getParams(),
-						myXMLContents.getCellsToConfig(), CELL_REGION_WIDTH,
-						CELL_REGION_HEIGHT, myXMLContents.getColorMap());
+				createEngine(myPolygons);
 			} catch (CellSocietyException error) {
 				displayError(error);
 				return;
@@ -249,15 +231,39 @@ public class SimBrain extends Application {
 			initializeChart();
 		}
 	}
+
+	private CellRegionDivider createCellRegionDivider(){
+		CellRegionDividerFactory myDividerFactory = new CellRegionDividerFactory();
+		int cellsAcross = (myXMLContents.getParams().get("columns"))
+				.intValue();
+		int cellsVertical = (myXMLContents.getParams().get("rows"))
+				.intValue();
+		CellRegionDivider myDivider = myDividerFactory
+				.createSpecifiedDivider(cellsAcross, cellsVertical,
+						CELL_REGION_HEIGHT, CELL_REGION_WIDTH,
+						SCREEN_BORDER_BUFFER, SCREEN_BORDER_BUFFER,
+						myXMLContents.getGraphType());
+		return myDivider;
+	}
 	
-	private void enableButtonsForNewSim(){
+	private void createEngine(Polygon[][] myPolygons) {
+		myEngine = new SimEngine(myPolygons, myXMLContents.getRandomConfig(),
+				myXMLContents.randomWithParams(),
+				myXMLContents.getInitialProportions(),
+				myXMLContents.getModel(), myXMLContents.getGraphType(),
+				myXMLContents.getEdgeType(), myXMLContents.getParams(),
+				myXMLContents.getCellsToConfig(), CELL_REGION_WIDTH,
+				CELL_REGION_HEIGHT, myXMLContents.getColorMap());
+	}
+
+	private void enableButtonsForNewSim() {
 		myStepButton.setDisable(false);
 		myIncSpeedButton.setDisable(false);
 		myDecSpeedButton.setDisable(false);
 		enableCorrectButtons(false);
 	}
-	
-	private void displayError(CellSocietyException error){
+
+	private void displayError(CellSocietyException error) {
 		PopUpWindow myErrorWindow = new PopUpWindow();
 		myErrorWindow.setDisplayMessage(error.getErrorMessage());
 		myErrorWindow.displayError();
