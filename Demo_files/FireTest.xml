@@ -2,14 +2,13 @@
 <Information>
 	<GraphType>FourNeighborSquareGraph</GraphType>
 	<Model>Fire</Model>
-    <GraphType>Square</GraphType>
 	<Author> Sierra and Megan</Author>
-	<Random>NO</Random>
 	<Title>Forest Fire</Title>
 	<GridRows>60</GridRows>
+    <GridLines>On</GridLines>
 	<GridColumns>60</GridColumns>
 	<Parameters>
-		<probCatch>1.0</probCatch>
+		<probCatch>0.9</probCatch>
 	</Parameters>
     <Colors>
         <burning>ORANGE</burning>

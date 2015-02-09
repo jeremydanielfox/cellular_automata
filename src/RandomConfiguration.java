@@ -7,6 +7,16 @@ import java.util.Random;
 import Graphs.ConfigCellInfo;
 import Models.BaseModel;
 
+/**
+ * This class can create a configuration of randomly placed cells given the
+ * proportion of states to be represented, or it can create a completely random
+ * configuration including each state proportion. It depends on methods in the
+ * BaseModel class that it uses to get critical information about the states
+ * available.
+ * 
+ * @author Sierra, Megan
+ *
+ */
 public class RandomConfiguration {
 	private BaseModel myModel;
 	private List<ConfigCellInfo> myRandConfigCells;

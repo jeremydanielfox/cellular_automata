@@ -55,8 +55,6 @@ public class SimBrain extends Application {
 	private static final int MIN_FRAME_PER_SECOND = 0;
 	private static final int MAX_FRAME_PER_SECOND = 5000;
 	private static final int SCREEN_BORDER_BUFFER = 50;
-	// private static final int CELL_REGION_WIDTH = SimWindow.WINDOW_WIDTH - 2
-	// * SCREEN_BORDER_BUFFER;
 	private static final int CELL_REGION_WIDTH = (SimWindow.WINDOW_WIDTH) / 2;
 	private static final int CELL_REGION_HEIGHT = SimWindow.WINDOW_HEIGHT - 2
 			* SCREEN_BORDER_BUFFER;
@@ -162,7 +160,6 @@ public class SimBrain extends Application {
 		initializeAnimationTimeline();
 		paintSim();
 		restoreLastAnimationStatus(previousStatus);
-
 	}
 
 	private void restoreLastAnimationStatus(Animation.Status prevStatus) {
@@ -174,7 +171,7 @@ public class SimBrain extends Application {
 		}
 	}
 
-	public void changeFramesPerSecondValue(int i) {
+	private void changeFramesPerSecondValue(int i) {
 		if (framesPerSecond + i * FRAME_SPEED_CHANGE_VALUE <= MIN_FRAME_PER_SECOND) {
 			myIncSpeedButton.setDisable(true);
 			return;
@@ -232,9 +229,7 @@ public class SimBrain extends Application {
 						myXMLContents.getCellsToConfig(), CELL_REGION_WIDTH,
 						CELL_REGION_HEIGHT, myXMLContents.getColorMap());
 			} catch (CellSocietyException error) {
-				PopUpWindow myErrorWindow = new PopUpWindow();
-				myErrorWindow.setDisplayMessage(error.getErrorMessage());
-				myErrorWindow.displayError();
+				displayError(error);
 				return;
 			}
 			myWindow.setStageTitle(myXMLContents.getTitle() + " by "
@@ -243,12 +238,9 @@ public class SimBrain extends Application {
 			framesPerSecond = INITIAL_FRAME_RATE;
 			initializeAnimationTimeline();
 			paintSim();
-			myStepButton.setDisable(false);
-			myIncSpeedButton.setDisable(false);
-			myDecSpeedButton.setDisable(false);
-			enableCorrectButtons(false);
+			enableButtonsForNewSim();
 			Map<String, List<Double>> paramMap = myEngine.getParamMap();
-			myWindow.clearControlPanel();
+			myWindow.clearParameterControlPanel();
 			if (paramMap.keySet().size() > 0) {
 				ParameterControlBox myParamControls = new ParameterControlBox(
 						this, paramMap);
@@ -256,6 +248,19 @@ public class SimBrain extends Application {
 			}
 			initializeChart();
 		}
+	}
+	
+	private void enableButtonsForNewSim(){
+		myStepButton.setDisable(false);
+		myIncSpeedButton.setDisable(false);
+		myDecSpeedButton.setDisable(false);
+		enableCorrectButtons(false);
+	}
+	
+	private void displayError(CellSocietyException error){
+		PopUpWindow myErrorWindow = new PopUpWindow();
+		myErrorWindow.setDisplayMessage(error.getErrorMessage());
+		myErrorWindow.displayError();
 	}
 
 	private void readFile(File file) {
@@ -266,6 +271,14 @@ public class SimBrain extends Application {
 		}
 	}
 
+	/**
+	 * This method takes in the string name of a parameter and a double value to
+	 * change it to and temporarily stops the animation while passing the
+	 * information down to the engine to complete the updated parameter change.
+	 * 
+	 * @param paramName
+	 * @param paramValue
+	 */
 	public void updateParameter(String paramName, Double paramValue) {
 		Animation.Status previousStatus = myAnimation.getStatus();
 		myAnimation.pause();
@@ -273,14 +286,14 @@ public class SimBrain extends Application {
 		restoreLastAnimationStatus(previousStatus);
 	}
 
-	public void initializeChart() {
+	private void initializeChart() {
 		myChart = new ChartMaster();
 		myChart.initializeChart("Population Levels", "Time", "Population",
 				myEngine.getStateNames(), CHART_X_OFFSET, CHART_Y_OFFSET);
 		myWindow.addChart(myChart);
 	}
 
-	public void updateChart() {
+	private void updateChart() {
 		myChart.addData(myEngine.getStateCounts());
 	}
 }

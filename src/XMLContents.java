@@ -69,99 +69,42 @@ public class XMLContents {
 			throw new CellSocietyException(
 					CellSocietyException.MISSING_INFO_MESSAGE);
 		}
-
 		randomWithParams = checkIfTagPresent("RandomWithProportions");
 		myInitialProportions = extractChildNodes("RandomWithProportions");
 		myColorMap = extractColors("Colors");
-		readAuthor();
-		readTitle();
-		readGraphType();
-		readEdgeType();
-		readGridLines();
+		myAuthor = getTagValueOrDefault("Author", "User");
+		myTitle = getTagValueOrDefault("Title", myModel);
+		myGraphType = getTagValueOrDefault("GraphType",
+				"FourNeighborSquareGraph");
+		myEdgeType = getTagValueOrDefault("EdgeType", "Finite");
+		myGridLines = getTagValueOrDefault("GridLines", "Off");
+		myRandomConfig = getTagValueOrDefault("Random", "NO");
+		myParameters.putAll(extractChildNodes("Parameters"));
 		extractConfig();
-		extractParams();
-		readRandomTag();
-		readGridLines();
 	}
 
-	private boolean checkIfTagPresent(String tag){
+	private boolean checkIfTagPresent(String tag) {
 		NodeList paramList = myDoc.getElementsByTagName(tag);
 		if (paramList.getLength() != 0) {
 			return true;
 		}
 		return false;
 	}
-	
-	private void readGridLines() {
+
+	private String getTagValueOrDefault(String tag, String alternate) {
+		String result;
 		try {
-			myGridLines = extractSpecifiedTag("GridLines");
+			result = extractSpecifiedTag(tag);
 		} catch (NullPointerException e) {
-			myGridLines = "Off";
+			result = alternate;
 		}
+		return result;
 	}
 
-	private void readRandomTag(){
-		try{
-			myRandomConfig = extractSpecifiedTag("Random");
-		} catch (NullPointerException e) {
-			myRandomConfig = "NO";
-		}
-	}
-
-	private void readGraphType(){
-		try{
-			myGraphType = extractSpecifiedTag("GraphType");
-		} catch (NullPointerException e) {
-			myGraphType = "FourNeighborSquareGraph";
-		}
-	}
-
-	private void readEdgeType() {
-		try {
-			myEdgeType = extractSpecifiedTag("EdgeType");
-		} catch (NullPointerException e) {
-			myEdgeType = "Finite";
-		}
-	}
-
-	private void readAuthor(){
-		try{
-			myAuthor = extractSpecifiedTag("Author");
-		} catch (NullPointerException e) {
-			myAuthor = "User";
-		}
-	}
-
-	private void readTitle() {
-		try {
-			myTitle = extractSpecifiedTag("Title");
-		} catch (NullPointerException e) {
-			myTitle = myModel;
-		}
-	}
-
-	private void extractParams() {
-		NodeList paramList = myDoc.getElementsByTagName("Parameters");
-		if (paramList.getLength() != 0) {
-			Element firstParam = (Element) paramList.item(0);
-			for (int k = 0; k < paramList.getLength(); k++) {
-				Node node = paramList.item(k);
-				if (node.getNodeType() == Node.ELEMENT_NODE) {
-					Element elem = (Element) node;
-					NodeList specificParams = elem.getChildNodes();
-					for (int q = 0; q < specificParams.getLength(); q++) {
-						Node paramNode = specificParams.item(q);
-						if (paramNode.getNodeType() == Node.ELEMENT_NODE) {
-							Element paramElem = (Element) paramNode;
-							String tag = paramElem.getTagName();
-							double param = Double.parseDouble(paramElem
-									.getChildNodes().item(0).getNodeValue());
-							myParameters.put(tag, param);
-						}
-					}
-				}
-			}
-		}
+	private String extractSpecifiedTag(String tag) {
+		NodeList myList = myDoc.getElementsByTagName(tag);
+		String result = myList.item(0).getChildNodes().item(0).getNodeValue();
+		return result;
 	}
 
 	private Map<String, Double> extractChildNodes(String parent) {
@@ -206,9 +149,10 @@ public class XMLContents {
 						if (colorNode.getNodeType() == Node.ELEMENT_NODE) {
 							Element paramElem = (Element) colorNode;
 							String tag = paramElem.getTagName();
-							String colorString = paramElem.getChildNodes().item(0)
-									.getNodeValue();
-							Color realColor = myColorFactory.stringToColor(colorString);
+							String colorString = paramElem.getChildNodes()
+									.item(0).getNodeValue();
+							Color realColor = myColorFactory
+									.stringToColor(colorString);
 							toReturn.put(tag, realColor);
 						}
 					}
@@ -263,7 +207,7 @@ public class XMLContents {
 		return myAuthor;
 	}
 
-	public String getEdgeType(){
+	public String getEdgeType() {
 		return myEdgeType;
 	}
 
@@ -275,25 +219,19 @@ public class XMLContents {
 		return myGridLines;
 	}
 
-	private String extractSpecifiedTag(String tag) {
-		NodeList myList = myDoc.getElementsByTagName(tag);
-		String result = myList.item(0).getChildNodes().item(0).getNodeValue();
-		return result;
-	}
-
 	public String getModel() {
 		return myModel;
 	}
 
-	public boolean randomWithParams(){
+	public boolean randomWithParams() {
 		return randomWithParams;
 	}
-	
-	public String getRandomConfig(){
+
+	public String getRandomConfig() {
 		return myRandomConfig;
 	}
-	
-	public Map<String, Double> getInitialProportions(){
+
+	public Map<String, Double> getInitialProportions() {
 		return myInitialProportions;
 	}
 

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Information>
-	<GraphType>EightNeighborTriangleGraph</GraphType>
-	<Random>NO</Random>
+	<GraphType>EightNeighborSquareGraph</GraphType>
 	<EdgeType>Toroidal</EdgeType>
 	<Model>GameOfLife</Model>
 	<Author>Sierra</Author>
-    <Random>YES</Random>
     <RandomWithProportions>
-        <alive>0.2</alive>
+        <alive>0.5</alive>
     </RandomWithProportions>
 	<Title>Conway's Game Of Life</Title>
 	<GridLines>Off</GridLines>

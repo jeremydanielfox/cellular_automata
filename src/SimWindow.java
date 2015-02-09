@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 /**
  * This class acts as the "view" for the simulation. It displays the stage that
  * the simulation runs, the control panel, and displays the cells of the
- * simulation.
+ * simulation and the graph of the current simulation populations.
  * 
  * @author sierrasmith95
  *
@@ -45,20 +45,32 @@ public class SimWindow {
 		myStage.show();
 	}
 
+	/**
+	 * Takes in a list of cells and adds their shapes to the simulation window
+	 * 
+	 * @param collection
+	 *            of cell objects
+	 */
 	public void paintCells(Collection<Cell> collection) {
-		wipeCells();
+		clearCells();
 		for (Cell c : collection) {
 			myCellRegion.getChildren().add(c.getShape());
 		}
 	}
-	
-	public void clearControlPanel(){
-		if(myParamControls != null){
+
+	public void clearParameterControlPanel() {
+		if (myParamControls != null) {
 			myControlPanels.getChildren().remove(myParamControls);
 		}
 	}
-	
-	public void addControlPanel(HBox toAdd){
+
+	/**
+	 * Takes in a HBox, assigns it to the myParamControls instance variable, and
+	 * adds it to the VBox at the top of the simulation window.
+	 * 
+	 * @param toAdd
+	 */
+	public void addControlPanel(HBox toAdd) {
 		myParamControls = toAdd;
 		myControlPanels.getChildren().add(myParamControls);
 	}
@@ -67,10 +79,16 @@ public class SimWindow {
 		myStage.setTitle(newTitle);
 	}
 
-	public void wipeCells() {
+	public void clearCells() {
 		myCellRegion.getChildren().clear();
 	}
-	
+
+	/**
+	 * Adds the chart of the ChartMaster object to the display window
+	 * 
+	 * @param myChart
+	 *            , a ChartMaster object
+	 */
 	public void addChart(ChartMaster myChart) {
 		myChartRegion.getChildren().clear();
 		myChartRegion.getChildren().add(myChart.getChart());
