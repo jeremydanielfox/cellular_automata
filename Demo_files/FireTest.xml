@@ -6,8 +6,7 @@
 	<Author> Sierra and Megan</Author>
 	<Random>NO</Random>
     <RandomWithProportions>
-        <fire>0.3</fire>
-        <empty>0.2</empty>
+        <burning>0.2</burning>
     </RandomWithProportions>
 	<Title>Forest Fire</Title>
 	<GridRows>60</GridRows>
@@ -16,7 +15,7 @@
 		<probCatch>1.0</probCatch>
 	</Parameters>
     <Colors>
-        <burning>BLUE</burning>
+        <burning>ORANGE</burning>
         <empty>PURPLE</empty>
     </Colors>
 	<Configuration>

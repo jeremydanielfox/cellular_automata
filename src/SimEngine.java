@@ -27,7 +27,7 @@ public class SimEngine {
 	private BaseGraph myGraph;
 	private BaseModel myModel;
 
-	public SimEngine(Polygon[][] myPolygons, String random,
+	public SimEngine(Polygon[][] myPolygons, String random, boolean randWithParams,
 			Map<String, Double> initProportions, String model,
 			String graphType, String edgeType, Map<String, Double> parameters,
 			List<ConfigCellInfo> cellsToConfig, int cellRegionWidth,
@@ -36,12 +36,10 @@ public class SimEngine {
 		myParameters = parameters;
 		ModelFactory myModFactory = new ModelFactory();
 		myModel = myModFactory.createSpecifiedModel(myModelName, myParameters, stateToColorMap);
-		if (random.equals("YES")) {
-			// eliminate this and give it the hash map from the parser
-			Map<String, Double> paramProp = new HashMap<>();
+		if(randWithParams || random.equals("YES")){
 			RandomConfiguration randConfigGenerator = new RandomConfiguration(
 					myModel, myParameters.get("rows").intValue(), myParameters
-							.get("columns").intValue(), paramProp);
+							.get("columns").intValue(), randWithParams, initProportions);
 			myCellsToConfig = randConfigGenerator.getRandConfigCells();
 		} else {
 			myCellsToConfig = cellsToConfig;

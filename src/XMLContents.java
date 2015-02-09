@@ -72,7 +72,6 @@ public class XMLContents {
 
 		randomWithParams = checkIfTagPresent("RandomWithProportions");
 		myInitialProportions = extractChildNodes("RandomWithProportions");
-		System.out.println(randomWithParams);
 		myColorMap = extractColors("Colors");
 		readAuthor();
 		readTitle();
@@ -188,11 +187,6 @@ public class XMLContents {
 				}
 			}
 		}
-
-		for (String s : toReturn.keySet()) {
-			System.out.println(s);
-		}
-
 		return toReturn;
 	}
 
@@ -284,7 +278,6 @@ public class XMLContents {
 	private String extractSpecifiedTag(String tag) {
 		NodeList myList = myDoc.getElementsByTagName(tag);
 		String result = myList.item(0).getChildNodes().item(0).getNodeValue();
-		System.out.println(result);
 		return result;
 	}
 
@@ -292,7 +285,10 @@ public class XMLContents {
 		return myModel;
 	}
 
-
+	public boolean randomWithParams(){
+		return randomWithParams;
+	}
+	
 	public String getRandomConfig(){
 		return myRandomConfig;
 	}
