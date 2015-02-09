@@ -57,6 +57,11 @@ public abstract class BaseModel {
 		return parameterValues;
 	}
 
+	/**
+	 * Implemented in the models, getParamNameMinMaxCur() gets a map that
+	 * correlates a string representing a state with a list of its min, max and
+	 * current values, used to create the parameter sliders
+	 */
 	public Map<String, List<Double>> getParamNameMinMaxCur() {
 		return new HashMap<String, List<Double>>();
 	}
@@ -67,6 +72,15 @@ public abstract class BaseModel {
 
 	public abstract Cell updateFutureState(Cell cellToUpdate,
 			Collection<Cell> neighbors);
+
+	/**
+	 * This method is what takes each cell and sets the future state of each
+	 * cell based on the rules of the model, either overriden in by the model or
+	 * calls updateFutureCell which is written in the model.
+	 * 
+	 * @param cellsToUpdate
+	 * @param graph
+	 */
 
 	public Collection<Cell> updateFutureStates(Iterable<Cell> cellsToUpdate,
 			BaseGraph graph) {
@@ -90,6 +104,14 @@ public abstract class BaseModel {
 		return stateToColor.get(state);
 	}
 
+	/**
+	 * Method used in many models that extend BaseModel, used to calculate the
+	 * number of neighbors with the specified state.
+	 * 
+	 * @param state
+	 * @param neighbors
+	 */
+
 	public int countNeighbors(int state, Collection<Cell> neighbors) {
 		int neighborsWithState = 0;
 		for (Cell c : neighbors) {
@@ -104,6 +126,16 @@ public abstract class BaseModel {
 		cellToUpdate.setFutureState(state);
 		cellToUpdate.setColor(stateColor);
 	}
+
+	/**
+	 * Purpose of setUpCellContents, which loops through the cellsToConfig and
+	 * calls UpdateStateOfCell on them, is to set up the initial configuration
+	 * of cells based on the information in the ConfigCellInfo objects that
+	 * contain information parsed from the XML file
+	 * 
+	 * @param graph
+	 * @param cellsToConfig
+	 */
 
 	public void setUpCellContents(BaseGraph graph,
 			Iterable<ConfigCellInfo> cellsToConfig) {

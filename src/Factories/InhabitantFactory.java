@@ -7,7 +7,7 @@ import CellsAndComponents.Shark;
 /**
  * This factory is used when a given model has more than one type of Inhabitant.
  * 
- * @author Jeremy
+ * @author Jeremy, Megan
  *
  */
 public class InhabitantFactory {

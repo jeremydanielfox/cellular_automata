@@ -46,8 +46,7 @@ public class Sugarscape extends BaseModel {
 		super(parameters);
 		sugarColor = selectNonNullColor(stateToColorMap.get("sugar"),
 				Color.ORANGE);
-		agentColor = selectNonNullColor(stateToColorMap.get("agent"),
-				Color.RED);
+		agentColor = selectNonNullColor(stateToColorMap.get("agent"), Color.RED);
 		defaultSugarColor = sugarColor;
 		List<String> myStates = new ArrayList<String>(Arrays.asList("agent"));
 		List<Color> myColors = new ArrayList<>(Arrays.asList(agentColor));
@@ -91,14 +90,18 @@ public class Sugarscape extends BaseModel {
 					if (((Agent) toMoveTo.getInhabitants().get(0)).checkDead()) {
 						toMoveTo.getInhabitants().remove(0);
 					} else {
-						changeFutureState(toMoveTo, WITH_AGENT,
-								agentColor);
+						changeFutureState(toMoveTo, WITH_AGENT, agentColor);
 					}
 				} else {
 					changeFutureState(curCell, WITH_AGENT, agentColor);
 				}
 			}
 		}
+		updateSugar(shuffledCells);
+		return shuffledCells;
+	}
+
+	private void updateSugar(ArrayList<Cell> shuffledCells) {
 		sugarGrowCounter += 1;
 		for (Cell c : shuffledCells) {
 			AdvancedCell curCell = (AdvancedCell) c;
@@ -114,7 +117,6 @@ public class Sugarscape extends BaseModel {
 								.getSugarAmount()));
 			}
 		}
-		return shuffledCells;
 	}
 
 	private ArrayList<Cell> createArrayListFromIterable(
@@ -125,6 +127,15 @@ public class Sugarscape extends BaseModel {
 		}
 		return shuffledCells;
 	}
+
+	/**
+	 * This method overrides the setUpCellContents in Base Model in order to
+	 * adapt to itializing for Sugarscape, where we initialize patches of Sugar
+	 * for all cells and randomly place Agent inhabitants.
+	 * 
+	 * @param graph
+	 * @param cellsToConfig
+	 */
 
 	@Override
 	public void setUpCellContents(BaseGraph graph,
@@ -172,6 +183,15 @@ public class Sugarscape extends BaseModel {
 		return orange;
 	}
 
+	/**
+	 * Loops through the possible cells in the vision of the agent and checks if
+	 * there is no other agent in that spot, to add to a list of possible cells
+	 * that agent can move to
+	 * 
+	 * @param curCell
+	 * @param graph
+	 */
+
 	private Map<AdvancedCell, Integer> getVacantPatchesInSight(
 			AdvancedCell curCell, BaseGraph graph) {
 		int vision = ((Agent) curCell.getInhabitants().get(0)).getVision();
@@ -204,6 +224,14 @@ public class Sugarscape extends BaseModel {
 		return null;
 	}
 
+	/**
+	 * Of all the possible cells an agent can move to that are vacant and in its
+	 * vision, finds the cells with the maximum amount of sugar and limits the
+	 * possible cells an agent can move to these.
+	 * 
+	 * @param possibleCells
+	 */
+
 	private Map<AdvancedCell, Integer> findMaxSugarCells(
 			HashMap<AdvancedCell, Integer> possibleCells) {
 		int maxSugar = 0;
@@ -220,6 +248,15 @@ public class Sugarscape extends BaseModel {
 		}
 		return possibleMaxSugarMap;
 	}
+
+	/**
+	 * Looks for the closest cell out of all the cells within sight with the
+	 * maximum amount of sugar, and randomly selects one of these to move to.
+	 * 
+	 * @param possibleCells
+	 * @param curCell
+	 * @param graph
+	 */
 
 	private AdvancedCell getClosest(
 			HashMap<AdvancedCell, Integer> possibleCells, AdvancedCell curCell,
@@ -261,7 +298,6 @@ public class Sugarscape extends BaseModel {
 	}
 
 	@Override
-	// error check?
 	public int getIntForState(String state) {
 		if (state.equals("agent")) {
 			return getStateToIntMap().get(state);
