@@ -46,8 +46,8 @@ public class SimEngine {
 		} else {
 			myCellsToConfig = cellsToConfig;
 		}
+		Color temp = myModel.getDefaultColor();
 		GraphFactory myGraphFactory = new GraphFactory();
-
 		myGraph = myGraphFactory.createSpecifiedGraph(myPolygons, myParameters
 				.get("columns").intValue(),
 				myParameters.get("rows").intValue(), myModel

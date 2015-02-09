@@ -26,21 +26,16 @@ public class Fire extends BaseModel {
 	private Color EMPTY_COLOR;
 	private Color TREE_COLOR;
 	private Color BURNING_COLOR;
-	private Color DEFAULT_COLOR = TREE_COLOR;
+	private Color DEFAULT_COLOR ;
 	private static final double MIN_PROB_CATCH = 0;
 	private static final double MAX_PROB_CATCH = 1.0;
 
 	public Fire(Map<String, Double> parameters, Map<String, Color> stateToColorMap) {
 		super(parameters);
-		try {
-			EMPTY_COLOR = (Color) stateToColorMap.get("empty");
-			TREE_COLOR = (Color) stateToColorMap.get("tree");
-			BURNING_COLOR = (Color) stateToColorMap.get("burning");
-		} catch (NullPointerException e) {
-			EMPTY_COLOR = Color.YELLOW;
-			TREE_COLOR = Color.FORESTGREEN;
-			BURNING_COLOR = Color.RED;
-		}
+		EMPTY_COLOR = selectNonNullColor(stateToColorMap.get("empty"), Color.YELLOW);
+		TREE_COLOR = selectNonNullColor(stateToColorMap.get("tree"), Color.FORESTGREEN);
+		BURNING_COLOR = selectNonNullColor(stateToColorMap.get("burning"), Color.RED);
+		DEFAULT_COLOR = TREE_COLOR;
 		List<String> myStates = new ArrayList<String>(Arrays.asList("empty", "tree", "burning"));
 		List<Color> myColors = new ArrayList<>(Arrays.asList(EMPTY_COLOR, TREE_COLOR, BURNING_COLOR));
 		List<Integer> myInts = new ArrayList<>(Arrays.asList(EMPTY, TREE, BURNING));
@@ -51,7 +46,7 @@ public class Fire extends BaseModel {
 			getParameterValuesMap().put("probCatch", (MIN_PROB_CATCH + MAX_PROB_CATCH) / 2);
 		}
 	}
-
+	
 	@Override
 	public Cell updateFutureState(Cell cellToUpdate, Collection<Cell> neighbors) {
 		double random = new Random().nextDouble();

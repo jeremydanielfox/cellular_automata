@@ -19,13 +19,11 @@ import Graphs.ConfigCellInfo;
  */
 
 public abstract class BaseModel {
-	//private int numPointsForNeighbor;
 	private Map<String, Integer> stateToInt;
 	private Map<String, Color> stateToColor;
 	private Map<String, Double> parameterValues;
 
 	public BaseModel(Map<String, Double> parameters) {
-		//numPointsForNeighbor = points;
 		stateToInt = new HashMap<String, Integer>();
 		stateToColor = new HashMap<String, Color>();
 		parameterValues = new HashMap<String, Double>();
@@ -36,6 +34,15 @@ public abstract class BaseModel {
 		for (int i = 0; i < states.size(); i++) {
 			stateToInt.put(states.get(i), stateInts.get(i));
 			stateToColor.put(states.get(i), stateColors.get(i));
+		}
+	}
+	
+	public Color selectNonNullColor(Color specifiedColor, Color defaultColor){
+		if(specifiedColor != null){
+			return specifiedColor;
+		}
+		else{
+			return defaultColor;
 		}
 	}
 
@@ -84,10 +91,6 @@ public abstract class BaseModel {
 		return stateToColor.get(state);
 	}
 
-//	public int getSharePointsForNeighbor() {
-//		return numPointsForNeighbor;
-//	}
-
 	public int countNeighbors(int state, Collection<Cell> neighbors) {
 		int neighborsWithState = 0;
 		for (Cell c : neighbors) {
@@ -123,11 +126,6 @@ public abstract class BaseModel {
 		current.setCurrentState(myBabyCell.getIntState());
 		current.getShape().setFill(color);
 		addAdditionalCellInfo(current, myBabyCell);
-//		needs to be overriden, deleted from sugarscape, and added only in water world
-//		InhabitantFactory myInhabitantFactory = new InhabitantFactory();
-//		current.setInhabitant(
-//				myInhabitantFactory.createSpecifiedInhabitant(
-//						myBabyCell.getStringState(), myBabyCell.getIntState()));
 	}
 	
 	public void addAdditionalCellInfo(Cell c, ConfigCellInfo myBabyCell){

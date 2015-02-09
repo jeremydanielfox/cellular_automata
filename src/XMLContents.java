@@ -18,6 +18,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import Exceptions.CellSocietyException;
+import Factories.ColorFactory;
 import Graphs.ConfigCellInfo;
 
 /**
@@ -41,10 +42,11 @@ public class XMLContents {
 	private List<ConfigCellInfo> cellsToConfigure;
 	private Map<String, Double> myInitialProportions;
 	private boolean randomWithParams;
+	private Map<String, Color> myColorMap;
 	private Document myDoc;
 
 	public XMLContents(File file) throws ParserConfigurationException,
-	SAXException, IOException {
+			SAXException, IOException {
 		myFile = file;
 		cellsToConfigure = new ArrayList<>();
 		myParameters = new HashMap<>();
@@ -52,24 +54,26 @@ public class XMLContents {
 	}
 
 	public void readXML() throws ParserConfigurationException, SAXException,
-	IOException {
+			IOException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		myDoc = builder.parse(myFile);
-		try{
+		try {
 			myModel = extractSpecifiedTag("Model");
 			myParameters.put("rows",
 					Double.parseDouble(extractSpecifiedTag("GridRows")));
 
 			myParameters.put("columns",
 					Double.parseDouble(extractSpecifiedTag("GridColumns")));
-		}catch(NullPointerException e){
-			throw new CellSocietyException(CellSocietyException.MISSING_INFO_MESSAGE);
+		} catch (NullPointerException e) {
+			throw new CellSocietyException(
+					CellSocietyException.MISSING_INFO_MESSAGE);
 		}
-		
-		randomWithParams = false;
-		myInitialProportions = extractChildNodes("RandomWithProportions", randomWithParams);
+
+		randomWithParams = checkIfTagPresent("RandomWithProportions");
+		myInitialProportions = extractChildNodes("RandomWithProportions");
 		System.out.println(randomWithParams);
+		myColorMap = extractColors("Colors");
 		readAuthor();
 		readTitle();
 		readGraphType();
@@ -81,60 +85,68 @@ public class XMLContents {
 		readGridLines();
 	}
 
-	//private void setSpecifiedVariable(String variable, )
-	
-	public Map<String, Double> getInitialProportions(){
+	// private void setSpecifiedVariable(String variable, )
+
+	public Map<String, Double> getInitialProportions() {
 		return myInitialProportions;
 	}
+
+	private boolean checkIfTagPresent(String tag){
+		NodeList paramList = myDoc.getElementsByTagName(tag);
+		if (paramList.getLength() != 0) {
+			return true;
+		}
+		return false;
+	}
 	
-	private void readGridLines(){
-		try{
+	private void readGridLines() {
+		try {
 			myGridLines = extractSpecifiedTag("GridLines");
-		}catch(NullPointerException e){
+		} catch (NullPointerException e) {
 			myGridLines = "Off";
 		}
 	}
-	
-	private void readRandomTag(){
-		try{
+
+	private void readRandomTag() {
+		try {
 			myRandomConfig = extractSpecifiedTag("Random");
-		}catch(NullPointerException e){
+		} catch (NullPointerException e) {
 			myRandomConfig = "NO";
 		}
 	}
-	
-	private void readGraphType(){
-		try{
+
+	private void readGraphType() {
+		try {
 			myGraphType = extractSpecifiedTag("GraphType");
-		}catch(NullPointerException e){
+		} catch (NullPointerException e) {
 			myGraphType = "FourNeighborSquareGraph";
 		}
 	}
 
-	private void readEdgeType(){
-		try{
+	private void readEdgeType() {
+		try {
 			myEdgeType = extractSpecifiedTag("EdgeType");
-		}catch(NullPointerException e){
+		} catch (NullPointerException e) {
 			myEdgeType = "Finite";
 		}
 	}
-	
-	private void readAuthor(){
-		try{
+
+	private void readAuthor() {
+		try {
 			myAuthor = extractSpecifiedTag("Author");
-		}catch(NullPointerException e){
+		} catch (NullPointerException e) {
 			myAuthor = "User";
 		}
 	}
-	
-	private void readTitle(){
-		try{
+
+	private void readTitle() {
+		try {
 			myTitle = extractSpecifiedTag("Title");
-		}catch(NullPointerException e){
+		} catch (NullPointerException e) {
 			myTitle = myModel;
 		}
 	}
-	
+
 	private void extractParams() {
 		NodeList paramList = myDoc.getElementsByTagName("Parameters");
 		if (paramList.getLength() != 0) {
@@ -159,11 +171,10 @@ public class XMLContents {
 		}
 	}
 
-	private Map<String, Double> extractChildNodes(String parent, boolean tagPresent) {
+	private Map<String, Double> extractChildNodes(String parent) {
 		Map<String, Double> toReturn = new HashMap<String, Double>();
 		NodeList paramList = myDoc.getElementsByTagName(parent);
 		if (paramList.getLength() != 0) {
-			tagPresent = true;
 			Element firstParam = (Element) paramList.item(0);
 			for (int k = 0; k < paramList.getLength(); k++) {
 				Node node = paramList.item(k);
@@ -183,39 +194,42 @@ public class XMLContents {
 				}
 			}
 		}
-		
-		for(String s: toReturn.keySet()){
+
+		for (String s : toReturn.keySet()) {
 			System.out.println(s);
 		}
-		
+
 		return toReturn;
 	}
-	
-//	private Map<String, Color> extractChildNodes(String parent) {
-//		Map<String, Color> toReturn = new HashMap<>();
-//		NodeList colorList = myDoc.getElementsByTagName(parent);
-//		if (colorList.getLength() != 0) {
-//			Element firstParam = (Element) colorList.item(0);
-//			for (int k = 0; k < colorList.getLength(); k++) {
-//				Node node = colorList.item(k);
-//				if (node.getNodeType() == Node.ELEMENT_NODE) {
-//					Element elem = (Element) node;
-//					NodeList specificColors = elem.getChildNodes();
-//					for (int q = 0; q < specificColors.getLength(); q++) {
-//						Node colorNode = specificColors.item(q);
-//						if (colorNode.getNodeType() == Node.ELEMENT_NODE) {
-//							Element paramElem = (Element) colorNode;
-//							String tag = paramElem.getTagName();
-//							double param = Double.parseDouble(paramElem
-//									.getChildNodes().item(0).getNodeValue());
-//							toReturn.put(tag, param);
-//						}
-//					}
-//				}
-//			}
-//		}
-//	}
-	
+
+	private Map<String, Color> extractColors(String parent) {
+		Map<String, Color> toReturn = new HashMap<>();
+		ColorFactory myColorFactory = new ColorFactory();
+		NodeList colorList = myDoc.getElementsByTagName(parent);
+		if (colorList.getLength() != 0) {
+			Element firstParam = (Element) colorList.item(0);
+			for (int k = 0; k < colorList.getLength(); k++) {
+				Node node = colorList.item(k);
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					Element elem = (Element) node;
+					NodeList specificColors = elem.getChildNodes();
+					for (int q = 0; q < specificColors.getLength(); q++) {
+						Node colorNode = specificColors.item(q);
+						if (colorNode.getNodeType() == Node.ELEMENT_NODE) {
+							Element paramElem = (Element) colorNode;
+							String tag = paramElem.getTagName();
+							String colorString = paramElem.getChildNodes().item(0)
+									.getNodeValue();
+							Color realColor = myColorFactory.stringToColor(colorString);
+							toReturn.put(tag, realColor);
+						}
+					}
+				}
+			}
+		}
+		return toReturn;
+	}
+
 	public Map<String, Double> getParams() {
 		return myParameters;
 	}
@@ -260,19 +274,19 @@ public class XMLContents {
 	public String getAuthor() {
 		return myAuthor;
 	}
-	
-	public String getEdgeType(){
+
+	public String getEdgeType() {
 		return myEdgeType;
 	}
 
-	public String getGraphType(){
+	public String getGraphType() {
 		return myGraphType;
 	}
-	
-	public String getGridLines(){
+
+	public String getGridLines() {
 		return myGridLines;
 	}
-	
+
 	private String extractSpecifiedTag(String tag) {
 		NodeList myList = myDoc.getElementsByTagName(tag);
 		String result = myList.item(0).getChildNodes().item(0).getNodeValue();
@@ -283,8 +297,12 @@ public class XMLContents {
 	public String getModel() {
 		return myModel;
 	}
-	
-	public String getRandomConfig(){
+
+	public String getRandomConfig() {
 		return myRandomConfig;
+	}
+
+	public Map<String, Color> getColorMap() {
+		return myColorMap;
 	}
 }

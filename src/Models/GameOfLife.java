@@ -25,22 +25,16 @@ public class GameOfLife extends BaseModel {
 	//private static final int NUM_POINTS_FOR_NEIGHBOR = 1;
 	private Color DEAD_COLOR;
 	private Color ALIVE_COLOR;
-	private Color DEFAULT_COLOR = DEAD_COLOR;
+	private Color DEFAULT_COLOR;
 	private Map<String, Color> colorMap;
 	
 
 	public GameOfLife(Map<String, Double> parameters, Map<String, Color> stateToColorMap) {
 		super(parameters);
 		colorMap = stateToColorMap;
-		setColor(DEAD_COLOR, Color.BLUE, "dead");
-		setColor(ALIVE_COLOR, Color.FUCHSIA, "alive");
-//		try {
-//			DEAD_COLOR = stateToColorMap.get("dead");
-//			ALIVE_COLOR = stateToColorMap.get("alive");
-//		} catch(NullPointerException e) {
-//			DEAD_COLOR = Color.BLUE;
-//			ALIVE_COLOR = Color.FUCHSIA;
-//		}
+		DEAD_COLOR = selectNonNullColor(stateToColorMap.get("dead"), Color.BLUE);
+		ALIVE_COLOR = selectNonNullColor(stateToColorMap.get("alive"), Color.FUCHSIA);
+		DEFAULT_COLOR = DEAD_COLOR;
 		List<String> myStates = new ArrayList<String>(Arrays.asList("dead", "alive"));
 		List<Color> myColors = new ArrayList<>(Arrays.asList(DEAD_COLOR, ALIVE_COLOR));
 		List<Integer> myInts = new ArrayList<>(Arrays.asList(DEAD, ALIVE));

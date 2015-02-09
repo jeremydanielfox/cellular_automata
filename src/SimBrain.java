@@ -220,7 +220,7 @@ public class SimBrain extends Application {
 						myXMLContents.getModel(), myXMLContents.getGraphType(),
 						myXMLContents.getEdgeType(), myXMLContents.getParams(),
 						myXMLContents.getCellsToConfig(), CELL_REGION_WIDTH,
-						CELL_REGION_HEIGHT);
+						CELL_REGION_HEIGHT, myXMLContents.getColorMap());
 			} catch (CellSocietyException error) {
 				PopUpWindow myErrorWindow = new PopUpWindow();
 				myErrorWindow.setDisplayMessage(error.getErrorMessage());

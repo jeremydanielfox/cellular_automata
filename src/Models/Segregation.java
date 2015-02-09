@@ -28,7 +28,7 @@ public class Segregation extends BaseModel {
 	public Color EMPTY_COLOR;
 	public Color GROUP_ONE_COLOR;
 	public Color GROUP_TWO_COLOR;
-	public Color DEFAULT_COLOR = EMPTY_COLOR;
+	public Color DEFAULT_COLOR;
 	private static final double MIN_RATIO_NEIGHBORS = 0;
 	private static final double MAX_RATIO_NEIGHBORS = 1.0;
 
@@ -37,15 +37,10 @@ public class Segregation extends BaseModel {
 		// superclass so that we can
 		// set up that information using the constructor
 		super(parameters);
-		try {
-			EMPTY_COLOR = (Color) stateToColorMap.get("empty");
-			GROUP_ONE_COLOR = (Color) stateToColorMap.get("group_one");
-			GROUP_TWO_COLOR = (Color) stateToColorMap.get("group_two");
-		} catch (NullPointerException e) {
-			EMPTY_COLOR = Color.WHITE;
-			GROUP_ONE_COLOR = Color.RED;
-			GROUP_TWO_COLOR = Color.GREEN;
-		}
+		EMPTY_COLOR = selectNonNullColor(stateToColorMap.get("empty"), Color.WHITE);
+		GROUP_ONE_COLOR = selectNonNullColor(stateToColorMap.get("group_one"), Color.RED);
+		GROUP_TWO_COLOR = selectNonNullColor(stateToColorMap.get("group_two"), Color.GREEN);
+		DEFAULT_COLOR = EMPTY_COLOR;
 		List<String> myStates = new ArrayList<String>(Arrays.asList("empty", "group_one", "group_two"));
 		List<Color> myColors = new ArrayList<>(Arrays.asList(EMPTY_COLOR, GROUP_ONE_COLOR, GROUP_TWO_COLOR));
 		List<Integer> myInts = new ArrayList<>(Arrays.asList(EMPTY, GROUP_ONE, GROUP_TWO));

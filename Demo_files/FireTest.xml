@@ -12,8 +12,12 @@
 	<GridRows>60</GridRows>
 	<GridColumns>60</GridColumns>
 	<Parameters>
-		<probCatch>.6</probCatch>
+		<probCatch>1.0</probCatch>
 	</Parameters>
+    <Colors>
+        <burning>BLUE</burning>
+        <empty>PURPLE</empty>
+    </Colors>
 	<Configuration>
 		<Cell x="50" y="49" state="burning"> </Cell>
 		<Cell x="51" y="49" state="burning"> </Cell>

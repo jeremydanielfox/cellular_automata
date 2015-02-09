@@ -37,18 +37,15 @@ public class Sugarscape extends BaseModel {
 	private static final double MAX_NUM_AGENTS = 100;
 	private static final int DEFAULT_MAX_SUGAR = 10;
 	private static final String DEFAULT_STRING_MAX_SUGAR = "10";
+	private Color DEFAULT_SUGAR_COLOR;
 	private int maxSugarLevel;
 	private int sugarGrowCounter;
 
 	public Sugarscape(Map<String, Double> parameters, Map<String, Color> stateToColorMap) {
 		super(parameters);
-		try {
-			SUGAR_COLOR = (Color) stateToColorMap.get("sugar");
-			WITH_AGENT_COLOR = (Color) stateToColorMap.get("agent");
-		} catch(NullPointerException e) {
-			SUGAR_COLOR = Color.ORANGE;
-			WITH_AGENT_COLOR = Color.RED;
-		}
+		SUGAR_COLOR = selectNonNullColor(stateToColorMap.get("sugar"), Color.ORANGE);
+		WITH_AGENT_COLOR = selectNonNullColor(stateToColorMap.get("agent"), Color.RED);
+		DEFAULT_SUGAR_COLOR = SUGAR_COLOR;
 		List<String> myStates = new ArrayList<String>(Arrays.asList("agent"));
 		List<Color> myColors = new ArrayList<>(Arrays.asList(WITH_AGENT_COLOR));
 		List<Integer> myInts = new ArrayList<>(Arrays.asList(WITH_AGENT));
@@ -249,7 +246,7 @@ public class Sugarscape extends BaseModel {
 
 	@Override
 	public Color getDefaultColor() {
-		return null;
+		return DEFAULT_SUGAR_COLOR;
 	}
 
 	@Override
