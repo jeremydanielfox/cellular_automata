@@ -36,12 +36,11 @@ public abstract class BaseModel {
 			stateToColor.put(states.get(i), stateColors.get(i));
 		}
 	}
-	
-	public Color selectNonNullColor(Color specifiedColor, Color defaultColor){
-		if(specifiedColor != null){
+
+	public Color selectNonNullColor(Color specifiedColor, Color defaultColor) {
+		if (specifiedColor != null) {
 			return specifiedColor;
-		}
-		else{
+		} else {
 			return defaultColor;
 		}
 	}
@@ -84,7 +83,7 @@ public abstract class BaseModel {
 	public abstract Color getDefaultColor();
 
 	public abstract int getDefaultIntState();
-	
+
 	public abstract String getDefaultStringState();
 
 	public Color getColorForStringState(String state) {

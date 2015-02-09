@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javafx.scene.paint.Color;
 import CellsAndComponents.Cell;
 import Graphs.BaseGraph;
-import javafx.scene.paint.Color;
 
 /**
  * 
@@ -25,7 +25,6 @@ public class Segregation extends BaseModel {
 	public static final int GROUP_TWO = 2;
 	public static final int DEFAULT_INT_STATE = EMPTY;
 	public static final String DEFAULT_STRING_STATE = "empty";
-	// public static final int NUM_POINTS_FOR_NEIGHBOR = 1;
 	public Color EMPTY_COLOR;
 	public Color GROUP_ONE_COLOR;
 	public Color GROUP_TWO_COLOR;
@@ -35,9 +34,6 @@ public class Segregation extends BaseModel {
 
 	public Segregation(Map<String, Double> parameters,
 			Map<String, Color> stateToColorMap) {
-		// possibly we should create a setNumPointsForNeighbor method in the
-		// superclass so that we can
-		// set up that information using the constructor
 		super(parameters);
 		EMPTY_COLOR = selectNonNullColor(stateToColorMap.get("empty"),
 				Color.WHITE);
