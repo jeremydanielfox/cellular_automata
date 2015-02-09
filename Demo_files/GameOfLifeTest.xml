@@ -3,7 +3,11 @@
 	<GraphType>EightNeighborSquareGraph</GraphType>
 	<Model>GameOfLife</Model>
 	<Author>Sierra</Author>
-	<Title>Brown Fire</Title>
+	<Title>Evolution</Title>
+    <Random>YES</Random>
+    <RandomWithProportions>
+        <alive>0.2</alive>
+    </RandomWithProportions>
 	<GridRows>100</GridRows>
 	<GridColumns>100</GridColumns>
 	<Configuration>

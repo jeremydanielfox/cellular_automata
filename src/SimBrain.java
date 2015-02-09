@@ -215,7 +215,7 @@ public class SimBrain extends Application {
 				Polygon[][] myPolygons = myDivider.divideSpace(myXMLContents
 						.getGridLines());
 				myEngine = new SimEngine(myPolygons,
-						myXMLContents.getRandomConfig(),
+						myXMLContents.getRandomConfig(), myXMLContents.randomWithParams(), 
 						myXMLContents.getInitialProportions(),
 						myXMLContents.getModel(), myXMLContents.getGraphType(),
 						myXMLContents.getEdgeType(), myXMLContents.getParams(),
