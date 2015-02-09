@@ -3,7 +3,12 @@
 	<GraphType>FourNeighborSquareGraph</GraphType>
 	<Model>Fire</Model>
     <GraphType>Square</GraphType>
+<<<<<<< HEAD
+	<Author> Sierra and Megan</Author>
+	<Random>NO</Random>
+=======
 	<Author>Sierra and Megan</Author>
+>>>>>>> 5db4688d325aa9408a25252c51e6f0ef89965c7d
     <RandomWithProportions>
         <burning>0.2</burning>
     </RandomWithProportions>

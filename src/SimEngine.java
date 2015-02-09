@@ -94,4 +94,12 @@ public class SimEngine {
 	public Map<String, List<Double>> getParamMap() {
 		return myModel.getParamNameMinMaxCur();
 	}
+	
+	public String[]	getStateNames() {
+		return myModel.getMainStateNames();
+	}
+	
+	public int[] getStateCounts() {
+		return myModel.getCountMainStates(myGraph);
+	}
 }

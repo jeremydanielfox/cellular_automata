@@ -5,6 +5,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import CellsAndComponents.Cell;
 
+/**
+ * This is the graph class that will give cells eight neighbors. This class is
+ * appropriate for both triangles and squares
+ * 
+ * @author Jeremy
+ *
+ */
 public class EightNeighorBasicGraph extends BasicGraph {
 	private Point2D RIGHT;
 	private Point2D LEFT;
@@ -20,7 +27,6 @@ public class EightNeighorBasicGraph extends BasicGraph {
 			String model, String graphType, String edgeType) {
 		super(myShapes, numCellsWidth, numCellsHeight, defaultState,
 				defaultColor, model, graphType, edgeType);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void initializeConstants() {

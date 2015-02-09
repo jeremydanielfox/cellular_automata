@@ -1,9 +1,17 @@
 package Factories;
+
 import Graphs.BaseGraph;
 import Graphs.EdgeManager;
 import Graphs.EightNeighborToroid;
 import Graphs.FourNeighborToroid;
 
+/**
+ * This class creates appropriate EdgeManagers. The graph classes use this class
+ * to wrap edges appropriately
+ * 
+ * @author Jeremy
+ *
+ */
 public class EdgeManagerFactory {
 	public EdgeManager createSpecifiedManager(String type, BaseGraph graph) {
 		switch (type) {

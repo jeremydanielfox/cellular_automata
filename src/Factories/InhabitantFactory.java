@@ -1,11 +1,15 @@
 package Factories;
+
 import CellsAndComponents.AquaticCreature;
 import CellsAndComponents.Inhabitant;
 import CellsAndComponents.Shark;
 
-
-
-
+/**
+ * This factory is used when a given model has more than one type of Inhabitant.
+ * 
+ * @author Jeremy
+ *
+ */
 public class InhabitantFactory {
 
 	public Inhabitant createSpecifiedInhabitant(String inhabitant, int state) {

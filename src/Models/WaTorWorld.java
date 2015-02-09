@@ -1,4 +1,5 @@
 package Models;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -38,26 +39,34 @@ public class WaTorWorld extends BaseModel {
 	private static final double MAX_SHARK_ENERGY = 100;
 	private static final double MIN_TIME_TILL_REPRODUCE = 1;
 	private static final double MAX_TIME_TILL_REPRODUCE = 100;
-//	private int sharkEnergy;
-//	private int timeTillReproduce;
 
-	public WaTorWorld(Map<String, Double> parameters, Map<String, Color> stateToColorMap) {
+	public WaTorWorld(Map<String, Double> parameters,
+			Map<String, Color> stateToColorMap) {
 		super(parameters);
-		WATER_COLOR = selectNonNullColor(stateToColorMap.get("water"), Color.AQUAMARINE);
-		FISH_COLOR = selectNonNullColor(stateToColorMap.get("fish"), Color.YELLOW);
-		SHARK_COLOR = selectNonNullColor(stateToColorMap.get("shark"), Color.PURPLE);
+		WATER_COLOR = selectNonNullColor(stateToColorMap.get("water"),
+				Color.AQUAMARINE);
+		FISH_COLOR = selectNonNullColor(stateToColorMap.get("fish"),
+				Color.YELLOW);
+		SHARK_COLOR = selectNonNullColor(stateToColorMap.get("shark"),
+				Color.PURPLE);
 		DEFAULT_COLOR = WATER_COLOR;
-		List<String> myStates = new ArrayList<String>(Arrays.asList("water", "fish", "shark"));
-		List<Color> myColors = new ArrayList<>(Arrays.asList(WATER_COLOR, FISH_COLOR, SHARK_COLOR));
-		List<Integer> myInts = new ArrayList<>(Arrays.asList(WATER, FISH, SHARK));
+		List<String> myStates = new ArrayList<String>(Arrays.asList("water",
+				"fish", "shark"));
+		List<Color> myColors = new ArrayList<>(Arrays.asList(WATER_COLOR,
+				FISH_COLOR, SHARK_COLOR));
+		List<Integer> myInts = new ArrayList<>(
+				Arrays.asList(WATER, FISH, SHARK));
 		initializeMaps(myStates, myInts, myColors);
 		try {
-			getParameterValuesMap().put("sharkEnergy", (double)parameters.get("energyLevel"));
-			getParameterValuesMap().put("timeTillReproduce", (double)parameters.get("timeTillReproduce"));
+			getParameterValuesMap().put("sharkEnergy",
+					(double) parameters.get("energyLevel"));
+			getParameterValuesMap().put("timeTillReproduce",
+					(double) parameters.get("timeTillReproduce"));
 		} catch (NullPointerException e) {
 			getParameterValuesMap().put("sharkEnergy", MIN_SHARK_ENERGY);
-			getParameterValuesMap().put("timeTillReproduce", MAX_TIME_TILL_REPRODUCE);
-			}
+			getParameterValuesMap().put("timeTillReproduce",
+					MAX_TIME_TILL_REPRODUCE);
+		}
 
 	}
 
@@ -72,10 +81,12 @@ public class WaTorWorld extends BaseModel {
 			if (c.getCurrentState() == SHARK) {
 				Shark currentShark = ((Shark) ((CellWithInhabitant) c)
 						.getInhabitant());
-				if (currentShark.getEnergyLevel() < getParameterValuesMap().get("sharkEnergy").intValue()
+				if (currentShark.getEnergyLevel() < getParameterValuesMap()
+						.get("sharkEnergy").intValue()
 						&& countNeighbors(FISH, graph.getNeighbors(c)) > 0) {
 					moveShark(graph, c, currentShark, FISH);
-				} else if (currentShark.getEnergyLevel() >= getParameterValuesMap().get("sharkEnergy").intValue()) {
+				} else if (currentShark.getEnergyLevel() >= getParameterValuesMap()
+						.get("sharkEnergy").intValue()) {
 					changeStateAndInhabitant(c, new Inhabitant(WATER), WATER,
 							WATER_COLOR);
 				} else {
@@ -88,7 +99,8 @@ public class WaTorWorld extends BaseModel {
 				AquaticCreature currentFish = ((AquaticCreature) ((CellWithInhabitant) c)
 						.getInhabitant());
 				if (countNeighbors(0, graph.getNeighbors(c)) > 0
-						&& currentFish.getReproductionCounter() >= getParameterValuesMap().get("timeTillReproduce").intValue()) {
+						&& currentFish.getReproductionCounter() >= getParameterValuesMap()
+								.get("timeTillReproduce").intValue()) {
 					currentFish.resetReproductionCounter();
 					Cell cellToMoveTo = getCellToMoveTo(graph, c, WATER);
 					if (cellToMoveTo != null) {
@@ -122,7 +134,8 @@ public class WaTorWorld extends BaseModel {
 			cellToMoveTo.setCurrentState(DEFAULT_INT_STATE);
 			changeStateAndInhabitant(cellToMoveTo, currentShark, SHARK,
 					SHARK_COLOR);
-			if (currentShark.getReproductionCounter() >= getParameterValuesMap().get("timeTillReproduce").intValue()) {
+			if (currentShark.getReproductionCounter() >= getParameterValuesMap()
+					.get("timeTillReproduce").intValue()) {
 				currentShark.resetReproductionCounter();
 				changeStateAndInhabitant(c, new Shark(SHARK), SHARK,
 						SHARK_COLOR);
@@ -180,7 +193,8 @@ public class WaTorWorld extends BaseModel {
 		ArrayList<Double> minMaxCurReproduce = new ArrayList<>();
 		minMaxCurReproduce.add(0, MIN_TIME_TILL_REPRODUCE);
 		minMaxCurReproduce.add(1, MAX_TIME_TILL_REPRODUCE);
-		minMaxCurReproduce.add(2, getParameterValuesMap().get("timeTillReproduce"));
+		minMaxCurReproduce.add(2,
+				getParameterValuesMap().get("timeTillReproduce"));
 		toReturn.put("timeTillReproduce", minMaxCurReproduce);
 		ArrayList<Double> minMaxCurSharkEnergy = new ArrayList<>();
 		minMaxCurSharkEnergy.add(0, MIN_SHARK_ENERGY);
@@ -189,19 +203,23 @@ public class WaTorWorld extends BaseModel {
 		toReturn.put("sharkEnergy", minMaxCurSharkEnergy);
 		return toReturn;
 	}
-	
+
 	@Override
-	public void addAdditionalCellInfo(Cell c, ConfigCellInfo myBabyCell){
-		CellWithInhabitant curCell = (CellWithInhabitant)c;
+	public void addAdditionalCellInfo(Cell c, ConfigCellInfo myBabyCell) {
+		CellWithInhabitant curCell = (CellWithInhabitant) c;
 		InhabitantFactory myInhabitantFactory = new InhabitantFactory();
-		curCell.setInhabitant(
-				myInhabitantFactory.createSpecifiedInhabitant(
-						myBabyCell.getStringState(), myBabyCell.getIntState()));
+		curCell.setInhabitant(myInhabitantFactory.createSpecifiedInhabitant(
+				myBabyCell.getStringState(), myBabyCell.getIntState()));
 	}
 
 	@Override
+	public String[] getMainStateNames() {
+		return new String[] { "fish", "shark" };
+	}
+
 	public String getDefaultStringState() {
 		return DEFAULT_STRING_STATE;
+
 	}
 
 }

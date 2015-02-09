@@ -11,6 +11,13 @@ import Models.Segregation;
 import Models.Sugarscape;
 import Models.WaTorWorld;
 
+/**
+ * This class creates an appropriate model depending on the model string that is
+ * fed into it
+ * 
+ * @author Megan, Sierra, Jeremy
+ *
+ */
 public class ModelFactory {
 
 	public BaseModel createSpecifiedModel(String model,
@@ -28,7 +35,8 @@ public class ModelFactory {
 		case "Sugarscape":
 			return new Sugarscape(parameters, stateToColorMap);
 		default:
-			throw new CellSocietyException(CellSocietyException.INCORRECT_MODEL_MESSAGE);
+			throw new CellSocietyException(
+					CellSocietyException.INCORRECT_MODEL_MESSAGE);
 		}
 
 	}

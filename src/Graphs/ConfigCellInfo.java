@@ -1,5 +1,13 @@
 package Graphs;
 
+/**
+ * This class contains row, column, string state, and int state, and it was
+ * created because as we read in the XML file, we need to save the informatino
+ * somewhere while we gather the rest of the information to create a Cell
+ * 
+ * @author Sierra
+ *
+ */
 public class ConfigCellInfo {
 	private static final int DEFAULT_STATE = 0;
 
@@ -13,7 +21,7 @@ public class ConfigCellInfo {
 		myCol = col;
 		myStringState = state;
 		myIntState = DEFAULT_STATE;
-		
+
 	}
 
 	public int getRow() {
@@ -35,8 +43,8 @@ public class ConfigCellInfo {
 	public int getIntState() {
 		return myIntState;
 	}
-	
-	public void setStringState(String newState){
+
+	public void setStringState(String newState) {
 		myStringState = newState;
 	}
 }

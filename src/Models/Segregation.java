@@ -1,4 +1,5 @@
 package Models;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -7,9 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javafx.scene.paint.Color;
 import CellsAndComponents.Cell;
 import Graphs.BaseGraph;
-import javafx.scene.paint.Color;
 
 /**
  * 
@@ -24,7 +25,6 @@ public class Segregation extends BaseModel {
 	public static final int GROUP_TWO = 2;
 	public static final int DEFAULT_INT_STATE = EMPTY;
 	public static final String DEFAULT_STRING_STATE = "empty";
-	//public static final int NUM_POINTS_FOR_NEIGHBOR = 1;
 	public Color EMPTY_COLOR;
 	public Color GROUP_ONE_COLOR;
 	public Color GROUP_TWO_COLOR;
@@ -32,23 +32,30 @@ public class Segregation extends BaseModel {
 	private static final double MIN_RATIO_NEIGHBORS = 0;
 	private static final double MAX_RATIO_NEIGHBORS = 1.0;
 
-	public Segregation(Map<String, Double> parameters, Map<String, Color> stateToColorMap) {
-		// possibly we should create a setNumPointsForNeighbor method in the
-		// superclass so that we can
-		// set up that information using the constructor
+	public Segregation(Map<String, Double> parameters,
+			Map<String, Color> stateToColorMap) {
 		super(parameters);
-		EMPTY_COLOR = selectNonNullColor(stateToColorMap.get("empty"), Color.WHITE);
-		GROUP_ONE_COLOR = selectNonNullColor(stateToColorMap.get("group_one"), Color.RED);
-		GROUP_TWO_COLOR = selectNonNullColor(stateToColorMap.get("group_two"), Color.GREEN);
+		EMPTY_COLOR = selectNonNullColor(stateToColorMap.get("empty"),
+				Color.WHITE);
+		GROUP_ONE_COLOR = selectNonNullColor(stateToColorMap.get("group_one"),
+				Color.RED);
+		GROUP_TWO_COLOR = selectNonNullColor(stateToColorMap.get("group_two"),
+				Color.GREEN);
 		DEFAULT_COLOR = EMPTY_COLOR;
-		List<String> myStates = new ArrayList<String>(Arrays.asList("empty", "group_one", "group_two"));
-		List<Color> myColors = new ArrayList<>(Arrays.asList(EMPTY_COLOR, GROUP_ONE_COLOR, GROUP_TWO_COLOR));
-		List<Integer> myInts = new ArrayList<>(Arrays.asList(EMPTY, GROUP_ONE, GROUP_TWO));
+
+		List<String> myStates = new ArrayList<String>(Arrays.asList("empty",
+				"group_one", "group_two"));
+		List<Color> myColors = new ArrayList<>(Arrays.asList(EMPTY_COLOR,
+				GROUP_ONE_COLOR, GROUP_TWO_COLOR));
+		List<Integer> myInts = new ArrayList<>(Arrays.asList(EMPTY, GROUP_ONE,
+				GROUP_TWO));
 		initializeMaps(myStates, myInts, myColors);
 		try {
-			getParameterValuesMap().put("happinessRatio", (double)parameters.get("HappinessRatio"));
+			getParameterValuesMap().put("happinessRatio",
+					(double) parameters.get("HappinessRatio"));
 		} catch (NullPointerException e) {
-			getParameterValuesMap().put("happinessRatio", (MIN_RATIO_NEIGHBORS + MAX_RATIO_NEIGHBORS) / 2);
+			getParameterValuesMap().put("happinessRatio",
+					(MIN_RATIO_NEIGHBORS + MAX_RATIO_NEIGHBORS) / 2);
 		}
 	}
 
@@ -137,14 +144,18 @@ public class Segregation extends BaseModel {
 		ArrayList<Double> minMaxCurReproduce = new ArrayList<>();
 		minMaxCurReproduce.add(0, MIN_RATIO_NEIGHBORS);
 		minMaxCurReproduce.add(1, MAX_RATIO_NEIGHBORS);
-		minMaxCurReproduce.add(2, getParameterValuesMap().get("happinessRatio"));
+		minMaxCurReproduce
+				.add(2, getParameterValuesMap().get("happinessRatio"));
 		toReturn.put("happinessRatio", minMaxCurReproduce);
 		return toReturn;
 	}
 
 	@Override
+	public String[] getMainStateNames() {
+		return new String[] { "group_one", "group_two" };
+	}
+
 	public String getDefaultStringState() {
 		return DEFAULT_STRING_STATE;
 	}
-
 }

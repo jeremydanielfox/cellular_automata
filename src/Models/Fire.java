@@ -1,4 +1,5 @@
 package Models;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -26,33 +27,43 @@ public class Fire extends BaseModel {
 	private Color EMPTY_COLOR;
 	private Color TREE_COLOR;
 	private Color BURNING_COLOR;
-	private Color DEFAULT_COLOR ;
+	private Color DEFAULT_COLOR;
 	private static final double MIN_PROB_CATCH = 0;
 	private static final double MAX_PROB_CATCH = 1.0;
 
-	public Fire(Map<String, Double> parameters, Map<String, Color> stateToColorMap) {
+	public Fire(Map<String, Double> parameters,
+			Map<String, Color> stateToColorMap) {
 		super(parameters);
-		EMPTY_COLOR = selectNonNullColor(stateToColorMap.get("empty"), Color.YELLOW);
-		TREE_COLOR = selectNonNullColor(stateToColorMap.get("tree"), Color.FORESTGREEN);
-		BURNING_COLOR = selectNonNullColor(stateToColorMap.get("burning"), Color.RED);
+		EMPTY_COLOR = selectNonNullColor(stateToColorMap.get("empty"),
+				Color.YELLOW);
+		TREE_COLOR = selectNonNullColor(stateToColorMap.get("tree"),
+				Color.FORESTGREEN);
+		BURNING_COLOR = selectNonNullColor(stateToColorMap.get("burning"),
+				Color.RED);
 		DEFAULT_COLOR = TREE_COLOR;
-		List<String> myStates = new ArrayList<String>(Arrays.asList("empty", "tree", "burning"));
-		List<Color> myColors = new ArrayList<>(Arrays.asList(EMPTY_COLOR, TREE_COLOR, BURNING_COLOR));
-		List<Integer> myInts = new ArrayList<>(Arrays.asList(EMPTY, TREE, BURNING));
+		List<String> myStates = new ArrayList<String>(Arrays.asList("empty",
+				"tree", "burning"));
+		List<Color> myColors = new ArrayList<>(Arrays.asList(EMPTY_COLOR,
+				TREE_COLOR, BURNING_COLOR));
+		List<Integer> myInts = new ArrayList<>(Arrays.asList(EMPTY, TREE,
+				BURNING));
 		initializeMaps(myStates, myInts, myColors);
 		try {
-			getParameterValuesMap().put("probCatch", (double) parameters.get("probCatch"));
+			getParameterValuesMap().put("probCatch",
+					(double) parameters.get("probCatch"));
 		} catch (NullPointerException e) {
-			getParameterValuesMap().put("probCatch", (MIN_PROB_CATCH + MAX_PROB_CATCH) / 2);
+			getParameterValuesMap().put("probCatch",
+					(MIN_PROB_CATCH + MAX_PROB_CATCH) / 2);
 		}
 	}
-	
+
 	@Override
 	public Cell updateFutureState(Cell cellToUpdate, Collection<Cell> neighbors) {
 		double random = new Random().nextDouble();
 
 		if (cellToUpdate.getCurrentState() == TREE
-				&& countNeighbors(2, neighbors) > 0 && random < getParameterValuesMap().get("probCatch")) {
+				&& countNeighbors(2, neighbors) > 0
+				&& random < getParameterValuesMap().get("probCatch")) {
 			changeFutureState(cellToUpdate, BURNING, BURNING_COLOR);
 		} else if (cellToUpdate.getCurrentState() == BURNING
 				|| cellToUpdate.getCurrentState() == EMPTY) {
@@ -85,8 +96,13 @@ public class Fire extends BaseModel {
 	}
 
 	@Override
+	public String[] getMainStateNames() {
+		return new String[] { "tree", "burning" };
+	}
+
 	public String getDefaultStringState() {
 		return DEFAULT_STRING_STATE;
+
 	}
 
 }

@@ -4,6 +4,13 @@ import java.util.List;
 
 import javafx.geometry.Point2D;
 
+/**
+ * This is the EdgeManager class that will wrap edges into an eight-neighbor
+ * toroid
+ * 
+ * @author Jeremy
+ *
+ */
 public class EightNeighborToroid extends FourNeighborToroid {
 
 	public EightNeighborToroid(BaseGraph graph) {
