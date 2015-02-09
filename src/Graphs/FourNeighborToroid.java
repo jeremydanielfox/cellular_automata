@@ -6,6 +6,13 @@ import java.util.List;
 import javafx.geometry.Point2D;
 import CellsAndComponents.Cell;
 
+/**
+ * This is the EdgeManager class that will wrap edges in a four neighbor
+ * toroidal shape
+ * 
+ * @author Jeremy
+ *
+ */
 public class FourNeighborToroid extends EdgeManager {
 	private final boolean VERTICAL = false;
 	private final boolean HORIZONTAL = true;

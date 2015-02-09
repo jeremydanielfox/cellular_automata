@@ -40,9 +40,6 @@ public class WaTorWorld extends BaseModel {
 	private static final double MIN_TIME_TILL_REPRODUCE = 1;
 	private static final double MAX_TIME_TILL_REPRODUCE = 100;
 
-	// private int sharkEnergy;
-	// private int timeTillReproduce;
-
 	public WaTorWorld(Map<String, Double> parameters,
 			Map<String, Color> stateToColorMap) {
 		super(parameters);
