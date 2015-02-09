@@ -51,7 +51,7 @@ To change the starting configuration of any model using the XML, change these ta
 
 Note, completely random overrides random with parameters which overrides any specific configuration of cells.
 
-Known bugs/problems with functionality: You have to literally slide the parameter sliders to make that parameter change, if you just click to a certain point on the slider it won't change.  In addition, the cells in the triangle grid do not match up perfectly; the simulation still works as normal, but it may look a little funky because the triangles aren't quiet lined up.
+Known bugs/problems with functionality: You have to literally slide the parameter sliders to make that parameter change, if you just click to a certain point on the slider it won't change.  In addition, the cells in the triangle grid do not match up perfectly; the simulation still works as normal, but it may look a little funky because the triangles aren't quiet lined up.  Sometimes there is also a lag in the display window, both in updating the display of the cells and/or in updating the graph of the populations.
 
 Extra Features: see closed issues on github
 
