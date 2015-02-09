@@ -12,8 +12,15 @@ import CellsAndComponents.Shark;
  */
 public class InhabitantFactory {
 
+	/**
+	 * Creates and returns the correct type of inhabitant based on the string
+	 * given
+	 * 
+	 * @param inhabitant
+	 * @param state
+	 * @return
+	 */
 	public Inhabitant createSpecifiedInhabitant(String inhabitant, int state) {
-
 		switch (inhabitant) {
 		case "shark":
 			return new Shark(state);

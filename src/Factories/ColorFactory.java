@@ -12,6 +12,11 @@ import javafx.scene.paint.Color;
  *
  */
 public class ColorFactory {
+	/**
+	 * Uses reflection to return the color that corresponds to the string given
+	 * @param value
+	 * @return
+	 */
 	public Color stringToColor(String value) {
 		if (value == null) {
 			return null;

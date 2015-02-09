@@ -12,6 +12,19 @@ import visuals.TriangleRegionDivider;
  *
  */
 public class CellRegionDividerFactory {
+	/**
+	 * Generates and returns the proper type of cell region divider based on the
+	 * string name of the graph to be used
+	 * 
+	 * @param cellsAcross
+	 * @param cellsUpDown
+	 * @param height
+	 * @param width
+	 * @param xspace
+	 * @param yspace
+	 * @param shape
+	 * @return
+	 */
 	public CellRegionDivider createSpecifiedDivider(int cellsAcross,
 			int cellsUpDown, int height, int width, int xspace, int yspace,
 			String shape) {

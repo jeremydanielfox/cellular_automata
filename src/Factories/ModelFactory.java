@@ -20,9 +20,17 @@ import Models.WaTorWorld;
  */
 public class ModelFactory {
 
+	/**
+	 * Creates and returns the correct type of simulation model based on the
+	 * string given
+	 * 
+	 * @param model
+	 * @param parameters
+	 * @param stateToColorMap
+	 * @return
+	 */
 	public BaseModel createSpecifiedModel(String model,
 			Map<String, Double> parameters, Map<String, Color> stateToColorMap) {
-
 		switch (model) {
 		case "GameOfLife":
 			return new GameOfLife(parameters, stateToColorMap);

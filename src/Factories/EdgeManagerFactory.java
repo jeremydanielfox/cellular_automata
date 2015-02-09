@@ -13,6 +13,15 @@ import Graphs.FourNeighborToroid;
  *
  */
 public class EdgeManagerFactory {
+
+	/**
+	 * Creates and returns the correct type of edge manager for the model to be
+	 * used
+	 * 
+	 * @param type
+	 * @param graph
+	 * @return
+	 */
 	public EdgeManager createSpecifiedManager(String type, BaseGraph graph) {
 		switch (type) {
 		case "FourNeighborSquareGraphToroidal":
