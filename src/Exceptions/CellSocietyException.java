@@ -1,5 +1,12 @@
 package Exceptions;
 
+/**
+ * This class extends RunTime exception to create an exception that has a private
+ * instance variable error message String.
+ * 
+ * @author Sierra
+ *
+ */
 public class CellSocietyException extends RuntimeException {
 
 	public static final String MISSING_INFO_MESSAGE = "The XML file is missing one of the following tags:\n \"Model\", "
