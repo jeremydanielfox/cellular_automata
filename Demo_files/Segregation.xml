@@ -6,11 +6,9 @@
 	<Title>Segregation</Title>
 	<GridRows>5</GridRows>
 	<GridColumns>5</GridColumns>
-		
 	<Parameters>
 		<HappinessRatio>0.33</HappinessRatio>
 	</Parameters>
-
 	<Configuration>
 		<Cell x="1" y="1" state="group_one"> </Cell>
 		<Cell x="1" y="2" state="group_two"> </Cell>

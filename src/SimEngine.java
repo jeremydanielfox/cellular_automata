@@ -2,8 +2,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import CellsAndComponents.Cell;
 import Factories.GraphFactory;
@@ -27,16 +27,17 @@ public class SimEngine {
 	private BaseGraph myGraph;
 	private BaseModel myModel;
 
-	public SimEngine(Polygon[][] myPolygons, String random, String model,
+	public SimEngine(Polygon[][] myPolygons, String random,
+			Map<String, Double> initProportions, String model,
 			String graphType, String edgeType, Map<String, Double> parameters,
 			List<ConfigCellInfo> cellsToConfig, int cellRegionWidth,
-			int cellRegionHeight) {
+			int cellRegionHeight, Map<String, Color> stateToColorMap) {
 		myModelName = model;
 		myParameters = parameters;
 		ModelFactory myModFactory = new ModelFactory();
-		myModel = myModFactory.createSpecifiedModel(myModelName, myParameters);
+		myModel = myModFactory.createSpecifiedModel(myModelName, myParameters, stateToColorMap);
 		if (random.equals("YES")) {
-			//eliminate this and give it the hash map from the parser
+			// eliminate this and give it the hash map from the parser
 			Map<String, Double> paramProp = new HashMap<>();
 			RandomConfiguration randConfigGenerator = new RandomConfiguration(
 					myModel, myParameters.get("rows").intValue(), myParameters
@@ -45,12 +46,13 @@ public class SimEngine {
 		} else {
 			myCellsToConfig = cellsToConfig;
 		}
+		Color temp = myModel.getDefaultColor();
 		GraphFactory myGraphFactory = new GraphFactory();
-
 		myGraph = myGraphFactory.createSpecifiedGraph(myPolygons, myParameters
 				.get("columns").intValue(),
-				myParameters.get("rows").intValue(), myModel.getDefaultIntState(),
-				myModel.getDefaultColor(), myModelName, graphType, edgeType);
+				myParameters.get("rows").intValue(), myModel
+						.getDefaultIntState(), myModel.getDefaultColor(),
+				myModelName, graphType, edgeType);
 		// myGraph = new SquareGraph(myParameters.get("columns").intValue(),
 		// myParameters.get("rows").intValue(), cellRegionWidth,
 		// cellRegionHeight, cellRegionXOffset, cellRegionYOffset,
