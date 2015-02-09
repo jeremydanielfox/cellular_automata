@@ -23,7 +23,6 @@ public class AdvancedCell extends Cell {
 	public AdvancedCell(int id, Polygon shape,
 			List<Point2D> verticies, int defaultState, Color defaultColor) {
 		super(id, shape, verticies, defaultState, defaultColor);
-		// TODO Auto-generated constructor stub
 		myInhabitants = new ArrayList<Inhabitant>();
 	}
 

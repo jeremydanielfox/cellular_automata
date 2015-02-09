@@ -1,5 +1,4 @@
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,14 +50,6 @@ public class SimEngine {
 				myParameters.get("rows").intValue(), myModel
 						.getDefaultIntState(), myModel.getDefaultColor(),
 				myModelName, graphType, edgeType);
-		// myGraph = new SquareGraph(myParameters.get("columns").intValue(),
-		// myParameters.get("rows").intValue(), cellRegionWidth,
-		// cellRegionHeight, cellRegionXOffset, cellRegionYOffset,
-		// myModel.getSharePointsForNeighbor(), myModel.getDefaultState(),
-		// myModel.getDefaultColor(), myModelName);
-
-		// myGraph.initializeCells(myModel.getDefaultState(),
-		// myModel.getDefaultColor());
 		setUpInitCells();
 	}
 
