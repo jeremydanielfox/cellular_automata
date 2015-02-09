@@ -23,17 +23,17 @@ Test Files: Located in "Demo_files"
 
 Using the program: After running the main method in SimBrain, click on the "Upload XML File" and choose one of the XML files located in the "Demo_files" folder. The initial configuration will be loaded on the screen. To start the simulation either press "play" or "step". 
 
-To change the starting configuration of any model using the XML, change these tags to any of the given options (in the ommission of a tag the default states will be implemented:
+To change the starting configuration of any model using the XML, change these tags to any of the given options (in the event that a tag is ommitted, the default state/element will be implemented):
 
 * GraphType: can be FourNeighborSquareGraph, FourNeighborTriangleGraph, EightNeighborTriangleGraph, or EightNeighor
 * EdgeType: can be Toroidal or Finite
-* Model: can be GameOfLife, Fire, Segregation, WaTorWorld, or Sugarscape
+* Model: can be GameOfLife, Fire, Segregation, WaTorWorld, or Sugarscape (**Necessary tag to run simulation)
 * Author: your name
 * Title: your title
-* GridRows: put the number of rows you want in the grid
-* GridColumns: put the number of columns you want in the grid
-* Random (optional, if you want a completely random configuration): YES
-* RandomWithParams (optional, if you want to set proportions of random configuration): create a subtag using the name of the state with the proportion in decimal form (example: <tree>0.5</tree>)
+* GridRows: put the number of rows you want in the grid (**Necessary tag to run simulation)
+* GridColumns: put the number of columns you want in the grid (**Necessary tag to run simulation)
+* Random (optional, if you want a completely random configuration): YES or NO
+* RandomWithParams (optional, if you want to set proportions of random configuration): create a subtag using the name of the state with the proportion in decimal form (example: <tree>0.5</tree>)  (see configuration bullet for possible states)
 * Parameters (optional): create a subtag using the name of the parameter containing its value (example: <probCatch>0.5</probCatch>). The parameters you can input for each model are as follows.
     * Fire: probCatch
     * Segregation: HappinessRatio
