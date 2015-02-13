@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Information>
-	<GraphType>FourNeighborSquareGraph</GraphType>
+	<GraphType>FourNeighborTriangleGraph</GraphType>
     <EdgeType>Toroidal</EdgeType>
     <GridLines>On</GridLines>
 	<Model>WaTorWorld</Model>
@@ -9,8 +9,8 @@
 	<GridRows>10</GridRows>
 	<GridColumns>10</GridColumns>
 	<Parameters>
-		<energyLevel>10</energyLevel>
-		<timeTillReproduce>8</timeTillReproduce>
+		<energyLevel>8</energyLevel>
+		<timeTillReproduce>9</timeTillReproduce>
 	</Parameters>
 	<Configuration>
 		<Cell x="1" y="1" state="fish"> </Cell>

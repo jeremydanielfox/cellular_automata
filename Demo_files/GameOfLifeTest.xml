@@ -4,9 +4,9 @@
 	<EdgeType>Toroidal</EdgeType>
 	<Model>GameOfLife</Model>
 	<Author>Sierra</Author>
-    <RandomWithProportions>
+    <!--<RandomWithProportions>
         <alive>0.5</alive>
-    </RandomWithProportions>
+    </RandomWithProportions> -->
 	<Title>Conway's Game Of Life</Title>
 	<GridLines>Off</GridLines>
 	<GridRows>100</GridRows>

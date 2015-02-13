@@ -42,7 +42,6 @@ public abstract class BaseGraph {
 		isWrapped = false;
 		myEdgeType = edgeType;
 		myType = graphType;
-		initializeConstants();
 		initializeCells(myShapes, defaultState, defaultColor);
 		connectCells();
 		manageEdgeConditions();
@@ -80,7 +79,7 @@ public abstract class BaseGraph {
 		return myCellPointMap.get(temp);
 	}
 
-	public void addVertex(Cell myCell) {
+	protected void addVertex(Cell myCell) {
 		if (myCell == null) {
 			System.out.println("Can't add vertex because not a cell");
 			return;
@@ -121,9 +120,9 @@ public abstract class BaseGraph {
 
 	}
 
-	public abstract void connectCells();
+	protected abstract void connectCells();
 
-	public abstract void manageEdgeConditions();
+	protected abstract void manageEdgeConditions();
 
 	public Cell getTranslatedCell(Cell current, Point2D change) {
 		if (!isWrapped()) {
@@ -149,24 +148,21 @@ public abstract class BaseGraph {
 		return myCellPointMap.get(current);
 	}
 
-	public String getModelName() {
+	protected String getModelName() {
 		return myModel;
 	}
 
-	public String getEdgeType() {
+	protected String getEdgeType() {
 		return myEdgeType;
 	}
 
-	public String getType() {
+	protected String getType() {
 		return myType;
 	}
 
-	public abstract void initializeConstants();
 
-	public abstract void initializeCells(Polygon[][] myShapes,
+	protected abstract void initializeCells(Polygon[][] myShapes,
 			int defaultState, Color defaultColor);
-
-	public abstract int calculateID(int row, int col);
 
 
 }

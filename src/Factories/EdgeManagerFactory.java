@@ -3,6 +3,7 @@ package Factories;
 import Graphs.BaseGraph;
 import Graphs.EdgeManager;
 import Graphs.EightNeighborToroid;
+import Graphs.FiniteEdge;
 import Graphs.FourNeighborToroid;
 
 /**
@@ -33,7 +34,7 @@ public class EdgeManagerFactory {
 		case "EightNeighborTriangleGraphToroidal":
 			return new EightNeighborToroid(graph);
 		default:
-			return new EdgeManager(graph);
+			return new FiniteEdge(graph);
 		}
 
 	}

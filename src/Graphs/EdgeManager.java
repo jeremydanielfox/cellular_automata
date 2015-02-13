@@ -13,7 +13,7 @@ import CellsAndComponents.Cell;
  * @author Jeremy, Team 12
  *
  */
-public class EdgeManager {
+public abstract class EdgeManager {
 	private List<Cell> topRow = new ArrayList<>();
 	private List<Cell> leftCol = new ArrayList<>();
 	private final int BEGINNING = 1;
@@ -22,7 +22,6 @@ public class EdgeManager {
 	public EdgeManager(BaseGraph graph) {
 		myGraph = graph;
 		makeRowAndCol();
-		linkEdges();
 	}
 
 	private void makeRowAndCol() {
@@ -34,9 +33,7 @@ public class EdgeManager {
 		}
 	}
 
-	protected void linkEdges() {
-
-	}
+	protected abstract void linkEdges();
 
 	protected BaseGraph getGraph() {
 		return myGraph;

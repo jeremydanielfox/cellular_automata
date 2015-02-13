@@ -7,6 +7,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import CellsAndComponents.Cell;
+import Factories.CellConnectorFactory;
 import Factories.CellFactory;
 import Factories.EdgeManagerFactory;
 
@@ -19,11 +20,6 @@ import Factories.EdgeManagerFactory;
  *
  */
 public class BasicGraph extends BaseGraph {
-	private Point2D RIGHT;
-	private Point2D LEFT;
-	private Point2D UP;
-	private Point2D DOWN;
-
 	/**
 	 * The constructor for a SquareGraph takes in the desired number of cells
 	 * across the grid in each direction, as well as the screen size in pixels
@@ -43,19 +39,12 @@ public class BasicGraph extends BaseGraph {
 				defaultColor, model, graphType, edgeType);
 	}
 
-	public void initializeConstants() {
-		RIGHT = new Point2D(1, 0);
-		LEFT = new Point2D(-1, 0);
-		UP = new Point2D(0, -1);
-		DOWN = new Point2D(0, 1);
-	}
-
 	/**
 	 * Generate all necessary cells. Assign each cell an appropriate ID. Create
 	 * a Polygon for each Cell. Assign correct matrix of points for each
 	 * Polygon. Add each Polygon to each Cell. Add each Cell to the Graph.
 	 */
-	public void initializeCells(Polygon[][] myShapes, int defaultState,
+	protected void initializeCells(Polygon[][] myShapes, int defaultState,
 			Color defaultColor) {
 		int count = 1;
 		CellFactory myFactory = new CellFactory();
@@ -73,39 +62,19 @@ public class BasicGraph extends BaseGraph {
 			}
 	}
 
-	/**
-	 * Calculate the appropriate ID for a row and column by multiplying the row
-	 * number by the number of cells across, and adding the column number
-	 * 
-	 * @param row
-	 * @param col
-	 * @return
-	 */
-	public int calculateID(int row, int col) {
-		return (row - 1) * getNumCellsAcross() + col;
-	}
-
 	@Override
-	public void connectCells() {
-		for (Cell current : this.getAllCells()) {
-			checkConnect(current, RIGHT);
-			checkConnect(current, LEFT);
-			checkConnect(current, DOWN);
-			checkConnect(current, UP);
-		}
+	protected void connectCells() {
+		CellConnectorFactory myFactory = new CellConnectorFactory();
+		CellConnector myConnector = myFactory.createSpecifiedConnector(
+				getType(), this);
+		myConnector.connectCells();
 	}
 
-	public void checkConnect(Cell myCell, Point2D myPoint) {
-		Cell neighbor = getNeighbor(myCell, myPoint);
-		if (neighbor != null)
-			connect(myCell, neighbor);
-	}
-
-	@Override
-	public void manageEdgeConditions() {
+	protected void manageEdgeConditions() {
 		EdgeManagerFactory myManagerFactory = new EdgeManagerFactory();
 		EdgeManager myEdgeManager = myManagerFactory.createSpecifiedManager(
 				getType() + getEdgeType(), this);
+		myEdgeManager.linkEdges();
 
 	}
 }
