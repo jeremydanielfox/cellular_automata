@@ -1,3 +1,5 @@
+// This entire file is part of my masterpiece
+// Jeremy Fox
 package Graphs;
 
 import java.util.ArrayList;
