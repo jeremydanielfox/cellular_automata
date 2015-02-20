@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
@@ -115,6 +117,17 @@ public abstract class BaseGraph {
 	public Iterable<Cell> getAllCells() {
 		return Collections.unmodifiableSet(myEdges.keySet());
 	}
+	
+	public <Cell> void doForAllCells(Consumer<Cell> action) {
+		getAllCells().forEach((Consumer<CellsAndComponents.Cell>) action);
+	}
+	
+//	default void forEach(Consumer<? super T> action) {
+//        Objects.requireNonNull(action);
+//        for (T t : this) {
+//            action.accept(t);
+//        }
+//    }
 
 	public Cell getCell(Point2D myPoint) {
 		return myCellPointMap.get(myPoint);

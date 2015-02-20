@@ -3,8 +3,8 @@ package Factories;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import Graphs.BaseGraph;
-import Graphs.EightNeighorBasicGraph;
 import Graphs.BasicGraph;
+import Graphs.EightNeighorBasicGraph;
 
 /**
  * This is the factory to make new graphs

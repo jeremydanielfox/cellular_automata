@@ -75,7 +75,8 @@ public class SimEngine {
 	}
 
 	private void determineFutureStates() {
-		myModel.updateFutureStates(myGraph.getAllCells(), myGraph);
+		myGraph.doForAllCells(e -> myModel.updateFutureState((Cell) e, myGraph.getNeighbors((Cell) e)));
+		//myModel.updateFutureStates(myGraph.getAllCells(), myGraph);
 	}
 
 	private void setFutureToCurrentStates() {
